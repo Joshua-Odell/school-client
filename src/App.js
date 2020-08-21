@@ -186,7 +186,7 @@ export default class App extends Component {
                         <option value="Concord">Concord Education Center</option>
                         <option value="Alliance">Alliance Education Center</option>
                         <option value="Lebanon">Lebanon Education Center</option>
-                        <option value="Ceader">Ceader School?</option>
+                        <option value="Cedea">Cedar School?</option>
                         <option value="program">programs?</option>
                     </select>
                 </nav>
