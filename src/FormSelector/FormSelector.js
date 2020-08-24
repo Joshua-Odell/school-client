@@ -15,6 +15,11 @@ export default function FormSelector(props) {
             <ConcordForm/>
         )
         
+    }
+    if(schoolLocation === "Cedar"){
+        return(
+            <CedarForm/>
+        )
     }else{
         return(
             <div>test</div>

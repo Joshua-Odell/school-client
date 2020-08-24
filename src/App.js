@@ -50,6 +50,19 @@ export default class App extends Component {
     }
   }
 
+  Select(array, name){
+    let result = (
+      `<label for='${name}'>${name}</label> 
+      <select id='${name}' name='${name}'>`)
+    for (let i = 0; i < array.length; i++){
+      let temp=array[i];
+      let stagedResult = `<option value='${temp}'>${temp}</option`;
+      result += stagedResult; 
+    }
+    result += '</select>';
+    return( result );
+  }
+
   emailHandler(event){this.setState({submissionEmail: event.target.value})}
 
   submitterNameHandler(event){this.setState({submitterName: event.target.value})}
@@ -170,7 +183,8 @@ export default class App extends Component {
           programHandler: this.programHandler,
           roomlocationHandler: this.roomlocationHandler,
           disruptionHandler: this.disruptionHandler,
-          handleSubmit: this.handleSubmit
+          handleSubmit: this.handleSubmit,
+          Select: this.Select
 
         }
         return(

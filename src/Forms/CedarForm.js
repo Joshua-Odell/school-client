@@ -1,4 +1,5 @@
 import React from 'react';
+import '../store';
 
 export default function CedarForm() {
     return(

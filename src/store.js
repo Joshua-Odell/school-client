@@ -6,7 +6,7 @@ const daysOfTheWeek = ["Monday", "Tuesday", "Wednsday", "Thursday", "Friday"];
 
 const holds = ["None", "Transport- Single Wrist Tri", "Transport- Double Wrist Tri", "Transport- Single Sunday Stroll", "Transport- Double Sunday Stroll", "Transport- One Arm Wrap", "One-Arm Wrap", "2-Person Vertical", "3-Person Vertical", "2-3 Person Vertical", "Supine"];
 
-const raceEthnicitys = ["American Indian", "Asian", "Black", "Hispanic", "White", "Multirace", "Other"];
+const raceEthnicity = ["American Indian", "Asian", "Black", "Hispanic", "White", "Multirace", "Other"];
 
 const ages = ["5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21"];
 
