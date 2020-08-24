@@ -13,3 +13,12 @@ const ages = ["5","6","7","8","9","10","11","12","13","14","15","16","17","18","
 const federalSettings = ["1","2","3","4","5","6","7","8","11","12","13","14","15","16","17","31","32","33","34","41","42","43","44","45"];
 
 const disabilityClasses = ["ASD","DB","D/HH","DCD-MM","DCD-SP","DD 3-6","EBD","OHD","PI","SMI","SLD","SLI","TBI"];
+
+exports.holds = holds;
+exports.disabilityClasses = disabilityClasses;
+exports.majorDisruptionList = majorDisruptionList;
+exports.daysOfTheWeek = daysOfTheWeek;
+exports.concordRoomLocation = concordRoomLocation;
+exports.raceEthnicity = raceEthnicity;
+exports.ages = ages;
+exports.federalSettings = federalSettings;

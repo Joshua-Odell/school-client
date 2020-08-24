@@ -1,5 +1,7 @@
 import React from 'react';
-import Context from '../Context'
+import Context from '../Context';
+
+const list = require('../store');
 
 export default class ConcordForm extends React.Component {
 
@@ -14,7 +16,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label for="reporter">Your Name</label>
-                    <input type="text" id="reporter" name="reporter" placeholder="Valid email address"/>
+                    <input type="text" id="reporter" name="reporter" placeholder="Your Name" onChange={this.context.subbmitterNameHandler} />
                 </div>
                 <div>
                     <label for="studentFirstName"> Student's First Name</label>
@@ -58,85 +60,16 @@ export default class ConcordForm extends React.Component {
                     sequence of events"></textarea>
                 </div>
                 <div>
-                    <label for="disability">Disability</label>
-                    <select id="disability" name="disability">
-                        <option value="ASD">ASD</option>
-                        <option value="DB">DB</option>
-                        <option value="D/HH">D/HH</option>
-                        <option value="DCD-MM">DCD-MM</option>
-                        <option value="DCD-SP">DCD-SP</option>
-                        <option value="DD 3-6">DD-36</option>
-                        <option value="EBD">EBD</option>
-                        <option value="OHD">OHD</option>
-                        <option value="PI">PI</option>
-                        <option value="SMI">SMI</option>
-                        <option value="SLD">SLD</option>
-                        <option value="SLI">SLI</option>
-                        <option value="TBI">TBI</option>
-                    </select>
+                    {this.context.Select(list.disabilityClasses, 'Disability')}
                 </div>
                 <div>
-                    <label for="federal">Federal Setting</label>
-                    <select id="federal" name="federal">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="31">31</option>
-                        <option value="32">32</option>
-                        <option value="33">33</option>
-                        <option value="34">34</option>
-                        <option value="41">41</option>
-                        <option value="42">42</option>
-                        <option value="43">43</option>
-                        <option value="44">44</option>
-                        <option value="45">45</option>
-                    </select>            
+                    {this.context.Select(list.federalSettings, 'Federal Setting')}
                 </div>
                 <div>
-                    <label for="age">Age</label>
-                    <select id="age" name="age">
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                    </select>
+                    {this.context.Select(list.ages, 'Age')}
                 </div>
                 <div>
-                    <label for="raceEthnicity">Race/Ethnicity</label>
-                    <select id="raceEthnicity" name="raceEthnicity">
-                        <option value="American Indian">American Indian</option>
-                        <option value="Asian">Asian</option>
-                        <option value="Black">Black</option>
-                        <option value="Hispanic">Hispanic</option>
-                        <option value="White">White</option>
-                        <option value="Multirace">Multirace</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    {this.context.Select(list.raceEthnicity, 'Race/Ethnicity')}
                 </div>
                 <div>
                     <label for="gender">Gender</label>
@@ -150,20 +83,8 @@ export default class ConcordForm extends React.Component {
                     <input type="text" id="date" name="date" placeholder="Month, day, year" />
                 </div>
                 <div>
-                    <label for="holding">Physical Holding</label> ask if holding used then if yes prompt for type then stat time, end time, staff, behavior/Physical status allow for multiple rounds
-                    <select id="holding" name="holding">
-                        <option value="None">--None--</option>
-                        <option value="Transport- Single Wrist Tri">Transport - Single Wrist Tri</option>
-                        <option value="Transport- Double Wrist Tri">Transport - Double Wrist Tri</option>
-                        <option value="Transport- Single Sunday Stroll">Transport - Single Sunday Stroll</option>
-                        <option value="Transport- Double Sunday Stroll">Transport - Double Sunday Stroll</option>
-                        <option value="Transport- One Arm Wrap">Transport- One Arm Wrap</option>
-                        <option value="One-Arm Wrap">One Arm Wrap</option>
-                        <option value="2-Person Vertical">2 - Person Vertical</option>
-                        <option value="3-Person Vertical">3 - Person Vertical</option>
-                        <option value="2-3 Person Vertical">2 - 3 Person Vertical</option>
-                        <option value="Supine">Supine</option>            
-                    </select>
+                    {/* Need to account for multiple holds used Ask if hold was used give option take time repeat process */}
+                    {this.context.Select(list.holds, 'Physical Holding')} 
                 </div>
                 <div>
                     <label for="seclusion">Seclusion</label>
@@ -193,14 +114,7 @@ export default class ConcordForm extends React.Component {
                     calculate based on start and stop time
                 </div>
                 <div>
-                    <label for="day">Day of Week</label>
-                    <select id='day' name='day'>
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednsday">Wednsday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
-                    </select>
+                    {this.context.Select(list.daysOfTheWeek, 'Day of the week')}
                 </div>
                 <div>
                     <label for="studentInjury">Student injury during restrictive procedure</label>
@@ -230,28 +144,10 @@ export default class ConcordForm extends React.Component {
                     </select>
                 </div>
                 <div>
-                    <label for="roomlocation">Location</label>
-                    <select id="roomlocation" name="rooomlocation" multiple>
-                        <option value="Classroom">Classroom</option>
-                        <option value="Individual Office">Individual Office</option>
-                        <option value="Blue Hallway">Blue Hallway</option>
-                        <option value="Green Hallway">Green Hallway</option>
-                        <option value="Red Hallway">Red Hallway</option>
-                        <option value="Yellow Hallway">Yellow Hallway</option>
-                        <option value="Sensory Room">Sensory Room</option>
-                        <option value="Lunch Room">Lunch Room</option>
-                        <option value="Gym">Gym</option>
-                        <option value="Outside">Outside</option>
-                        <option value="Playground">Playground</option>
-                        <option value="Front Office">Front Office</option>
-                        <option value="Field Trip">Field Trip</option>
-                        <option value="Front Entrance">Front Entrance</option>
-                        <option value="Bathroom">Bathroom</option>
-                        <option value="Life SKills Lab">Life SKills Lab</option>
-                        <option value="Project Discovery Lab">Project Discovery Lab</option>
-                    </select>
+                    {this.context.Select(list.concordRoomLocation, "Location")}
                 </div>
                 <div>
+                    {/* I have list to generate this but this one requires a multiple option */}
                     <label for="majorDisruption">Major Disruption</label>
                     <select id='majorDisruption' name='majorDisruption' multiple>
                         <option value="Clearing Classroom">Clearing Classroom</option>

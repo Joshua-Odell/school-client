@@ -50,17 +50,21 @@ export default class App extends Component {
     }
   }
 
-  Select(array, name){
-    let result = (
-      `<label for='${name}'>${name}</label> 
-      <select id='${name}' name='${name}'>`)
-    for (let i = 0; i < array.length; i++){
-      let temp=array[i];
-      let stagedResult = `<option value='${temp}'>${temp}</option`;
-      result += stagedResult; 
-    }
-    result += '</select>';
-    return( result );
+  Select(list, name){
+    const options = list.map( (item) => {
+      return(
+        <option value={item}>{item}</option>
+      )
+    });
+
+    return( 
+      <div>
+                    <label htmlFor={name}>{name}</label>
+                    <select id={name} name={name}>
+                      {options}
+                    </select>
+                </div>
+     );
   }
 
   emailHandler(event){this.setState({submissionEmail: event.target.value})}
@@ -200,7 +204,7 @@ export default class App extends Component {
                         <option value="Concord">Concord Education Center</option>
                         <option value="Alliance">Alliance Education Center</option>
                         <option value="Lebanon">Lebanon Education Center</option>
-                        <option value="Cedea">Cedar School?</option>
+                        <option value="Cedar">Cedar School?</option>
                         <option value="program">programs?</option>
                     </select>
                 </nav>
