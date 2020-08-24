@@ -27,6 +27,7 @@ export default class ConcordForm extends React.Component {
                     <input type="text" id="studentLastName" name="studentLastName" /> 
                 </div>    
                 <div>
+                    {/* If student validation is present grade and IEP Manager can be removed */}
                     <label for="grade">Grade:</label>
                     <input type="text" id="grade" name="grade" /> 
                 </div>
@@ -35,17 +36,20 @@ export default class ConcordForm extends React.Component {
                     <input type="text" id="iepManager" name="iepManager" /> 
                 </div>
                 <div>
+                    {/* There should be a seperate field for each person so they can be matched to the relevant staff table */}
                     <label for="involvedPeople">People Involved:</label>
                     <input type="text" id="involvedPeople" name="involvedPeople" /> 
                 </div>
             
                 <div>
-                    <label for="director">Assistant Director/Principal</label>
+                    {/* This is redundant and can be assumed based on school selection */}
+                    <label for="director">Assistant Director/Principal -</label>
                     <select id="director" name="cars">
                         <option value="Dalbesio">Dalbesio</option>
                     </select>
                 </div>
                 <div>
+                    {/* Unique number to student */}
                     <label for="marssNumber">MARSS Number</label>
                     <input type="text" id="marssNumber" name="marssNumber" />
                 </div>
@@ -60,18 +64,23 @@ export default class ConcordForm extends React.Component {
                     sequence of events"></textarea>
                 </div>
                 <div>
+                    {/* Can be removed if student verification is present */}
                     {this.context.Select(list.disabilityClasses, 'Disability')}
                 </div>
                 <div>
+                    {/* Can be reduced due to school selection */}
                     {this.context.Select(list.federalSettings, 'Federal Setting')}
                 </div>
                 <div>
+                    {/* Can be removed if student verification is present */}
                     {this.context.Select(list.ages, 'Age')}
                 </div>
                 <div>
+                    {/* Can be removed if student verification is present */}
                     {this.context.Select(list.raceEthnicity, 'Race/Ethnicity')}
                 </div>
                 <div>
+                    {/* Can be removed if student verification is present */}
                     <label for="gender">Gender</label>
                     <select id="gender" name="gender">
                         <option value="Male">Male</option>
@@ -114,6 +123,7 @@ export default class ConcordForm extends React.Component {
                     calculate based on start and stop time
                 </div>
                 <div>
+                    {/* Can be taken from the date that is inputted */}
                     {this.context.Select(list.daysOfTheWeek, 'Day of the week')}
                 </div>
                 <div>

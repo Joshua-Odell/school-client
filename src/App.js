@@ -51,19 +51,19 @@ export default class App extends Component {
   }
 
   Select(list, name){
-    const options = list.map( (item) => {
+    // Need to figure out state change with these points
+    const options = list.map((item) => {
       return(
         <option value={item}>{item}</option>
       )
     });
-
     return( 
       <div>
-                    <label htmlFor={name}>{name}</label>
-                    <select id={name} name={name}>
-                      {options}
-                    </select>
-                </div>
+        <label htmlFor={name}>{name}</label>
+        <select id={name} name={name}>
+          {options}
+        </select>
+      </div>
      );
   }
 
