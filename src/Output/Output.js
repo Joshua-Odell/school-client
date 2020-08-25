@@ -1,5 +1,4 @@
-import React from "react";
-import { Component } from "react";
+import React, { Component} from "react";
 import './output.css'
 
 export default class Output extends Component {
@@ -34,8 +33,10 @@ export default class Output extends Component {
           lawEnforcment: "True",
           program: "True",
           roomlocation: "True",
-          disruption: "True"
+          disruption: "True",
+          isAdvancedOptionsVisible: false
         }
+        this.toggleHidden = this.toggleHidden.bind(this)
       }
 
     schoolLocation(event){ this.setState({schoolLocation: event.target.value})}
@@ -46,10 +47,20 @@ export default class Output extends Component {
 
     }
 
-    toggleHidden(){
-        console.log('test')
-        let x = document.getElementById('advancedContent');
-        console.log(x)
+    toggleHidden(event){
+        event.preventDefault()
+        if(!this.isAdvancedOptionsVisible){
+            this.setState({isAdvancedOptionsVisible: true})
+        }
+        
+        // this.setState((state) => {
+        //     console.log(state, !!this.state.isAdvancedOptionsVisible)
+        //     return {
+        //         ...state, isAdvancedOptionsVisible: !!state.isAdvancedOptionsVisible
+        //     }
+            
+        // }  )
+        //this.setState({isAdvancedOptionsVisible: !!this.state.isAdvancedOptionsVisible})
     }
 
     //I want to add checked as default state but when I do I cannot uncheck the box
@@ -93,11 +104,10 @@ export default class Output extends Component {
                             <option value="Grade">Grade</option>
                         </select>
                     </div>
-                    <div id="advanced" onClick={this.toggleHidden()}>
+                    <div id="advanced" >
                         {/* Need to figure out how to toggle hidden on Advance Settings */}
-                        <button >test</button>
-                        <p id="advancedOptions">Advanced Options</p>
-                        <div id="advancedContent" className="advancedContent" hidden>
+                        <button id="advancedOptions" onClick={this.toggleHidden} >Advanced Options</button>
+                        {this.state.isAdvancedOptionsVisible && (<div id="advancedContent" className="advancedContent">
                             {this.checkboxGenerator("submissionEmail", "Submitter's Email")}
                             {this.checkboxGenerator("submissionName", "Submitter's Name")}
                             {this.checkboxGenerator("studentName", "Student's Name")}
@@ -125,14 +135,25 @@ export default class Output extends Component {
                             {this.checkboxGenerator("program", "Program")}
                             {this.checkboxGenerator("roomLocation", "Room Location")}
                             {this.checkboxGenerator("disruption", "Disruption")}
-                        </div>
+                        </div>)}
                     </div>
                     <div>
                         <button onClick={this.searchHandler()}>Search</button>
                     </div>
 
                 </form>
+                {/* <Toggle></Toggle> */}
             </div>            
         )
     }
 }
+
+// function Toggle() {
+//     const [isVisible, setIsVisible] = React.useState(false)
+//     return (
+//         <div>
+//             <button onClick={ () => setIsVisible(!!isVisible)}>click</button>
+//             {isVisible && (<p>is visible</p>)}
+//         </div>
+//     )
+// }

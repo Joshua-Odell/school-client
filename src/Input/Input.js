@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Context from '../Context';
-import { Route, Link } from 'react-router-dom';
 import FormSelector from '../FormSelector/FormSelector';
 
 export default class Input extends Component {
