@@ -15,15 +15,15 @@ export default function FormSelector(props) {
             <ConcordForm/>
         )
         
-    }
-    if(schoolLocation === "Cedar"){
-        return(
-            <CedarForm/>
-        )
     }else{
         return(
-            <div>test</div>
+            <div>Waiting on additional details for relevant content</div>
         )
         
     } 
+    // if(schoolLocation === "Cedar"){
+    //     return(
+    //         <CedarForm/>
+    //     )
+    //}
 }
