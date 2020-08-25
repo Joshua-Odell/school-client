@@ -1,5 +1,6 @@
 import React from "react";
 import { Component } from "react";
+import './output.css'
 
 export default class Output extends Component {
     constructor(props){
@@ -38,7 +39,28 @@ export default class Output extends Component {
       }
 
     schoolLocation(event){ this.setState({schoolLocation: event.target.value})}
+    
+    searchHandler(event){
+        //event.preventDefault()
+        // fetch GET request to database 
 
+    }
+
+    toggleHidden(){
+        console.log('test')
+        let x = document.getElementById('advancedContent');
+        console.log(x)
+    }
+
+    //I want to add checked as default state but when I do I cannot uncheck the box
+    checkboxGenerator(variable, title){
+        return(
+            <div>
+                <label htmlFor={variable}>{title}</label>
+                <input type="checkbox" id={variable} name={variable} ></input>
+            </div>
+        );
+    }
 
     render(){
         return(
@@ -62,7 +84,7 @@ export default class Output extends Component {
                     <div>
                         <label htmlFor="textMatch">Search for specific information</label>
                         <input type="text" id="textMatch" name="textMatch" placeholder="An empty search field returns all results"/>
-                        <label for="fieldSearch">Matching Field</label>
+                        <label htmlFor="fieldSearch">Matching Field</label>
                         <select id='fieldSearch' name='fieldSearch'>
                             <option value="MARS_Number">MARS Number</option>
                             <option value="SubmitterEmail">Submitter Email</option>
@@ -71,14 +93,42 @@ export default class Output extends Component {
                             <option value="Grade">Grade</option>
                         </select>
                     </div>
-                    <div>
-                        Advanced
-                        <div hidden>
-                            Advanced Content
+                    <div id="advanced" onClick={this.toggleHidden()}>
+                        {/* Need to figure out how to toggle hidden on Advance Settings */}
+                        <button >test</button>
+                        <p id="advancedOptions">Advanced Options</p>
+                        <div id="advancedContent" className="advancedContent" hidden>
+                            {this.checkboxGenerator("submissionEmail", "Submitter's Email")}
+                            {this.checkboxGenerator("submissionName", "Submitter's Name")}
+                            {this.checkboxGenerator("studentName", "Student's Name")}
+                            {this.checkboxGenerator("grade", "Grade")}
+                            {this.checkboxGenerator("iepManager", "IEP Manager")}
+                            {this.checkboxGenerator("involvedPeople", "Involved People")}
+                            {this.checkboxGenerator("director", "Director's Name")}
+                            {this.checkboxGenerator("mars", "MARS Number")}
+                            {this.checkboxGenerator("contributingVariables", "Contributing Variables")}
+                            {this.checkboxGenerator("antecedant", "Antecedent")}
+                            {this.checkboxGenerator("disability", "Disability")}
+                            {this.checkboxGenerator("federal", "Federal Setting")}
+                            {this.checkboxGenerator("age", "Age")}
+                            {this.checkboxGenerator("raceEthnicity", "Race/Ethnicity")}
+                            {this.checkboxGenerator("gender", "Gender")}
+                            {this.checkboxGenerator("date", "Date")}
+                            {this.checkboxGenerator("physicalHolding", "Hold's Used")}
+                            {this.checkboxGenerator("seclusion", "Seclusion Used")}
+                            {this.checkboxGenerator("force", "Force Used")}
+                            {this.checkboxGenerator("startTime", "Start Time")}
+                            {this.checkboxGenerator("endTime", "End Time")}
+                            {this.checkboxGenerator("length", "Length")}
+                            {this.checkboxGenerator("injury", "Injury")}
+                            {this.checkboxGenerator("lawEnforcment", "Law Enforcment Involved")}
+                            {this.checkboxGenerator("program", "Program")}
+                            {this.checkboxGenerator("roomLocation", "Room Location")}
+                            {this.checkboxGenerator("disruption", "Disruption")}
                         </div>
                     </div>
                     <div>
-                        <button>Search</button>
+                        <button onClick={this.searchHandler()}>Search</button>
                     </div>
 
                 </form>

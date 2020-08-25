@@ -124,8 +124,8 @@ export default class Input extends Component {
   disruptionHandler(event){this.setState({disruption: event.target.value})}
 
   handleSubmit(event){
-    event.preventDefault()
-    alert(this.state.submissionEmail);
+    //event.preventDefault()
+    // Fetch POST request to server
   }
 
     render(){
