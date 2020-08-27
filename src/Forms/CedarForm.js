@@ -1,7 +1,7 @@
 import React from 'react';
 import Context from '../Context';
 
-const list = require('../store');
+const list = require('../Store/store');
 
 
 export default class CedarForm extends React.Component {

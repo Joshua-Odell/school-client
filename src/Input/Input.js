@@ -123,7 +123,8 @@ export default class Input extends Component {
   disruptionHandler(event){this.setState({disruption: event.target.value})}
 
   handleSubmit(event){
-    //event.preventDefault()
+    event.preventDefault()
+    //if() Check for '---' values and prevent submit if present
     // Fetch POST request to server
   }
 

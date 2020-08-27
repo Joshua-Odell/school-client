@@ -1,7 +1,8 @@
 import React from 'react';
 import Context from '../Context';
 
-const list = require('../store');
+const list = require('../Store/store');
+const concordlist = require('../Store/ConcordStore');
 
 export default class ConcordForm extends React.Component {
 
@@ -69,7 +70,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     {/* Can be reduced due to school selection */}
-                    {this.context.Select(list.federalSettings, 'Federal Setting')}
+                    {this.context.Select(concordlist.federalSettingConcord, 'Federal Setting')}
                 </div>
                 <div>
                     {/* Can be removed if student verification is present */}
