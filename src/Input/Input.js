@@ -46,8 +46,8 @@ export default class Input extends Component {
       <input type="text" id="startTime" name="startTime" placeholder="12:00" />
     </div>
     <div>
-      <label htmlFor="endTime">End Time (Hour:Minutes)</label>
-      <input type="text" id="endTime" name="endTime" placeholder="12:00" />
+      <label htmlFor="stopTime">stop Time (Hour:Minutes)</label>
+      <input type="text" id="stopTime" name="stopTime" placeholder="12:00" />
     </div>
     <div>
       {this.context.Select(list.holds, 'Physical Holding')} 
@@ -63,8 +63,8 @@ export default class Input extends Component {
           <input type="time" id="startTime" name="startTime" placeholder="12:00" />
         </div>
         <div>
-          <label htmlFor="endTime">End Time (Hour:Minutes)</label>
-          <input type="time" id="endTime" name="endTime" placeholder="12:00" />
+          <label htmlFor="stopTime">stop Time (Hour:Minutes)</label>
+          <input type="time" id="stopTime" name="stopTime" placeholder="12:00" />
         </div>
         <div>
           {this.context.Select(list.holds, 'Physical Holding')} 
@@ -83,7 +83,7 @@ export default class Input extends Component {
     }
   }
 
-  Select(list, name){
+  Select(list, name, handler){
     // Need to figure out state change with these points
     const options = list.map((item) => {
       return(
@@ -93,7 +93,7 @@ export default class Input extends Component {
     return( 
       <div>
         <label htmlFor={name}>{name}</label>
-        <select id={name} name={name}>
+        <select id={name} name={name} onChange={handler}>
           {options}
         </select>
       </div>
@@ -114,6 +114,9 @@ export default class Input extends Component {
       })
   }
 
+  // I want to call this when both of the input fields are filled out 
+  // However, I am having an issue with this
+  // I have tried binding this at the top inside the functions and in the form
   day_of_the_weekHandler(date){
     let weekday = daysOfTheWeek[date.getDay()];
     this.setState({day_of_the_week: weekday});
@@ -146,9 +149,19 @@ export default class Input extends Component {
     this.setState({length: duration})
   }
 
-  startTimeHandler(event){this.setState({start_Time: event.target.value})}
+  startTimeHandler(event){
+    this.setState({start_time: event.target.value})
+    if(this.state.stop_time){
+      //this.lengthHandler().bind(this);
+    }
+  }
 
-  endTimeHandler(event){this.setState({stop_Time: event.target.value})}  
+  stopTimeHandler(event){
+    this.setState({stop_time: event.target.value})
+    if(this.state.start_time){
+      //this.lengthHandler().bind(this);
+    }
+  }  
 
   studentInjuryHandler(event){this.setState({student_injury: event.target.value})}
 
@@ -185,8 +198,8 @@ export default class Input extends Component {
           holds_used: this.state.holds_used,
           seclusion: this.state.seclusion,
           force: this.state.force,
-          startTime: this.state.startTime,
-          endTime: this.state.endTime,
+          startTime: this.state.start_time,
+          stopTime: this.state.stop_time,
           length: this.state.length,
           studentInjury: this.state.student_Injury,
           staffInjury: this.state.staff_Injury,
@@ -207,7 +220,7 @@ export default class Input extends Component {
           seclusionHandler: this.seclusionHandler,
           forceHandler: this.forceHandler,
           startTimeHandler: this.startTimeHandler,
-          endTimeHandler: this.endTimeHandler,
+          stopTimeHandler: this.stopTimeHandler,
           lengthHandler: this.lengthHandler,
           studentInjuryHandler: this.studentInjuryHandler,
           staffInjuryHandler: this.staffInjuryHandler,
