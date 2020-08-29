@@ -21,7 +21,7 @@ export default class Input extends Component {
       date: "",
       holds_used: "---",
       seclusion: "---",
-      reasonable_force: "",
+      reasonable_force: "---",
       start_time: "",
       stop_time: "",
       duration: "",
@@ -35,6 +35,24 @@ export default class Input extends Component {
     }
     this.dateHandler = this.dateHandler.bind(this);
     this.day_of_the_weekHandler = this.day_of_the_weekHandler.bind(this);
+    this.emailHandler = this.emailHandler.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.submitterNameHandler = this.submitterNameHandler.bind(this);
+    this.studentLastNameHandler = this.studentLastNameHandler.bind(this);
+    this.marssHandler = this.marssHandler.bind(this);
+    this.contributingVariablesHandler = this.contributingVariablesHandler.bind(this);
+    this.antecedentHandler = this.antecedentHandler.bind(this);
+    this.addHold = this.addHold.bind(this);
+    this.startTimeHandler = this.startTimeHandler.bind(this);
+    this.stopTimeHandler = this.stopTimeHandler.bind(this);
+    this.physicalHoldingHandler = this.physicalHoldingHandler.bind(this);
+    this.seclusionHandler = this.seclusionHandler.bind(this);
+    this.forceHandler = this.forceHandler.bind(this);
+    this.studentInjuryHandler = this.studentInjuryHandler.bind(this);
+    this.staffInjuryHandler = this.staffInjuryHandler.bind(this);
+    this.lawEnforcmentHandler = this.lawEnforcmentHandler.bind(this);
+    this.roomlocationHandler = this.roomlocationHandler.bind(this);
+    this.disruptionHandler = this.disruptionHandler.bind(this);
   }
 
   static contextType = Context
@@ -124,15 +142,15 @@ export default class Input extends Component {
 
   emailHandler(event){this.setState({submissionEmail: event.target.value})}
 
-  submitterNameHandler(event){this.setState({submitterName: event.target.value})}
+  submitterNameHandler(event){this.setState({staff_submitter: event.target.value})}
 
   studentLastNameHandler(event){this.setState({student_Last_Name: event.target.value})}
 
   involvedPeopleHandler(event){this.setState({involvedPeople: event.target.value})}
 
-  marssHandler(event){this.setState({marss: event.target.value})}
+  marssHandler(event){this.setState({student_marss: event.target.value})}
 
-  contributingVariablesHandler(event){this.setState({contributingVariables: event.target.value})}
+  contributingVariablesHandler(event){this.setState({contributing_variables: event.target.value})}
 
   antecedentHandler(event){this.setState({antecedent: event.target.value})}
 
@@ -142,7 +160,7 @@ export default class Input extends Component {
 
   seclusionHandler(event){this.setState({seclusion: event.target.value})}
 
-  forceHandler(event){this.setState({forceHandler: event.target.value})}
+  forceHandler(event){this.setState({reasonable_force: event.target.value})}
 
   lengthHandler(){
     let duration = this.state.stop_time - this.state.startTime;
@@ -167,17 +185,27 @@ export default class Input extends Component {
 
   staffInjuryHandler(event){this.setState({staff_injury: event.target.value})}
 
-  lawEnforcmentHandler(event){this.setState({lawEnforcment: event.target.value})}
+  lawEnforcmentHandler(event){
+    console.log(event.target.value);
+    if(event.target.value === "true"){
+      this.setState({law_enforcment: true})
+    }
+    if(event.target.value === "false"){
+      this.setState({law_enforcment: false})
+    }else {
+      this.setState({law_enforcment: '---'})
+    }
+    console.log(this.state.law_enforcment, typeof this.state.law_enforcment)    
+  }
 
-  roomlocationHandler(event){this.setState({roomlocation: event.target.value})}
+  roomlocationHandler(event){this.setState({room_location: event.target.value})}
 
   disruptionHandler(event){this.setState({major_disruption: event.target.value})}
 
   handleSubmit(event){
     event.preventDefault();
-    console.log(this.state.major_disruption)
     //this.studentCheck();
-    if(this.state.major_disruption === '---' || this.state.roomlocation === '---' || this.state.day_of_the_week === '---' || this.state.holds ==='---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
+    if( this.state.room_location === '---' || this.state.holds_used ==='---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
       alert('You must make a selection')
     }
     //if() Check for '---' values and prevent submit if present
@@ -188,26 +216,26 @@ export default class Input extends Component {
         const value = {
           schoolLocation: this.state.schoolLocation,
           submissionEmail: this.state.submissionEmail,
-          submitterName: this.state.submitterName,
+          submitterName: this.state.staff_submitter,
           studentLastName: this.state.student_Last_Name,
           involvedPeople: this.state.involvedPeople,
-          marss: this.state.marss,
-          contributingVariables: this.state.contributingVariables,
+          marss: this.state.student_marss,
+          contributingVariables: this.state.contributing_variables,
           antecedent: this.state.antecedent,
           date: this.state.date,
           holds_used: this.state.holds_used,
           seclusion: this.state.seclusion,
-          force: this.state.force,
+          force: this.state.reasonable_force,
           startTime: this.state.start_time,
           stopTime: this.state.stop_time,
           length: this.state.length,
-          studentInjury: this.state.student_Injury,
-          staffInjury: this.state.staff_Injury,
-          lawEnforcment: this.state.lawEnforcment,
-          roomlocation: this.state.roomlocation,
+          studentInjury: this.state.student_injury,
+          staffInjury: this.state.staff_injury,
+          lawEnforcment: this.state.law_enforcment,
+          roomlocation: this.state.room_location,
           major_disruption: this.state.major_disruption,
           day_of_the_week: this.state.day_of_the_week,
-          multiple_holds: this.multiple_holds,
+          multiple_holds: this.state.multiple_holds,
           emailHandler: this.emailHandler,
           submitterNameHandler: this.submitterNameHandler,
           studentLastNameHandler: this.studentLastNameHandler,

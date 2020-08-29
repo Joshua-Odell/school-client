@@ -25,23 +25,23 @@ export default class ConcordForm extends React.Component {
 
     render(){
         return(
-            <form onSubmit={this.context.handleSubmit.bind(this)}>
+            <form onSubmit={this.context.handleSubmit}>
                 <div>
                     <label htmlFor="email">Your Email</label>
-                    <input type="text" id="email" name="email" placeholder="Valid email address" onChange={this.context.emailHandler.bind(this)}/>
+                    <input type="text" id="email" name="email" placeholder="Valid email address" onChange={this.context.emailHandler}/>
                 </div>
                 <div>
                     <label htmlFor="reporter">Your Name</label>
-                    <input type="text" id="reporter" name="reporter" placeholder="Your Name" onChange={this.context.submitterNameHandler.bind(this)} />
+                    <input type="text" id="reporter" name="reporter" placeholder="Your Name" onChange={this.context.submitterNameHandler}/>
                 </div>                       
                 <div>
                     <label htmlFor="studentLastName"> Student's Last Name</label>
-                    <input type="text" id="studentLastName" name="studentLastName" onChange={this.context.studentLastNameHandler.bind(this)} /> 
+                    <input type="text" id="studentLastName" name="studentLastName" onChange={this.context.studentLastNameHandler} /> 
                 </div>                
                 <div>
                     {/* Unique number to student */}
                     <label htmlFor="marssNumber">MARSS Number</label>
-                    <input type="text" id="marssNumber" name="marssNumber" onChange={this.context.marssHandler.bind(this)}/>
+                    <input type="text" id="marssNumber" name="marssNumber" onChange={this.context.marssHandler}/>
                 </div>
                 <div>
                     <label htmlFor="date">Date</label>
@@ -70,25 +70,25 @@ export default class ConcordForm extends React.Component {
                 </div>                
                 <div>
                     {this.context.multiple_holds}
-                    <button onClick={this.context.addHold.bind(this)}>Add Hold</button>
+                    <button onClick={this.context.addHold}>Add Hold</button>
                     
                 </div>
                 <div>
                 <div>
                     <label htmlFor="startTime">Start Time</label>
-                    <input type="time" id="startTime" name="startTime" onChange={this.context.startTimeHandler.bind(this)} />
+                    <input type="time" id="startTime" name="startTime" onChange={this.context.startTimeHandler} />
                 </div>
                 <div>
                     <label htmlFor="stopTime">Stop Time</label>
-                    <input type="time" id="stopTime" name="stopTime" onChange={this.context.stopTimeHandler.bind(this)} />
+                    <input type="time" id="stopTime" name="stopTime" onChange={this.context.stopTimeHandler} />
                 </div>
                 <div>
-                    {this.context.Select(list.holds, 'Physical Holding', this.context.physicalHoldingHandler.bind(this))} 
+                    {this.context.Select(list.holds, 'Physical Holding', this.context.physicalHoldingHandler)} 
                 </div>
                 </div>
                 <div>
                     <label htmlFor="seclusion">Seclusion</label>
-                    <select id="seclusion" name="seclusion" onChange={this.context.seclusionHandler.bind(this)}>
+                    <select id="seclusion" name="seclusion" onChange={this.context.seclusionHandler}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
@@ -96,7 +96,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="force">Reasonable Force</label>
-                    <select id="force" name="force" onChange={this.context.forceHandler.bind(this)}>
+                    <select id="force" name="force" onChange={this.context.forceHandler}>
                         <option value="---">---</option>
                         <option value="None">--None--</option>
                         <option value="Non-PCM Hold">Non-PCM Hold</option>
@@ -105,7 +105,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="studentInjury">Student injury during restrictive procedure</label>
-                    <select id="studentInjury" name="studentInjury" onChange={this.context.studentInjuryHandler.bind(this)}>
+                    <select id="studentInjury" name="studentInjury" onChange={this.context.studentInjuryHandler}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
@@ -113,7 +113,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="staffInjury">Staff injury during restrictive procedure</label>
-                    <select id="staffInjury" name="staffInjury" onChange={this.context.staffInjuryHandler.bind(this)}>
+                    <select id="staffInjury" name="staffInjury" onChange={this.context.staffInjuryHandler}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
@@ -121,19 +121,19 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="lawEnforcment">Law Enforcment involved</label>
-                    <select id="lawEnforcment" name="lawEnforcment" onChange={this.context.lawEnforcmentHandler.bind(this)}>
+                    <select id="lawEnforcment" name="lawEnforcment" onChange={this.context.lawEnforcmentHandler}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
                     </select>
                 </div>
                 <div>
-                    {this.context.Select(list.concordRoomLocation, "Location", this.context.roomlocationHandler.bind(this))}
+                    {this.context.Select(list.concordRoomLocation, "Location", this.context.roomlocationHandler)}
                 </div>
                 <div>
                     {/* I have list to generate this but this one requires a multiple option */}
                     <label htmlFor="majorDisruption">Major Disruption</label>
-                    <select id='majorDisruption' name='majorDisruption' multiple onChange={this.context.disruptionHandler.bind(this)}>
+                    <select id='majorDisruption' name='majorDisruption' multiple onChange={this.context.disruptionHandler}>
                         <option value="Clearing Classroom">Clearing Classroom</option>
                         <option value="Physical Aggression/Fighting">Physical Aggression/Fighting</option>
                         <option value="Closing Hallway">Closing Hallway</option>
