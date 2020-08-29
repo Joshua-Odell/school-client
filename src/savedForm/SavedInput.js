@@ -3,9 +3,6 @@ import Context from '../Context';
 import FormSelector from '../FormSelector/FormSelector';
 import config from '../config';
 
-const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-const list = require('../Store/store');
-
 export default class Input extends Component {
   constructor(props){
     super(props);
@@ -13,65 +10,39 @@ export default class Input extends Component {
       school: "NONE",
       submissionEmail: "test",
       staff_submitter: "",
-      student_Last_Name: "",
-      student_marss: "",
+      studentFirstName: "",
+      studentLastName: "",
+      grade: "",
+      iepManager: "",
       people_involved: "",
+      director: "",
+      student_marss: "",
       contributing_variables: "",
       antecedent: "",
+      disability: "",
+      federal: "",
+      age: "",
+      raceEthnicity: "",
+      gender: "",
       date: "",
       holds_used: "---",
-      seclusion: "---",
+      seclusion: "",
       reasonable_force: "",
       start_time: "",
-      stop_time: "",
+      stop_ime: "",
       duration: "",
-      law_enforcment: "---",
+      injury: "",
+      law_enforcment: "",
+      program: "",
       room_location: "---",
       major_disruption: "---",
       day_of_the_week: "---",
-      student_injury: "---",
-      staff_injury: "---",
-      multiple_holds: ""
+      student_injury: "",
+      staff_injury: ""
     }
-    this.dateHandler = this.dateHandler.bind(this);
-    this.day_of_the_weekHandler = this.day_of_the_weekHandler.bind(this);
   }
 
-  static contextType = Context
-  
-  addHold(){
-    let holdIncident = (`<div>
-    <div>
-      <label htmlFor="startTime">Start Time (Hour:Minutes)</label>
-      <input type="text" id="startTime" name="startTime" placeholder="12:00" />
-    </div>
-    <div>
-      <label htmlFor="endTime">End Time (Hour:Minutes)</label>
-      <input type="text" id="endTime" name="endTime" placeholder="12:00" />
-    </div>
-    <div>
-      {this.context.Select(list.holds, 'Physical Holding')} 
-    </div>
-  </div>`)
-  let result = this.state.multiple_holds + holdIncident;
-  this.setState({multiple_holds: result})
-  console.log(result)
-    return(
-      <div>
-        <div>
-          <label htmlFor="startTime">Start Time (Hour:Minutes)</label>
-          <input type="time" id="startTime" name="startTime" placeholder="12:00" />
-        </div>
-        <div>
-          <label htmlFor="endTime">End Time (Hour:Minutes)</label>
-          <input type="time" id="endTime" name="endTime" placeholder="12:00" />
-        </div>
-        <div>
-          {this.context.Select(list.holds, 'Physical Holding')} 
-        </div>
-      </div>
-    )
-  }
+  static contextType = Context  
 
   locationHandler(event){
     let changes = 0;
@@ -114,18 +85,21 @@ export default class Input extends Component {
       })
   }
 
-  day_of_the_weekHandler(date){
-    let weekday = daysOfTheWeek[date.getDay()];
-    this.setState({day_of_the_week: weekday});
-  }
-
   emailHandler(event){this.setState({submissionEmail: event.target.value})}
 
   submitterNameHandler(event){this.setState({submitterName: event.target.value})}
 
-  studentLastNameHandler(event){this.setState({student_Last_Name: event.target.value})}
+  studentFirstNameHandler(event){this.setState({studentFirstName: event.target.value})}
+
+  studentLastNameHandler(event){this.setState({studentLastName: event.target.value})}
+
+  studentGradeHandler(event){this.setState({grade: event.target.value})}
+
+  iepManagerHandler(event){this.setState({iepManager: event.target.value})}
 
   involvedPeopleHandler(event){this.setState({involvedPeople: event.target.value})}
+
+  directorHandler(event){this.setState({director: event.target.value})}
 
   marssHandler(event){this.setState({marss: event.target.value})}
 
@@ -133,7 +107,17 @@ export default class Input extends Component {
 
   antecedentHandler(event){this.setState({antecedent: event.target.value})}
 
-  dateHandler(newdate){this.setState({date: newdate})};
+  disabilityHandler(event){this.setState({disability: event.target.value})}
+
+  federalHandler(event){this.setState({federal: event.target.value})}
+
+  ageHandler(event){this.setState({age: event.target.value})}
+
+  raceEthnicityHandler(event){this.setState({raceEthnicity: event.target.value})}
+
+  genderHandler(event){this.setState({gender: event.target.value})}
+
+  dateHandler(event){this.setState({dateHandler: event.target.value})}
 
   physicalHoldingHandler(event){this.setState({holds_used: event.target.value})}
 
@@ -141,30 +125,27 @@ export default class Input extends Component {
 
   forceHandler(event){this.setState({forceHandler: event.target.value})}
 
-  lengthHandler(){
-    let duration = this.state.stop_time - this.state.startTime;
-    this.setState({length: duration})
-  }
+  startTimeHandler(event){this.setState({startTime: event.target.value})}
 
-  startTimeHandler(event){this.setState({start_Time: event.target.value})}
+  endTimeHandler(event){this.setState({endTime: event.target.value})}
 
-  endTimeHandler(event){this.setState({stop_Time: event.target.value})}  
+  lengthHandler(event){this.setState({length: event.target.value})}
 
-  studentInjuryHandler(event){this.setState({student_injury: event.target.value})}
-
-  staffInjuryHandler(event){this.setState({staff_injury: event.target.value})}
+  injuryHandler(event){this.setState({injury: event.target.value})}
 
   lawEnforcmentHandler(event){this.setState({lawEnforcment: event.target.value})}
 
+  programHandler(event){this.setState({program: event.target.value})}
+
   roomlocationHandler(event){this.setState({roomlocation: event.target.value})}
 
-  disruptionHandler(event){this.setState({major_disruption: event.target.value})}
+  disruptionHandler(event){this.setState({disruption: event.target.value})}
 
   handleSubmit(event){
     event.preventDefault();
     console.log(this.state.major_disruption)
     //this.studentCheck();
-    if(this.state.major_disruption === '---' || this.state.roomlocation === '---' || this.state.day_of_the_week === '---' || this.state.holds ==='---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
+    if(this.state.major_disruption === '---' || this.state.roomlocation === '---' || this.state.day_of_the_week === '---' || this.state.holds ==='---'){
       alert('You must make a selection')
     }
     //if() Check for '---' values and prevent submit if present
@@ -176,11 +157,20 @@ export default class Input extends Component {
           schoolLocation: this.state.schoolLocation,
           submissionEmail: this.state.submissionEmail,
           submitterName: this.state.submitterName,
-          studentLastName: this.state.student_Last_Name,
+          studentFirstName: this.state.studentFirstName,
+          studentLastName: this.state.studentLastName,
+          garde: this.state.garde,
+          iepManager: this.state.iepManager,
           involvedPeople: this.state.involvedPeople,
+          director: this.state.director,
           marss: this.state.marss,
           contributingVariables: this.state.contributingVariables,
           antecedent: this.state.antecedent,
+          disability: this.state.disability,
+          federal: this.state.federal,
+          age: this.state.age,
+          raceEthnicity: this.state.raceEthnicity,
+          gender: this.state.gender,
           date: this.state.date,
           holds_used: this.state.holds_used,
           seclusion: this.state.seclusion,
@@ -188,20 +178,27 @@ export default class Input extends Component {
           startTime: this.state.startTime,
           endTime: this.state.endTime,
           length: this.state.length,
-          studentInjury: this.state.student_Injury,
-          staffInjury: this.state.staff_Injury,
+          injury: this.state.injury,
           lawEnforcment: this.state.lawEnforcment,
+          program: this.state.program,
           roomlocation: this.state.roomlocation,
-          major_disruption: this.state.major_disruption,
-          day_of_the_week: this.state.day_of_the_week,
-          multiple_holds: this.multiple_holds,
+          disruption: this.state.disruption,
           emailHandler: this.emailHandler,
           submitterNameHandler: this.submitterNameHandler,
+          studentFirstNameHandler: this.studentFirstNameHandler,
           studentLastNameHandler: this.studentLastNameHandler,
+          studentGradeHandler: this.studentGradeHandler,
+          iepManagerHandler: this.iepManagerHandler,
           involvedPeopleHandler: this.involvedPeopleHandler,
+          directorHandler: this.directorHandler,
           marssHandler: this.marssHandler,
           contributingVariablesHandler: this.contributingVariablesHandler,
           antecedentHandler: this.antecedentHandler,
+          disabilityHandler: this.disabilityHandler,
+          federalHandler: this.federalHandler,
+          ageHandler: this.ageHandler,
+          raceEthnicityHandler: this.raceEthnicityHandler,
+          genderHandler: this.genderHandler,
           dateHandler: this.dateHandler,
           physicalHoldingHandler: this.physicalHoldingHandler,
           seclusionHandler: this.seclusionHandler,
@@ -209,16 +206,14 @@ export default class Input extends Component {
           startTimeHandler: this.startTimeHandler,
           endTimeHandler: this.endTimeHandler,
           lengthHandler: this.lengthHandler,
-          studentInjuryHandler: this.studentInjuryHandler,
-          staffInjuryHandler: this.staffInjuryHandler,
+          injuryHandler: this.injuryHandler,
           lawEnforcmentHandler: this.lawEnforcmentHandler,
+          programHandler: this.programHandler,
           roomlocationHandler: this.roomlocationHandler,
           disruptionHandler: this.disruptionHandler,
           handleSubmit: this.handleSubmit,
           Select: this.Select,
-          studentCheck: this.studentCheck,
-          day_of_the_weekHandler: this.day_of_the_weekHandler,
-          addHold: this.addHold 
+          studentCheck: this.studentCheck 
 
         }
         return(
