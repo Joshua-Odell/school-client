@@ -47,6 +47,10 @@ export default class Input extends Component {
 
   static contextType = Context
   
+  createHoldIncident = () => {
+    document.getElementById('holdEntry').removeAttribute('hidden');
+  }
+
   addHold = () => {
     this.lengthHandler()
     let count = 1;
@@ -170,14 +174,18 @@ export default class Input extends Component {
 
     let hours = duration.hours();
     hours = hours.toString();
-    time = hours + ':' + minutes + '.' + seconds;
+    time = hours + ':' + minutes + '.' + '00';
+
+    if(time === '0:00.00'){
+      document.getElementById('optionalSeconds').removeAttribute('hidden');
+    }
+
     if(seconds){
       time = hours + ':' + minutes + '.' + seconds;
     }
     
-    if(time === '0:00.00'){
-      //this.setState({secondsField: secondsOption})
-    }
+    
+
     this.setState({length: time})
     console.log(this.state.length);    
   }
@@ -246,6 +254,7 @@ export default class Input extends Component {
           multiple_holds: this.state.multiple_holds,
           holdError: this.state.holdError,
           secondsField: this.state.secondsField,
+          createHoldIncident: this.createHoldIncident,
           dateHandler: this.dateHandler,
           timeHandler: this.timeHandler,
           handleSubmit: this.handleSubmit,
