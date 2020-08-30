@@ -69,22 +69,24 @@ export default class ConcordForm extends React.Component {
                     sequence of events"></textarea>
                 </div>                
                 <div>
-                    {this.context.multiple_holds}
-                    <button onClick={this.context.addHold}>Add Hold</button>
-                    
-                </div>
-                <div>
-                <div>
-                    <label htmlFor="startTime">Start Time</label>
-                    <input type="time" id="startTime" name="startTime" onChange={this.context.timeHandler('start_time', 'stop_time')}/>
-                </div>
-                <div>
-                    <label htmlFor="stopTime">Stop Time</label>
-                    <input type="time" id="stopTime" name="stopTime" onChange={this.context.timeHandler('stop_time', 'start_time')} />
-                </div>
-                <div>
-                    {this.context.Select(list.holds, 'Physical Holding', this.context.stateUpdate('holds_used'))} 
-                </div>
+                    <div>
+                        
+                        <button onClick={this.context.addHold}>Add Hold</button>
+                        
+                    </div>
+                    <div>                   
+                        {this.context.Select(list.holds, 'Hold', this.context.stateUpdate('holds_used'))} 
+                        <label htmlFor="startTime">Start Time</label>
+                        <input type="time" id="startTime" name="startTime" onChange={this.context.timeHandler('start_time', 'stop_time')}/>                    
+                        <label htmlFor="stopTime">Stop Time</label>
+                        <input type="time" id="stopTime" name="stopTime" onChange={this.context.timeHandler('stop_time', 'start_time')} />
+                        <label htmlFor="seconds">Please Enter Hold Time In Seconds:</label>
+                        <input type="text" id="seconds" onChange={this.context.stateUpdate('seconds')}/>
+                    </div>
+                    <div>
+                        <button onClick={this.context.addHold}>Enter Hold</button>                  
+                        {this.context.holdError}
+                    </div>
                 </div>
                 <div>
                     <label htmlFor="seclusion">Seclusion</label>

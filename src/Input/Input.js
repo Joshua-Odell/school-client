@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Context from '../Context';
 import FormSelector from '../FormSelector/FormSelector';
 import config from '../config';
+import { duration } from 'moment';
 
 const moment = require('moment');
 
@@ -26,52 +27,78 @@ export default class Input extends Component {
       reasonable_force: "---",
       start_time: "",
       stop_time: "",
-      duration: "",
+      length: "",
       law_enforcment: "---",
       room_location: "---",
       major_disruption: "---",
       day_of_the_week: "---",
       student_injury: "---",
       staff_injury: "---",
-      multiple_holds: ""
-    }
-    
+      hold_1: "",
+      hold_2: "",
+      hold_3: "",
+      hold_4: "",
+      hold_5: "",
+      holdError: "",
+      secondsField: "",
+      seconds: ""
+    }    
   }
 
   static contextType = Context
   
   addHold = () => {
-    let holdIncident = (`<div>
-    <div>
-      <label htmlFor="startTime">Start Time (Hour:Minutes)</label>
-      <input type="text" id="startTime" name="startTime" placeholder="12:00" />
-    </div>
-    <div>
-      <label htmlFor="stopTime">stop Time (Hour:Minutes)</label>
-      <input type="text" id="stopTime" name="stopTime" placeholder="12:00" />
-    </div>
-    <div>
-      {this.context.Select(list.holds, 'Physical Holding')} 
-    </div>
-  </div>`)
-  let result = this.state.multiple_holds + holdIncident;
-  this.setState({multiple_holds: result})
-  console.log(result)
-    return(
-      <div>
-        <div>
-          <label htmlFor="startTime">Start Time (Hour:Minutes)</label>
-          <input type="time" id="startTime" name="startTime" placeholder="12:00" />
-        </div>
-        <div>
-          <label htmlFor="stopTime">stop Time (Hour:Minutes)</label>
-          <input type="time" id="stopTime" name="stopTime" placeholder="12:00" />
-        </div>
-        <div>
-          {this.context.Select(list.holds, 'Physical Holding')} 
-        </div>
-      </div>
-    )
+    this.lengthHandler()
+    let count = 1;
+    let start_time = this.state.start_time;
+    let stop_time = this.state.stop_time;
+    let length = this.state.length;
+    let holds_used = this.state.holds_used;
+    let holdIncidentId = 123456;
+    let holdIdVariable = 'hold_' + count.toString();
+    let newHold = {
+      hold_type: holds_used,
+      start_time: start_time,
+      stop_time: stop_time,
+      duration: length,
+    }
+
+    if(!start_time || !stop_time || !length || holds_used === '---'){
+      this.setState({holdError: 'All fields must be filled out'})
+    }
+    if(count > 5){
+      this.setState({holdError: 'There is a maximum of five holds allowed'})
+    }
+    if(start_time > stop_time){
+      this.setState({holdError: 'Start time must be before stop time'})
+    }
+    
+    // Fetch POST request that returns the id of the newly created hold entry
+    fetch(config.API_ENDPOINT, {
+      method: 'POST',
+      body: JSON.stringify(newHold),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+
+    .then(res =>{
+      return res.json()
+    })
+
+    // .then(     
+    // this.setState({[holdIdVariable]: holdIncidentId}),
+    // this.setState({stop_time: ""}),
+    // this.setState({start_time: ""}),
+    // this.setState({length: ""}),
+    // this.setState({holds_used: "---"}),
+    // count ++
+    // )
+    
+
+
+  
+    
   }
 
   locationHandler = (event) => {
@@ -126,29 +153,41 @@ export default class Input extends Component {
 
 
   lengthHandler = () => {
+    let seconds = this.state.seconds;
     let start = moment(this.state.start_time, "HH:mm");
     let stop = moment(this.state.stop_time, "HH:mm");
-    console.log(start);
-    console.log(stop);
+    let time = ""
     if(start < stop){
       alert('start time must be before stop time')
     }
     let duration = moment.duration(stop.diff(start));
-    duration = duration.i;
-    console.log(duration)
-    if(duration === 0){
-      alert('Enter a time in seconds')
+
+    let minutes = duration.minutes();
+    if([0,1,2,3,4,5,6,7,8,9].includes(minutes)){
+      minutes = minutes.toString();
+      minutes = '0' + minutes;
+    };
+
+    let hours = duration.hours();
+    hours = hours.toString();
+    time = hours + ':' + minutes + '.' + seconds;
+    if(seconds){
+      time = hours + ':' + minutes + '.' + seconds;
     }
-    this.setState({length: duration})    
+    
+    if(time === '0:00.00'){
+      //this.setState({secondsField: secondsOption})
+    }
+    this.setState({length: time})
+    console.log(this.state.length);    
   }
 
   timeHandler = (property, match) => {
     let cross = 'this.state.'+ match;
-    console.log(cross)
     return (event) => {
       this.setState({[property]: event.target.value})
       if(cross){
-        this.lengthHandler();
+        //this.lengthHandler();
       }
     }
   }  
@@ -205,9 +244,10 @@ export default class Input extends Component {
           major_disruption: this.state.major_disruption,
           day_of_the_week: this.state.day_of_the_week,
           multiple_holds: this.state.multiple_holds,
+          holdError: this.state.holdError,
+          secondsField: this.state.secondsField,
           dateHandler: this.dateHandler,
           timeHandler: this.timeHandler,
-          lengthHandler: this.lengthHandler,
           handleSubmit: this.handleSubmit,
           Select: this.Select,
           studentCheck: this.studentCheck,
