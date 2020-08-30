@@ -5,7 +5,7 @@ import config from '../config';
 
 const moment = require('moment');
 
-const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
 const list = require('../Store/store');
 
 export default class Input extends Component {
@@ -115,33 +115,15 @@ export default class Input extends Component {
       })
   }
 
-  // I want to call this when both of the input fields are filled out 
-  // However, I am having an issue with this
-  // I have tried binding this at the top inside the functions and in the form
   day_of_the_weekHandler = (date) => {
+    let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     let weekday = daysOfTheWeek[date.getDay()];
     this.setState({day_of_the_week: weekday});
   }
 
-  emailHandler = (event) => {this.setState({submissionEmail: event.target.value})}
-
-  submitterNameHandler = (event) => {this.setState({staff_submitter: event.target.value})}
-
-  studentLastNameHandler = (event) => {this.setState({student_Last_Name: event.target.value})}
-
-  involvedPeopleHandler = (event) => {this.setState({involvedPeople: event.target.value})}
-
-  marssHandler = (event) => {this.setState({student_marss: event.target.value})}
-
-  contributingVariablesHandler = (event) => {this.setState({contributing_variables: event.target.value})}
-
-  antecedentHandler = (event) => {this.setState({antecedent: event.target.value})}
 
   dateHandler = (newdate) => {this.setState({date: newdate})};
 
-  physicalHoldingHandler = (event) => {this.setState({holds_used: event.target.value})}
-
-  forceHandler = (event) => {this.setState({reasonable_force: event.target.value})}
 
   lengthHandler = () => {
     let start = moment(this.state.start_time, "HH:mm");
@@ -185,9 +167,12 @@ export default class Input extends Component {
     }
   }
 
-  roomlocationHandler = (event) => {this.setState({room_location: event.target.value})}
-
-  disruptionHandler = (event) => {this.setState({major_disruption: event.target.value})}
+  stateUpdate = (property) => {
+    return (event) => {
+      const { target: {value}} = event
+      this.setState({[property]: value})
+    }
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -223,27 +208,17 @@ export default class Input extends Component {
           major_disruption: this.state.major_disruption,
           day_of_the_week: this.state.day_of_the_week,
           multiple_holds: this.state.multiple_holds,
-          emailHandler: this.emailHandler,
-          submitterNameHandler: this.submitterNameHandler,
-          studentLastNameHandler: this.studentLastNameHandler,
-          involvedPeopleHandler: this.involvedPeopleHandler,
-          marssHandler: this.marssHandler,
-          contributingVariablesHandler: this.contributingVariablesHandler,
-          antecedentHandler: this.antecedentHandler,
           dateHandler: this.dateHandler,
-          physicalHoldingHandler: this.physicalHoldingHandler,
-          forceHandler: this.forceHandler,
           startTimeHandler: this.startTimeHandler,
           stopTimeHandler: this.stopTimeHandler,
           lengthHandler: this.lengthHandler,
-          roomlocationHandler: this.roomlocationHandler,
-          disruptionHandler: this.disruptionHandler,
           handleSubmit: this.handleSubmit,
           Select: this.Select,
           studentCheck: this.studentCheck,
           day_of_the_weekHandler: this.day_of_the_weekHandler,
           addHold: this.addHold,
-          boolConversion: this.boolConversion 
+          boolConversion: this.boolConversion,
+          stateUpdate: this.stateUpdate 
 
         }
         return(

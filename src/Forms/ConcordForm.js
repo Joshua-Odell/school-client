@@ -28,20 +28,20 @@ export default class ConcordForm extends React.Component {
             <form onSubmit={this.context.handleSubmit}>
                 <div>
                     <label htmlFor="email">Your Email</label>
-                    <input type="text" id="email" name="email" placeholder="Valid email address" onChange={this.context.emailHandler}/>
+                    <input type="text" id="email" name="email" placeholder="Valid email address" onChange={this.context.stateUpdate('submissionEmail')}/>
                 </div>
                 <div>
                     <label htmlFor="reporter">Your Name</label>
-                    <input type="text" id="reporter" name="reporter" placeholder="Your Name" onChange={this.context.submitterNameHandler}/>
+                    <input type="text" id="reporter" name="reporter" placeholder="Your Name" onChange={this.context.stateUpdate('staff_submitter')}/>
                 </div>                       
                 <div>
                     <label htmlFor="studentLastName"> Student's Last Name</label>
-                    <input type="text" id="studentLastName" name="studentLastName" onChange={this.context.studentLastNameHandler} /> 
+                    <input type="text" id="studentLastName" name="studentLastName" onChange={this.context.stateUpdate('student_Last_Name')} /> 
                 </div>                
                 <div>
                     {/* Unique number to student */}
                     <label htmlFor="marssNumber">MARSS Number</label>
-                    <input type="text" id="marssNumber" name="marssNumber" onChange={this.context.marssHandler}/>
+                    <input type="text" id="marssNumber" name="marssNumber" onChange={this.context.stateUpdate('student_marss')}/>
                 </div>
                 <div>
                     <label htmlFor="date">Date</label>
@@ -58,13 +58,13 @@ export default class ConcordForm extends React.Component {
                 </div>                
                 <div>
                     <label htmlFor="contributingVariables">Contributing Variables</label>
-                    <textarea name="contributingVariables" id="contributingVariables" rows="10" cols="30" onChange={this.context.contributingVariablesHandler.bind(this)}
+                    <textarea name="contributingVariables" id="contributingVariables" rows="10" cols="30" onChange={this.context.stateUpdate('contributing_variables')}
                     placeholder="this might include getting no sleep, hunger, new staff, new peer, 
                     events earlier in the day, etc. – anything that may have impacted the student's behavior"></textarea>
                 </div>
                 <div>
                     <label htmlFor="antecedent">Antecedent</label>
-                    <textarea name="antecedent" id="antecedent" rows="10" cols="30" onChange={this.context.antecedentHandler.bind(this)}
+                    <textarea name="antecedent" id="antecedent" rows="10" cols="30" onChange={this.context.stateUpdate('antecedent')}
                     placeholder="this should include what happened before the challenging behavior - it may not be one specific thing but could be a
                     sequence of events"></textarea>
                 </div>                
@@ -76,14 +76,14 @@ export default class ConcordForm extends React.Component {
                 <div>
                 <div>
                     <label htmlFor="startTime">Start Time</label>
-                    <input type="time" id="startTime" name="startTime" onChange={this.context.startTimeHandler} />
+                    <input type="time" id="startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>
                 </div>
                 <div>
                     <label htmlFor="stopTime">Stop Time</label>
-                    <input type="time" id="stopTime" name="stopTime" onChange={this.context.stopTimeHandler} />
+                    <input type="time" id="stopTime" name="stopTime" onChange={this.context.stateUpdate('stop_time')} />
                 </div>
                 <div>
-                    {this.context.Select(list.holds, 'Physical Holding', this.context.physicalHoldingHandler)} 
+                    {this.context.Select(list.holds, 'Physical Holding', this.context.stateUpdate('holds_used'))} 
                 </div>
                 </div>
                 <div>
@@ -96,7 +96,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="force">Reasonable Force</label>
-                    <select id="force" name="force" onChange={this.context.forceHandler}>
+                    <select id="force" name="force" onChange={this.context.stateUpdate('reasonable_force')}>
                         <option value="---">---</option>
                         <option value="None">--None--</option>
                         <option value="Non-PCM Hold">Non-PCM Hold</option>
@@ -128,12 +128,12 @@ export default class ConcordForm extends React.Component {
                     </select>
                 </div>
                 <div>
-                    {this.context.Select(list.concordRoomLocation, "Location", this.context.roomlocationHandler)}
+                    {this.context.Select(list.concordRoomLocation, "Location", this.context.stateUpdate('room_location'))}
                 </div>
                 <div>
                     {/* I have list to generate this but this one requires a multiple option */}
                     <label htmlFor="majorDisruption">Major Disruption</label>
-                    <select id='majorDisruption' name='majorDisruption' multiple onChange={this.context.disruptionHandler}>
+                    <select id='majorDisruption' name='majorDisruption' multiple onChange={this.context.stateUpdate('major_disruption')}>
                         <option value="Clearing Classroom">Clearing Classroom</option>
                         <option value="Physical Aggression/Fighting">Physical Aggression/Fighting</option>
                         <option value="Closing Hallway">Closing Hallway</option>
