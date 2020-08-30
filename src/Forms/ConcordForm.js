@@ -88,7 +88,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="seclusion">Seclusion</label>
-                    <select id="seclusion" name="seclusion" onChange={this.context.seclusionHandler}>
+                    <select id="seclusion" name="seclusion" onChange={this.context.boolConversion('seclusion')}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
@@ -105,7 +105,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="studentInjury">Student injury during restrictive procedure</label>
-                    <select id="studentInjury" name="studentInjury" onChange={this.context.studentInjuryHandler}>
+                    <select id="studentInjury" name="studentInjury" onChange={this.context.boolConversion('student_injury')}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
@@ -113,7 +113,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="staffInjury">Staff injury during restrictive procedure</label>
-                    <select id="staffInjury" name="staffInjury" onChange={this.context.staffInjuryHandler}>
+                    <select id="staffInjury" name="staffInjury" onChange={this.context.boolConversion('staff_injury')}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
@@ -121,7 +121,7 @@ export default class ConcordForm extends React.Component {
                 </div>
                 <div>
                     <label htmlFor="lawEnforcment">Law Enforcment involved</label>
-                    <select id="lawEnforcment" name="lawEnforcment" onChange={this.context.lawEnforcmentHandler}>
+                    <select id="lawEnforcment" name="lawEnforcment" onChange={this.context.boolConversion('law_enforcment')}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
