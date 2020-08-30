@@ -142,17 +142,14 @@ export default class Input extends Component {
     this.setState({length: duration})    
   }
 
-  startTimeHandler = (event) => {
-    this.setState({start_time: event.target.value})
-    if(this.state.stop_time){
-      this.lengthHandler();
-    }
-  }
-
-  stopTimeHandler = (event) => {
-    this.setState({stop_time: event.target.value})
-    if(this.state.start_time){
-      this.lengthHandler();
+  timeHandler = (property, match) => {
+    let cross = 'this.state.'+ match;
+    console.log(cross)
+    return (event) => {
+      this.setState({[property]: event.target.value})
+      if(cross){
+        this.lengthHandler();
+      }
     }
   }  
 
@@ -209,8 +206,7 @@ export default class Input extends Component {
           day_of_the_week: this.state.day_of_the_week,
           multiple_holds: this.state.multiple_holds,
           dateHandler: this.dateHandler,
-          startTimeHandler: this.startTimeHandler,
-          stopTimeHandler: this.stopTimeHandler,
+          timeHandler: this.timeHandler,
           lengthHandler: this.lengthHandler,
           handleSubmit: this.handleSubmit,
           Select: this.Select,

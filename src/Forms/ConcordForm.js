@@ -76,11 +76,11 @@ export default class ConcordForm extends React.Component {
                 <div>
                 <div>
                     <label htmlFor="startTime">Start Time</label>
-                    <input type="time" id="startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>
+                    <input type="time" id="startTime" name="startTime" onChange={this.context.timeHandler('start_time', 'stop_time')}/>
                 </div>
                 <div>
                     <label htmlFor="stopTime">Stop Time</label>
-                    <input type="time" id="stopTime" name="stopTime" onChange={this.context.stateUpdate('stop_time')} />
+                    <input type="time" id="stopTime" name="stopTime" onChange={this.context.timeHandler('stop_time', 'start_time')} />
                 </div>
                 <div>
                     {this.context.Select(list.holds, 'Physical Holding', this.context.stateUpdate('holds_used'))} 
