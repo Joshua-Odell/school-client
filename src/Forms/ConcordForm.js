@@ -77,16 +77,16 @@ export default class ConcordForm extends React.Component {
                     <div >                   
                         {this.context.Select(list.holds, 'Hold', this.context.stateUpdate('holds_used'))} 
                         <label htmlFor="startTime">Start Time</label>
-                        <input type="time" id="startTime" name="startTime" onChange={this.context.timeHandler('start_time', 'stop_time')}/>                    
+                        <input type="time" id="startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>                    
                         <label htmlFor="stopTime">Stop Time</label>
-                        <input type="time" id="stopTime" name="stopTime" onChange={this.context.timeHandler('stop_time', 'start_time')} />
+                        <input type="time" id="stopTime" name="stopTime" onChange={this.context.stateUpdate('stop_time')} />
                         <div id='optionalSeconds' hidden>
                             <label htmlFor="seconds" >Please Enter Hold Time In Seconds:</label>
                             <input type="text" id="seconds" onChange={this.context.stateUpdate('seconds')}/>
                         </div>                        
                     </div>
                     <div>
-                        <button type="button" onClick={this.context.addHold}>Enter Hold</button>                  
+                        <button type="button" onClick={this.context.lengthHandler}>Enter Hold</button>                  
                         {this.context.holdError}
                     </div>
                 </div>

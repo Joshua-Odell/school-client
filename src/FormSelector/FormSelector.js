@@ -4,13 +4,13 @@ import ConcordForm from '../Forms/ConcordForm';
 
 
 export default function FormSelector(props) {
-    let schoolLocation = props.schoolLocation; 
-    if(schoolLocation === "NONE"){
+    let school = props.school; 
+    if(school === "NONE"){
         return(
             <div>Please Select Your Location</div>
         )
     }
-    if(schoolLocation === "Concord"){
+    if(school === "Concord"){
         return(
             <ConcordForm/>
         )
@@ -21,7 +21,7 @@ export default function FormSelector(props) {
         )
         
     } 
-    // if(schoolLocation === "Cedar"){
+    // if(school === "Cedar"){
     //     return(
     //         <CedarForm/>
     //     )

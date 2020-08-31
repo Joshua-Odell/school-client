@@ -52,7 +52,6 @@ export default class Input extends Component {
   }
 
   addHold = () => {
-    this.lengthHandler()
     let count = 1;
     let start_time = this.state.start_time;
     let stop_time = this.state.stop_time;
@@ -66,6 +65,7 @@ export default class Input extends Component {
       stop_time: stop_time,
       duration: length,
     }
+    console.log(newHold);
 
     if(!start_time || !stop_time || !length || holds_used === '---'){
       this.setState({holdError: 'All fields must be filled out'})
@@ -108,8 +108,7 @@ export default class Input extends Component {
   locationHandler = (event) => {
     let changes = 0;
     if(changes === 0){
-      this.setState({schoolLocation: event.target.value})
-      this.setState({school: this.state.schoolLocation})
+      this.setState({school: event.target.value})
     }else{
       //code to confirm form change choice
     }
@@ -155,21 +154,20 @@ export default class Input extends Component {
 
   dateHandler = (newdate) => {this.setState({date: newdate})};
 
-
+  // This function works I just need to interupt the subsequent function call if there is an error
   lengthHandler = () => {
     let seconds = this.state.seconds;
     let start = moment(this.state.start_time, "HH:mm");
     let stop = moment(this.state.stop_time, "HH:mm");
     let time = ""
-    if(start < stop){
-      alert('start time must be before stop time')
+    if(start > stop){
+      this.setState({holdError: 'Start Time Must Be Before Stop Time'})
     }
     let duration = moment.duration(stop.diff(start));
 
     let minutes = duration.minutes();
     if([0,1,2,3,4,5,6,7,8,9].includes(minutes)){
-      minutes = minutes.toString();
-      minutes = '0' + minutes;
+      minutes = '0' + minutes.toString();
     };
 
     let hours = duration.hours();
@@ -183,22 +181,8 @@ export default class Input extends Component {
     if(seconds){
       time = hours + ':' + minutes + '.' + seconds;
     }
-    
-    
-
-    this.setState({length: time})
-    console.log(this.state.length);    
+    this.setState({length: time}, () => {this.addHold(); });       
   }
-
-  timeHandler = (property, match) => {
-    let cross = 'this.state.'+ match;
-    return (event) => {
-      this.setState({[property]: event.target.value})
-      if(cross){
-        //this.lengthHandler();
-      }
-    }
-  }  
 
   boolConversion = (property) => {
     return (event) => {
@@ -230,7 +214,6 @@ export default class Input extends Component {
 
     render(){
         const value = {
-          schoolLocation: this.state.schoolLocation,
           submissionEmail: this.state.submissionEmail,
           submitterName: this.state.staff_submitter,
           studentLastName: this.state.student_Last_Name,
@@ -256,14 +239,14 @@ export default class Input extends Component {
           secondsField: this.state.secondsField,
           createHoldIncident: this.createHoldIncident,
           dateHandler: this.dateHandler,
-          timeHandler: this.timeHandler,
           handleSubmit: this.handleSubmit,
           Select: this.Select,
           studentCheck: this.studentCheck,
           day_of_the_weekHandler: this.day_of_the_weekHandler,
           addHold: this.addHold,
           boolConversion: this.boolConversion,
-          stateUpdate: this.stateUpdate 
+          stateUpdate: this.stateUpdate ,
+          lengthHandler: this.lengthHandler
 
         }
         return(
@@ -274,7 +257,7 @@ export default class Input extends Component {
                 </header>
                 <nav>
                     <label htmlFor="school">At which site did the Incident occur?</label>
-                    <select id="school" name="schoolLocation" onChange={this.locationHandler.bind(this)} value={this.state.value}>
+                    <select id="school" name="school" onChange={this.locationHandler.bind(this)} value={this.state.value}>
                         <option value="NONE">--NONE--</option>
                         <option value="Concord">Concord Education Center</option>
                         <option value="Alliance">Alliance Education Center</option>
@@ -285,7 +268,7 @@ export default class Input extends Component {
                 </nav>
                 <main>
                   <FormSelector 
-                  schoolLocation={this.state.schoolLocation}
+                  school={this.state.school}
                   emailHandler={this.emailHandler}
                    />
                 </main>
