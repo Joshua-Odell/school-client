@@ -41,7 +41,8 @@ export default class Input extends Component {
       hold_5: "",
       holdError: "",
       secondsField: "",
-      seconds: ""
+      seconds: "",
+      enteredHoldList: []
     }    
   }
 
@@ -59,13 +60,13 @@ export default class Input extends Component {
     let holds_used = this.state.holds_used;
     let holdIncidentId = 123456;
     let holdIdVariable = 'hold_' + count.toString();
+    let newList = this.state.enteredHoldList.push(holds_used);
     let newHold = {
       hold_type: holds_used,
       start_time: start_time,
       stop_time: stop_time,
       duration: length,
     }
-    console.log(newHold);
 
     if(!start_time || !stop_time || !length || holds_used === '---'){
       this.setState({holdError: 'All fields must be filled out'})
@@ -78,7 +79,7 @@ export default class Input extends Component {
     }
     
     // Fetch POST request that returns the id of the newly created hold entry
-    fetch(config.API_ENDPOINT, {
+    fetch(config.API_ENDPOINT + '/hold', {
       method: 'POST',
       body: JSON.stringify(newHold),
       headers: {
@@ -86,18 +87,22 @@ export default class Input extends Component {
       }
     })
 
-    .then(res =>{
-      return res.json()
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(error => { throw error })
+      }else{ 
+        const holdIncidentId = res,
+        this.setState({[holdIdVariable]: holdIncidentId}) }         
     })
 
-    // .then(     
-    // this.setState({[holdIdVariable]: holdIncidentId}),
-    // this.setState({stop_time: ""}),
-    // this.setState({start_time: ""}),
-    // this.setState({length: ""}),
-    // this.setState({holds_used: "---"}),
-    // count ++
-    // )
+    .then(
+      this.setState({enteredHoldList: newList}),
+      this.setState({stop_time: ""}),
+      this.setState({start_time: ""}),
+      this.setState({length: ""}),
+      this.setState({holds_used: "---"}),
+      count ++
+    )
     
 
 
