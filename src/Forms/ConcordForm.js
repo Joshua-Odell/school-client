@@ -89,6 +89,10 @@ export default class ConcordForm extends React.Component {
                         <button type="button" onClick={this.context.lengthHandler}>Enter Hold</button>                  
                         {this.context.holdError}
                     </div>
+                    <div id='enteredHolds' hidden>
+                        <h5>Entered Holds</h5>
+                        {this.context.displayHolds()}
+                    </div>
                 </div>
                 <div>
                     <label htmlFor="seclusion">Seclusion</label>

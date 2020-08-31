@@ -42,36 +42,39 @@ export default class Input extends Component {
       holdError: "",
       secondsField: "",
       seconds: "",
-      enteredHoldList: []
+      enteredHoldList: [],
+      holdCount: 1,
     }    
   }
 
   static contextType = Context
   
+  
   createHoldIncident = () => {
     document.getElementById('holdEntry').removeAttribute('hidden');
   }
 
+  // Works but I need to reset the input fields and dispaly the array of entered holds
   addHold = () => {
-    let count = 1;
+    
     let start_time = this.state.start_time;
     let stop_time = this.state.stop_time;
     let length = this.state.length;
     let holds_used = this.state.holds_used;
-    let holdIncidentId = 123456;
-    let holdIdVariable = 'hold_' + count.toString();
-    let newList = this.state.enteredHoldList.push(holds_used);
+    
     let newHold = {
       hold_type: holds_used,
       start_time: start_time,
       stop_time: stop_time,
       duration: length,
     }
+    console.log(this.state.holds_used);
+    document.getElementById('enteredHolds').removeAttribute('hidden');
 
     if(!start_time || !stop_time || !length || holds_used === '---'){
       this.setState({holdError: 'All fields must be filled out'})
     }
-    if(count > 5){
+    if(this.state.count > 5){
       this.setState({holdError: 'There is a maximum of five holds allowed'})
     }
     if(start_time > stop_time){
@@ -90,24 +93,35 @@ export default class Input extends Component {
     .then(res => {
       if (!res.ok) {
         return res.json().then(error => { throw error })
-      }else{ 
-        const holdIncidentId = res,
-        this.setState({[holdIdVariable]: holdIncidentId}) }         
+      }
+      return res.json()   
     })
+    .then(this.settingHoldIds) 
+  }
 
-    .then(
-      this.setState({enteredHoldList: newList}),
-      this.setState({stop_time: ""}),
-      this.setState({start_time: ""}),
-      this.setState({length: ""}),
-      this.setState({holds_used: "---"}),
-      count ++
+  settingHoldIds = (id) => {
+    let count = this.state.holdCount
+    let holdIdVariable = 'hold_' + count.toString();
+    let newCount = count + 1
+    console.log(this.state.holds_used);
+    this.state.enteredHoldList.push(this.state.holds_used);
+    console.log(this.state.enteredHoldList)
+
+    this.setState({[holdIdVariable]: id})
+    this.setState({stop_time: ""})
+    this.setState({start_time: ""})
+    this.setState({length: ""})
+    this.setState({holds_used: "---"})
+    this.setState({holdCount: newCount})
+    document.getElementById('holdEntry').value = '';
+  }
+
+  displayHolds = () => {
+    return(
+      <div>
+        {this.state.enteredHoldList}
+      </div>
     )
-    
-
-
-  
-    
   }
 
   locationHandler = (event) => {
@@ -242,6 +256,7 @@ export default class Input extends Component {
           multiple_holds: this.state.multiple_holds,
           holdError: this.state.holdError,
           secondsField: this.state.secondsField,
+          enteredHoldList: this.state.enteredHoldList,
           createHoldIncident: this.createHoldIncident,
           dateHandler: this.dateHandler,
           handleSubmit: this.handleSubmit,
@@ -251,7 +266,8 @@ export default class Input extends Component {
           addHold: this.addHold,
           boolConversion: this.boolConversion,
           stateUpdate: this.stateUpdate ,
-          lengthHandler: this.lengthHandler
+          lengthHandler: this.lengthHandler,
+          displayHolds: this.displayHolds
 
         }
         return(
