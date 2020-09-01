@@ -54,7 +54,7 @@ export default class Input extends Component {
     document.getElementById('holdEntry').removeAttribute('hidden');
   }
 
-  // Works but I need to reset the input fields and dispaly the array of entered holds
+  // Works but I need to reset the input fields 
   addHold = () => {
     
     let start_time = this.state.start_time;
@@ -150,17 +150,22 @@ export default class Input extends Component {
      );
   }
 
+  // GET requests cannot have bodies but I need to pass at least two variables to verify
   studentCheck = () => {
+    let newStudent = {
+      marss: this.state.student_marss,
+      student_last_name: this.state.student_Last_Name,
+    }
     fetch(`${config.API_ENDPOINT}/`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify()
+      body: JSON.stringify(newStudent)
     })
       .then(res => {
         if (!res.ok)
-          alert('Student MARSS and/or Last Name Invalid')
+          alert('Student MARSS and/or Last Name Invalid') // This is needs to be a regular message displayed that interupts submission
       })
   }
 
@@ -223,7 +228,7 @@ export default class Input extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    //this.studentCheck();
+    this.studentCheck();
     if( this.state.room_location === '---' || this.state.holds_used ==='---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
       alert('You must make a selection')
     }
