@@ -44,6 +44,7 @@ export default class Input extends Component {
       seconds: "",
       enteredHoldList: [],
       holdCount: 1,
+      enteredPersonsList: []
     }    
   }
 
@@ -89,7 +90,6 @@ export default class Input extends Component {
         'content-type': 'application/json'
       }
     })
-
     .then(res => {
       if (!res.ok) {
         return res.json().then(error => { throw error })
@@ -156,7 +156,7 @@ export default class Input extends Component {
       marss: this.state.student_marss,
       student_last_name: this.state.student_Last_Name,
     }
-    fetch(`${config.API_ENDPOINT}/`, {
+    fetch(config.API_ENDPOINT + '/', {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -164,9 +164,12 @@ export default class Input extends Component {
       body: JSON.stringify(newStudent)
     })
       .then(res => {
-        if (!res.ok)
+        if (!res.ok){
           alert('Student MARSS and/or Last Name Invalid') // This is needs to be a regular message displayed that interupts submission
+        }
+        return res.json()    
       })
+      
   }
 
   day_of_the_weekHandler = (date) => {
@@ -226,17 +229,77 @@ export default class Input extends Component {
     }
   }
 
+  involvedPeople = () => {
+    let newStaff= {
+      staff_name: this.context.staff_name
+    }
+    fetch(config.API_ENDPOINT + '/staffcheck', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(newStaff)
+    })
+      .then(res => {
+        if (!res.ok){
+          alert('Staff Name Not recognized')
+        }
+        return res.json()
+      })
+      .then(this.addInvolvedPerson)
+  }
+
+  addInvolvedPerson = () => {
+    this.state.enteredPersonsList.push(this.state.people_involved)
+    this.setState({people_involved: ""})    
+  }
+
+  submitterVerification = () => {
+    let newStaff ={
+      staff_name: this.state.staff_submitter
+    }
+    fetch(config.API_ENDPOINT + '/staffcheck', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(newStaff)
+    })
+      .then(res => {
+        if (!res.ok){
+          alert('Staff Name Not recognized')
+        }
+        return res.json()
+      })
+      .then(this.emailVerification)
+  }
+
+  emailVerification = (staff) => {
+    let { email } = staff;
+    if(this.state.submissionEmail !== email){
+      alert('This email does not match the one on record')
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
-    this.studentCheck();
+
     if( this.state.room_location === '---' || this.state.holds_used ==='---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
       alert('You must make a selection')
     }
-    //if() Check for '---' values and prevent submit if present
+
+    //studentCheck();
+    //submitterVerification();
+    
+    //More Data validation
+
+    //Use staff validation on submitter and people involved
     // Fetch POST request to server
+
   }
 
     render(){
+      // Do I need to pass the variables into context if I am updating them here?
         const value = {
           submissionEmail: this.state.submissionEmail,
           submitterName: this.state.staff_submitter,
