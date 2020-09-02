@@ -34,23 +34,29 @@ export default class Input extends Component {
       day_of_the_week: "---",
       student_injury: "---",
       staff_injury: "---",
-      hold_1: "",
-      hold_2: "",
-      hold_3: "",
-      hold_4: "",
-      hold_5: "",
+      hold_1: null,
+      hold_2: null,
+      hold_3: null,
+      hold_4: null,
+      hold_5: null,
       holdError: "",
       secondsField: "",
       seconds: "",
       enteredHoldList: [],
       holdCount: 1,
       enteredPersonsList: [],
-      formError: ""
+      formError: "",
+      approver: "",
     }    
   }
 
   static contextType = Context
   
+  approverAssignment = () => {
+    if(this.state.school === 'Concord'){
+      this.setState({approver: 'joshodell220@gmail.com'})
+    }
+  }
   
   createHoldIncident = () => {
     document.getElementById('holdEntry').removeAttribute('hidden');
@@ -305,20 +311,67 @@ export default class Input extends Component {
     }
   }
 
+  schoolConversion = () => {
+    if(this.state.school === 'Concord'){
+      this.setState({school: 5})
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if( this.state.room_location === '---' || this.state.holds_used ==='---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
+    if( this.state.room_location === '---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
       this.setState({formError: 'You must make a selection'})
     }
 
     this.studentCheck();
     this.submitterVerification();
+    this.approverAssignment();
+    this.schoolConversion();
     
     //More Data validation
 
     //Use staff validation on submitter and people involved
     // Fetch POST request to server
+
+    if(this.state.formError === ''){
+      let newIncident = {
+        student_marss: this.state.student_marss,
+        staff_submitter: this.state.staff_submitter,
+        school: this.state.school,
+        date: this.state.date,
+        day_of_the_week: this.state.day_of_the_week,
+        seclusion: this.state.seclusion,
+        reasonable_force: this.state.reasonable_force,
+        student_injury: this.state.student_injury,
+        staff_injury: this.state.staff_injury,
+        law_enforcment: this.state.law_enforcment,
+        room_location: this.state.room_location,
+        hold_1: this.state.hold_1,
+        hold_2: this.state.hold_2,
+        hold_3: this.state.hold_3,
+        hold_4: this.state.hold_4,
+        hold_5: this.state.hold_5,
+        antecedent: this.state.antecedent,
+        contributing_variables: this.state.contributing_variables,
+        people_involved:this.state.enteredPersonsList,
+        major_disruption: this.state.major_disruption,
+        approver: this.state.approver,
+      }
+      fetch(`${config.API_ENDPOINT}`, {
+        method: 'POST',
+        body: JSON.stringify(newIncident),
+        headers: {
+          'content-type': 'application/json'
+        },        
+      })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => { throw error })
+        }
+        return res.json()   
+      })
+    }
 
   }
 
