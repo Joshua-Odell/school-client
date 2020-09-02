@@ -48,13 +48,19 @@ export default class ConcordForm extends React.Component {
                     <DatePicker id="date" selected={this.state.startDate} onChange={this.handleChange.bind(this)} />
                 </div>               
                 <div>
-                    {/* There should be a seperate field for each person so they can be matched to the relevant staff table */}
+                    <div>
+                        {/* There should be a seperate field for each person so they can be matched to the relevant staff table */}
                     <label htmlFor="involvedPeople">People Involved:</label>
-                    <input type="text" id="involvedPeople" name="involvedPeople" />
-                    <button>Add Staff</button>
-                    <button>Add Student</button> 
+                    <input type="text" id="involvedPeople" name="involvedPeople" onChange={this.context.stateUpdate('people_involved')}/>
+                    <button type='button' onClick={this.context.involvedStaff}>Add Staff</button>
+                    <button type='button' onClick={this.context.involvedStudent}>Add Student</button> 
                     {/* The buttons should add the person and verify their existence in the database */}
                     {/* There should be a display showing the sucessfully added people */}
+                    </div>
+                    <div>
+                        <h5>InvolvedPeople</h5>
+                        {this.context.displayInvolved()}
+                    </div>
                 </div>                
                 <div>
                     <label htmlFor="contributingVariables">Contributing Variables</label>
@@ -152,6 +158,7 @@ export default class ConcordForm extends React.Component {
                     </select>
                 </div>
                 <div>
+                    {this.context.formError}
                     <button type="submit">Submit</button>
                 </div>  
             </form>

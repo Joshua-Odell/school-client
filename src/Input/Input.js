@@ -44,7 +44,8 @@ export default class Input extends Component {
       seconds: "",
       enteredHoldList: [],
       holdCount: 1,
-      enteredPersonsList: []
+      enteredPersonsList: [],
+      formError: ""
     }    
   }
 
@@ -104,7 +105,7 @@ export default class Input extends Component {
     let holdIdVariable = 'hold_' + count.toString();
     let newCount = count + 1
     console.log(this.state.holds_used);
-    this.state.enteredHoldList.push(this.state.holds_used);
+    this.state.enteredHoldList.push(' ' + this.state.holds_used + ',');
     console.log(this.state.enteredHoldList)
 
     this.setState({[holdIdVariable]: id})
@@ -156,16 +157,15 @@ export default class Input extends Component {
       marss: this.state.student_marss,
       student_last_name: this.state.student_Last_Name,
     }
-    fetch(config.API_ENDPOINT + '/', {
+    fetch(`${config.API_ENDPOINT}/studentcheck/${newStudent.marss}/${newStudent.student_last_name}`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify(newStudent)
     })
       .then(res => {
         if (!res.ok){
-          alert('Student MARSS and/or Last Name Invalid') // This is needs to be a regular message displayed that interupts submission
+          this.setState({formError: 'Student MARSS and/or Last Name Invalid'}) // This is needs to be a regular message displayed that interupts submission
         }
         return res.json()    
       })
@@ -229,55 +229,79 @@ export default class Input extends Component {
     }
   }
 
-  involvedPeople = () => {
-    let newStaff= {
-      staff_name: this.context.staff_name
+  involvedStaff = () => {
+    let newStaff ={
+      staff_name: this.state.people_involved
     }
-    fetch(config.API_ENDPOINT + '/staffcheck', {
+    console.log(newStaff, this.state.people_involved)
+    fetch(`${config.API_ENDPOINT}/staffcheck/${newStaff.staff_name}`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify(newStaff)
     })
       .then(res => {
         if (!res.ok){
-          alert('Staff Name Not recognized')
+          this.setState({formError: 'Staff Name Not recognized'})
         }
         return res.json()
       })
       .then(this.addInvolvedPerson)
   }
 
+  involvedStudent = () => {
+    let firstName = this.state.people_involved.split(' ').slice(0,-1).join(' ');
+    let lastName = this.state.people_involved.split(' ').slice(-1).join(' ');
+    fetch(`${config.API_ENDPOINT}/involvedstudentcheck/${firstName}/${lastName}`, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      },
+    })
+      .then(res => {
+        if (!res.ok){
+          this.setState({formError:'Student Name Invalid'}) // This is needs to be a regular message displayed that interupts submission
+        }
+        return res.json()    
+      })
+      .then(this.addInvolvedPerson)
+  }
+
   addInvolvedPerson = () => {
-    this.state.enteredPersonsList.push(this.state.people_involved)
+    this.state.enteredPersonsList.push(' ' + this.state.people_involved + ',')
     this.setState({people_involved: ""})    
+  }
+
+  displayInvolved = () => {
+    return(
+      <div>
+        {this.state.enteredPersonsList}
+      </div>
+    )
   }
 
   submitterVerification = () => {
     let newStaff ={
       staff_name: this.state.staff_submitter
     }
-    fetch(config.API_ENDPOINT + '/staffcheck', {
+    fetch(`${config.API_ENDPOINT}/staffcheck/${newStaff.staff_name}`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify(newStaff)
     })
       .then(res => {
         if (!res.ok){
-          alert('Staff Name Not recognized')
+          this.setState({formError: 'Staff Name Not recognized'})
         }
         return res.json()
       })
       .then(this.emailVerification)
   }
 
-  emailVerification = (staff) => {
-    let { email } = staff;
+  emailVerification = (email) => {
     if(this.state.submissionEmail !== email){
-      alert('This email does not match the one on record')
+      this.setState({formError:'This email does not match the one on record'})
     }
   }
 
@@ -285,11 +309,11 @@ export default class Input extends Component {
     event.preventDefault();
 
     if( this.state.room_location === '---' || this.state.holds_used ==='---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
-      alert('You must make a selection')
+      this.setState({formError: 'You must make a selection'})
     }
 
-    //studentCheck();
-    //submitterVerification();
+    this.studentCheck();
+    this.submitterVerification();
     
     //More Data validation
 
@@ -325,6 +349,7 @@ export default class Input extends Component {
           holdError: this.state.holdError,
           secondsField: this.state.secondsField,
           enteredHoldList: this.state.enteredHoldList,
+          formError: this.state.formError,
           createHoldIncident: this.createHoldIncident,
           dateHandler: this.dateHandler,
           handleSubmit: this.handleSubmit,
@@ -335,7 +360,10 @@ export default class Input extends Component {
           boolConversion: this.boolConversion,
           stateUpdate: this.stateUpdate ,
           lengthHandler: this.lengthHandler,
-          displayHolds: this.displayHolds
+          displayHolds: this.displayHolds,
+          involvedStaff: this.involvedStaff,
+          involvedStudent: this.involvedStudent,
+          displayInvolved: this.displayInvolved,
 
         }
         return(
