@@ -28,7 +28,7 @@ export default class Input extends Component {
       start_time: "",
       stop_time: "",
       length: "",
-      law_enforcment: "---",
+      law_enforcement: "---",
       room_location: "---",
       major_disruption: "---",
       day_of_the_week: "---",
@@ -327,7 +327,7 @@ export default class Input extends Component {
         reasonable_force: this.state.reasonable_force,
         student_injury: this.state.student_injury,
         staff_injury: this.state.staff_injury,
-        law_enforcment: this.state.law_enforcment,
+        law_enforcement: this.state.law_enforcement,
         room_location: this.state.room_location,
         hold_1: this.state.hold_1,
         hold_2: this.state.hold_2,
@@ -366,7 +366,7 @@ export default class Input extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if( this.state.room_location === '---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
+    if( this.state.room_location === '---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcement === '---'){
       this.setState({formError: 'You must make a selection'})
     }
     //I still need more data validation
@@ -393,7 +393,7 @@ export default class Input extends Component {
           length: this.state.length,
           studentInjury: this.state.student_injury,
           staffInjury: this.state.staff_injury,
-          lawEnforcment: this.state.law_enforcment,
+          lawEnforcment: this.state.law_enforcement,
           roomlocation: this.state.room_location,
           major_disruption: this.state.major_disruption,
           day_of_the_week: this.state.day_of_the_week,

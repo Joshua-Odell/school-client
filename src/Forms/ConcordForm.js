@@ -144,8 +144,8 @@ export default class ConcordForm extends React.Component {
                     </select>
                 </div>
                 <div>
-                    <label htmlFor="lawEnforcment">Law Enforcment involved</label>
-                    <select id="lawEnforcment" name="lawEnforcment" onChange={this.context.boolConversion('law_enforcment')}>
+                    <label htmlFor="lawenforcement">Law Enforcement involved</label>
+                    <select id="lawenforcement" name="lawenforcement" onChange={this.context.boolConversion('law_enforcement')}>
                         <option value="---">---</option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
