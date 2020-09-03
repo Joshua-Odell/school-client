@@ -23,6 +23,16 @@ export default class ConcordForm extends React.Component {
         this.context.day_of_the_weekHandler(date);
     };
 
+    clearInvolvedField = () => {
+        document.getElementById('involvedPeople').value = '';
+    }
+
+    clearHoldField = () => {
+        document.getElementById('startTime').value = '';
+        document.getElementById('stopTime').value = '';
+        document.getElementById('seconds').value = '';
+    }
+
     render(){
         return(
             <form onSubmit={this.context.handleSubmit}>
@@ -52,12 +62,12 @@ export default class ConcordForm extends React.Component {
                         {/* There should be a seperate field for each person so they can be matched to the relevant staff table */}
                     <label htmlFor="involvedPeople">People Involved:</label>
                     <input type="text" id="involvedPeople" name="involvedPeople" onChange={this.context.stateUpdate('people_involved')}/>
-                    <button type='button' onClick={this.context.involvedStaff}>Add Staff</button>
-                    <button type='button' onClick={this.context.involvedStudent}>Add Student</button> 
+                    <button type='button' onClick={() => { this.context.involvedStaff(); this.clearInvolvedField(); }}>Add Staff</button>
+                    <button type='button' onClick={() => { this.context.involvedStudent(); this.clearInvolvedField(); }}>Add Student</button> 
                     {/* The buttons should add the person and verify their existence in the database */}
                     {/* There should be a display showing the sucessfully added people */}
                     </div>
-                    <div>
+                    <div id='involvedPeopleList' hidden>
                         <h5>InvolvedPeople</h5>
                         {this.context.displayInvolved()}
                     </div>
@@ -86,13 +96,13 @@ export default class ConcordForm extends React.Component {
                         <input type="time" id="startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>                    
                         <label htmlFor="stopTime">Stop Time</label>
                         <input type="time" id="stopTime" name="stopTime" onChange={this.context.stateUpdate('stop_time')} />
-                        <div id='optionalSeconds' hidden>
-                            <label htmlFor="seconds" >Please Enter Hold Time In Seconds:</label>
+                        <div id='optionalSeconds' >
+                            <label htmlFor="seconds" >If time is less than 1 minute enter seconds:</label>
                             <input type="text" id="seconds" onChange={this.context.stateUpdate('seconds')}/>
                         </div>                        
                     </div>
                     <div>
-                        <button type="button" onClick={this.context.lengthHandler}>Enter Hold</button>                  
+                        <button type="button" onClick={() => {this.context.lengthHandler(); this.clearHoldField(); }}>Enter Hold</button>                  
                         {this.context.holdError}
                     </div>
                     <div id='enteredHolds' hidden>

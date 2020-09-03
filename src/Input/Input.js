@@ -21,7 +21,7 @@ export default class Input extends Component {
       people_involved: "",
       contributing_variables: "",
       antecedent: "",
-      date: "",
+      date: new Date (),
       holds_used: "---",
       seclusion: "---",
       reasonable_force: "---",
@@ -52,9 +52,13 @@ export default class Input extends Component {
 
   static contextType = Context
   
-  approverAssignment = () => {
+  componentWillMount(){
+    this.day_of_the_weekHandler(this.state.date);
+  }
+
+  approverAssignment = async() => {
     if(this.state.school === 'Concord'){
-      this.setState({approver: 'joshodell220@gmail.com'})
+      this.setState({approver: 1})
     }
   }
   
@@ -62,7 +66,6 @@ export default class Input extends Component {
     document.getElementById('holdEntry').removeAttribute('hidden');
   }
 
-  // Works but I need to reset the input fields 
   addHold = () => {
     
     let start_time = this.state.start_time;
@@ -76,7 +79,6 @@ export default class Input extends Component {
       stop_time: stop_time,
       duration: length,
     }
-    console.log(this.state.holds_used);
     document.getElementById('enteredHolds').removeAttribute('hidden');
 
     if(!start_time || !stop_time || !length || holds_used === '---'){
@@ -110,15 +112,11 @@ export default class Input extends Component {
     let count = this.state.holdCount
     let holdIdVariable = 'hold_' + count.toString();
     let newCount = count + 1
-    console.log(this.state.holds_used);
     this.state.enteredHoldList.push(' ' + this.state.holds_used + ',');
-    console.log(this.state.enteredHoldList)
-
     this.setState({[holdIdVariable]: id})
     this.setState({stop_time: ""})
     this.setState({start_time: ""})
     this.setState({length: ""})
-    this.setState({holds_used: "---"})
     this.setState({holdCount: newCount})
     document.getElementById('holdEntry').value = '';
   }
@@ -141,7 +139,6 @@ export default class Input extends Component {
   }
 
   Select = (list, name, handler) => {
-    // Need to figure out state change with these points
     const options = list.map((item) => {
       return(
         <option value={item}>{item}</option>
@@ -157,7 +154,6 @@ export default class Input extends Component {
      );
   }
 
-  // GET requests cannot have bodies but I need to pass at least two variables to verify
   studentCheck = () => {
     let newStudent = {
       marss: this.state.student_marss,
@@ -236,10 +232,10 @@ export default class Input extends Component {
   }
 
   involvedStaff = () => {
+    document.getElementById('involvedPeopleList').removeAttribute('hidden');
     let newStaff ={
       staff_name: this.state.people_involved
     }
-    console.log(newStaff, this.state.people_involved)
     fetch(`${config.API_ENDPOINT}/staffcheck/${newStaff.staff_name}`, {
       method: 'GET',
       headers: {
@@ -256,6 +252,7 @@ export default class Input extends Component {
   }
 
   involvedStudent = () => {
+    document.getElementById('involvedPeopleList').removeAttribute('hidden');
     let firstName = this.state.people_involved.split(' ').slice(0,-1).join(' ');
     let lastName = this.state.people_involved.split(' ').slice(-1).join(' ');
     fetch(`${config.API_ENDPOINT}/involvedstudentcheck/${firstName}/${lastName}`, {
@@ -275,7 +272,7 @@ export default class Input extends Component {
 
   addInvolvedPerson = () => {
     this.state.enteredPersonsList.push(' ' + this.state.people_involved + ',')
-    this.setState({people_involved: ""})    
+    this.setState({people_involved: ""})
   }
 
   displayInvolved = () => {
@@ -286,7 +283,7 @@ export default class Input extends Component {
     )
   }
 
-  submitterVerification = () => {
+  submitterVerification = async() => {
     let newStaff ={
       staff_name: this.state.staff_submitter
     }
@@ -302,39 +299,24 @@ export default class Input extends Component {
         }
         return res.json()
       })
-      .then(this.emailVerification)
+      .then(await this.emailVerification)
   }
 
-  emailVerification = (email) => {
-    if(this.state.submissionEmail !== email){
-      this.setState({formError:'This email does not match the one on record'})
+  emailVerification = async(staff) => {
+    if(this.state.submissionEmail !== staff.email){
+      this.setState({formError:'This email does not match the one on record'});
     }
   }
 
-  schoolConversion = () => {
+  schoolConversion = async() => {
     if(this.state.school === 'Concord'){
       this.setState({school: 5})
     }
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-
-    if( this.state.room_location === '---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
-      this.setState({formError: 'You must make a selection'})
-    }
-
-    this.studentCheck();
-    this.submitterVerification();
-    this.approverAssignment();
-    this.schoolConversion();
-    
-    //More Data validation
-
-    //Use staff validation on submitter and people involved
-    // Fetch POST request to server
-
-    if(this.state.formError === ''){
+  finalPostRequest = async() => {
+    await this.finalDataPreperation();
+    //if(this.state.formError === ''){
       let newIncident = {
         student_marss: this.state.student_marss,
         staff_submitter: this.state.staff_submitter,
@@ -371,8 +353,25 @@ export default class Input extends Component {
         }
         return res.json()   
       })
-    }
+    //}
+  }
 
+  finalDataPreperation = async() => {
+    await this.submitterVerification();
+    await this.studentCheck();    
+    await this.approverAssignment();
+    await this.schoolConversion();
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    if( this.state.room_location === '---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcment === '---'){
+      this.setState({formError: 'You must make a selection'})
+    }
+    //I still need more data validation
+    
+    this.finalPostRequest();
   }
 
     render(){
