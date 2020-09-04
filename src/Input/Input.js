@@ -5,8 +5,6 @@ import config from '../config';
 import { duration } from 'moment';
 
 const moment = require('moment');
-
-
 const list = require('../Store/store');
 
 export default class Input extends Component {
@@ -55,80 +53,7 @@ export default class Input extends Component {
   componentWillMount(){
     this.day_of_the_weekHandler(this.state.date);
   }
-
-  approverAssignment = async() => {
-    if(this.state.school === 'Concord'){
-      this.setState({approver: 1})
-    }
-  }
   
-  createHoldIncident = () => {
-    document.getElementById('holdEntry').removeAttribute('hidden');
-  }
-
-  addHold = () => {
-    
-    let start_time = this.state.start_time;
-    let stop_time = this.state.stop_time;
-    let length = this.state.length;
-    let holds_used = this.state.holds_used;
-    
-    let newHold = {
-      hold_type: holds_used,
-      start_time: start_time,
-      stop_time: stop_time,
-      duration: length,
-    }
-    document.getElementById('enteredHolds').removeAttribute('hidden');
-
-    if(!start_time || !stop_time || !length || holds_used === '---'){
-      this.setState({holdError: 'All fields must be filled out'})
-    }
-    if(this.state.count > 5){
-      this.setState({holdError: 'There is a maximum of five holds allowed'})
-    }
-    if(start_time > stop_time){
-      this.setState({holdError: 'Start time must be before stop time'})
-    }
-    
-    // Fetch POST request that returns the id of the newly created hold entry
-    fetch(config.API_ENDPOINT + '/hold', {
-      method: 'POST',
-      body: JSON.stringify(newHold),
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-    .then(res => {
-      if (!res.ok) {
-        return res.json().then(error => { throw error })
-      }
-      return res.json()   
-    })
-    .then(this.settingHoldIds) 
-  }
-
-  settingHoldIds = (id) => {
-    let count = this.state.holdCount
-    let holdIdVariable = 'hold_' + count.toString();
-    let newCount = count + 1
-    this.state.enteredHoldList.push(' ' + this.state.holds_used + ',');
-    this.setState({[holdIdVariable]: id})
-    this.setState({stop_time: ""})
-    this.setState({start_time: ""})
-    this.setState({length: ""})
-    this.setState({holdCount: newCount})
-    document.getElementById('holdEntry').value = '';
-  }
-
-  displayHolds = () => {
-    return(
-      <div>
-        {this.state.enteredHoldList}
-      </div>
-    )
-  }
-
   locationHandler = (event) => {
     let changes = 0;
     if(changes === 0){
@@ -136,52 +61,9 @@ export default class Input extends Component {
     }else{
       //code to confirm form change choice
     }
-  }
+  }  
 
-  Select = (list, name, handler) => {
-    const options = list.map((item) => {
-      return(
-        <option value={item}>{item}</option>
-      )
-    });
-    return( 
-      <div>
-        <label htmlFor={name}>{name}</label>
-        <select id={name} name={name} onChange={handler}>
-          {options}
-        </select>
-      </div>
-     );
-  }
-
-  studentCheck = () => {
-    let newStudent = {
-      marss: this.state.student_marss,
-      student_last_name: this.state.student_Last_Name,
-    }
-    fetch(`${config.API_ENDPOINT}/studentcheck/${newStudent.marss}/${newStudent.student_last_name}`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      },
-    })
-      .then(res => {
-        if (!res.ok){
-          this.setState({formError: 'Student MARSS and/or Last Name Invalid'}) // This is needs to be a regular message displayed that interupts submission
-        }
-        return res.json()    
-      })
-      
-  }
-
-  day_of_the_weekHandler = (date) => {
-    let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    let weekday = daysOfTheWeek[date.getDay()];
-    this.setState({day_of_the_week: weekday});
-  }
-
-
-  dateHandler = (newdate) => {this.setState({date: newdate})};
+  //HOLD FUNCTIONS
 
   // This function works I just need to interupt the subsequent function call if there is an error
   lengthHandler = () => {
@@ -213,24 +95,172 @@ export default class Input extends Component {
     this.setState({length: time}, () => {this.addHold(); });       
   }
 
+  createHoldIncident = () => {
+    document.getElementById('holdEntry').removeAttribute('hidden');
+  }
+
+  createSeclusionHoldIncident = () => {
+    if(this.state.seclusion === true){
+      document.getElementById('seclusionHold').removeAttribute('hidden');
+    }
+  }
+
+  createForceHoldIncident = () => {
+    if(this.state.reasonable_force === 'Non-PCM Hold' || this.state.reasonable_force === 'Unlicensed Seclusion'){
+      document.getElementById('reasonableForceHold').removeAttribute('hidden');
+    }
+  }
+
+  addHold = () => {
+    
+    let start_time = this.state.start_time;
+    let stop_time = this.state.stop_time;
+    let length = this.state.length;
+    let holds_used = this.state.holds_used;
+    
+    let newHold = {
+      hold_type: holds_used,
+      start_time: start_time,
+      stop_time: stop_time,
+      duration: length,
+    }
+
+    document.getElementById('enteredHolds').removeAttribute('hidden');
+
+    if(this.state.reasonable_force === "Non-PCM Hold" || this.state.reasonable_force === "Unlicensed Seclusion"){
+      newHold.hold_type = this.state.reasonable_force
+    }
+    else if(this.state.seclusion){
+      newHold.hold_type = 'seclusion'
+    }
+
+    if(holds_used === '---' && !this.state.seclusion){
+      this.setState({holdError: 'All fields must be filled out'})
+    }
+    if(this.state.count > 5){
+      this.setState({holdError: 'There is a maximum of five holds allowed'})
+    }
+    if(start_time > stop_time){
+      this.setState({holdError: 'Start time must be before stop time'})
+    }
+    
+    // Fetch POST request that returns the id of the newly created hold entry
+    fetch(config.API_ENDPOINT + '/hold', {
+      method: 'POST',
+      body: JSON.stringify(newHold),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(error => { throw error })
+      }
+      return res.json()   
+    })
+    .then(this.settingHoldIds) 
+  }
+
+  settingHoldIds = (id) => {
+    let count = this.state.holdCount
+    let holdIdVariable = 'hold_' + count.toString();
+    let newCount = count + 1
+    let regularHold = ' ' + this.state.holds_used + ','
+    
+    if(this.state.reasonable_force === "Non-PCM Hold" || this.state.reasonable_force === "Unlicensed Seclusion"){
+      this.state.enteredHoldList.push(' ' + this.state.reasonable_force + ',');
+    }
+    else if(this.state.seclusion){
+      this.state.enteredHoldList.push(' Seclusion,');
+    }else{
+      this.state.enteredHoldList.push(regularHold);
+    }
+
+    this.setState({[holdIdVariable]: id})
+    this.setState({stop_time: ""})
+    this.setState({start_time: ""})
+    this.setState({length: ""})
+    this.setState({holdCount: newCount})
+    document.getElementById('holdEntry').value = '';
+  }
+
+  displayHolds = () => {
+    return(
+      <div>
+        {this.state.enteredHoldList}
+      </div>
+    )
+  }
+
+  //STUDENT INFORMATION VALIDATION  
+
+  studentCheck = () => {
+    let newStudent = {
+      marss: this.state.student_marss,
+      student_last_name: this.state.student_Last_Name,
+    }
+    fetch(`${config.API_ENDPOINT}/studentcheck/${newStudent.marss}/${newStudent.student_last_name}`, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      },
+    })
+      .then(res => {
+        if (!res.ok){
+          this.setState({formError: 'Student MARSS and/or Last Name Invalid'}) // This is needs to be a regular message displayed that interupts submission
+        }
+        return res.json()    
+      })
+      
+  }
+
+  // DATE SECTION
+
+  day_of_the_weekHandler = (date) => {
+    let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    let weekday = daysOfTheWeek[date.getDay()];
+    this.setState({day_of_the_week: weekday});
+  }
+
+  dateHandler = (newdate) => {this.setState({date: newdate})};
+
+  // GENERAL HTML FUNCTIONS
+
+  Select = (list, name, handler) => {
+    const options = list.map((item) => {
+      return(
+        <option value={item}>{item}</option>
+      )
+    });
+    return( 
+      <div>
+        <label htmlFor={name}>{name}</label>
+        <select id={name} name={name} onChange={handler}>
+          {options}
+        </select>
+      </div>
+     );
+  }
+
   boolConversion = (property) => {
     return (event) => {
       const { target: {value}} = event
       if(['true', 'false'].includes(value)){
-        this.setState({[property]: value === "true"})
+        this.setState({[property]: value === "true"}, () => {this.createSeclusionHoldIncident();})
       }else{
         this.setState({[property]: '---'})
       }
-    }
+    }    
   }
 
   stateUpdate = (property) => {
     return (event) => {
       const { target: {value}} = event
-      this.setState({[property]: value})
+      this.setState({[property]: value}, () => {this.createForceHoldIncident();})
     }
   }
 
+  // INVOLVED FUNCTIONS
   involvedStaff = () => {
     document.getElementById('involvedPeopleList').removeAttribute('hidden');
     let newStaff ={
@@ -251,25 +281,6 @@ export default class Input extends Component {
       .then(this.addInvolvedPerson)
   }
 
-  involvedStudent = () => {
-    document.getElementById('involvedPeopleList').removeAttribute('hidden');
-    let firstName = this.state.people_involved.split(' ').slice(0,-1).join(' ');
-    let lastName = this.state.people_involved.split(' ').slice(-1).join(' ');
-    fetch(`${config.API_ENDPOINT}/involvedstudentcheck/${firstName}/${lastName}`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      },
-    })
-      .then(res => {
-        if (!res.ok){
-          this.setState({formError:'Student Name Invalid'}) // This is needs to be a regular message displayed that interupts submission
-        }
-        return res.json()    
-      })
-      .then(this.addInvolvedPerson)
-  }
-
   addInvolvedPerson = () => {
     this.state.enteredPersonsList.push(' ' + this.state.people_involved + ',')
     this.setState({people_involved: ""})
@@ -282,6 +293,8 @@ export default class Input extends Component {
       </div>
     )
   }
+
+  // STAFF SUBMITTER INFO VERIFICATION
 
   submitterVerification = async() => {
     let newStaff ={
@@ -308,15 +321,22 @@ export default class Input extends Component {
     }
   }
 
-  schoolConversion = async() => {
-    if(this.state.school === 'Concord'){
-      this.setState({school: 5})
+  // END SUBMIT DATA MANIPULATION
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    if( this.state.room_location === '---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcement === '---'){
+      this.setState({formError: 'You must make a selection'})
     }
+    //I still need more data validation
+    
+    this.finalPostRequest();
   }
 
   finalPostRequest = async() => {
     await this.finalDataPreperation();
-    //if(this.state.formError === ''){
+    if(this.state.formError === ''){
       let newIncident = {
         student_marss: this.state.student_marss,
         staff_submitter: this.state.staff_submitter,
@@ -353,26 +373,27 @@ export default class Input extends Component {
         }
         return res.json()   
       })
-    //}
-  }
+    }
+  } 
 
   finalDataPreperation = async() => {
     await this.submitterVerification();
     await this.studentCheck();    
     await this.approverAssignment();
     await this.schoolConversion();
-  }
+  } 
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-
-    if( this.state.room_location === '---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcement === '---'){
-      this.setState({formError: 'You must make a selection'})
+  approverAssignment = async() => {
+    if(this.state.school === 'Concord'){
+      this.setState({approver: 1})
     }
-    //I still need more data validation
-    
-    this.finalPostRequest();
   }
+
+  schoolConversion = async() => {
+    if(this.state.school === 'Concord'){
+      this.setState({school: 5})
+    }
+  }   
 
     render(){
       // Do I need to pass the variables into context if I am updating them here?
@@ -414,8 +435,8 @@ export default class Input extends Component {
           lengthHandler: this.lengthHandler,
           displayHolds: this.displayHolds,
           involvedStaff: this.involvedStaff,
-          involvedStudent: this.involvedStudent,
           displayInvolved: this.displayInvolved,
+          createSeclusionHoldIncident: this.createSeclusionHoldIncident
 
         }
         return(

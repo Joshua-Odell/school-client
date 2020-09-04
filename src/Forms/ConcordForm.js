@@ -27,10 +27,11 @@ export default class ConcordForm extends React.Component {
         document.getElementById('involvedPeople').value = '';
     }
 
-    clearHoldField = () => {
-        document.getElementById('startTime').value = '';
-        document.getElementById('stopTime').value = '';
-        document.getElementById('seconds').value = '';
+    clearHoldField = (category) => {
+        console.log(category + 'startTime')
+        document.getElementById(category + 'startTime').value = '';
+        document.getElementById(category + 'stopTime').value = '';
+        document.getElementById(category + 'seconds').value = '';
     }
 
     render(){
@@ -62,8 +63,7 @@ export default class ConcordForm extends React.Component {
                         {/* There should be a seperate field for each person so they can be matched to the relevant staff table */}
                     <label htmlFor="involvedPeople">People Involved:</label>
                     <input type="text" id="involvedPeople" name="involvedPeople" onChange={this.context.stateUpdate('people_involved')}/>
-                    <button type='button' onClick={() => { this.context.involvedStaff(); this.clearInvolvedField(); }}>Add Staff</button>
-                    <button type='button' onClick={() => { this.context.involvedStudent(); this.clearInvolvedField(); }}>Add Student</button> 
+                    <button type='button' onClick={() => { this.context.involvedStaff(); this.clearInvolvedField(); }}>Add Staff</button> 
                     {/* The buttons should add the person and verify their existence in the database */}
                     {/* There should be a display showing the sucessfully added people */}
                     </div>
@@ -93,16 +93,16 @@ export default class ConcordForm extends React.Component {
                     <div >                   
                         {this.context.Select(list.holds, 'Hold', this.context.stateUpdate('holds_used'))} 
                         <label htmlFor="startTime">Start Time</label>
-                        <input type="time" id="startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>                    
+                        <input type="time" id="regular-startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>                    
                         <label htmlFor="stopTime">Stop Time</label>
-                        <input type="time" id="stopTime" name="stopTime" onChange={this.context.stateUpdate('stop_time')} />
+                        <input type="time" id="regular-stopTime" name="stopTime" onChange={this.context.stateUpdate('stop_time')} />
                         <div id='optionalSeconds' >
                             <label htmlFor="seconds" >If time is less than 1 minute enter seconds:</label>
-                            <input type="text" id="seconds" onChange={this.context.stateUpdate('seconds')}/>
+                            <input type="text" id="regular-seconds" onChange={this.context.stateUpdate('seconds')}/>
                         </div>                        
                     </div>
                     <div>
-                        <button type="button" onClick={() => {this.context.lengthHandler(); this.clearHoldField(); }}>Enter Hold</button>                  
+                        <button type="button" onClick={() => {this.context.lengthHandler(); this.clearHoldField('regular-'); }}>Enter Hold</button>                  
                         {this.context.holdError}
                     </div>
                     <div id='enteredHolds' hidden>
@@ -117,15 +117,43 @@ export default class ConcordForm extends React.Component {
                         <option value="false">No</option>
                         <option value="true">Yes</option>
                     </select>
+                    <div id='seclusionHold' hidden>
+                        <label htmlFor="startTime">Start Time</label>
+                        <input type="time" id="seclusion-startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>                    
+                        <label htmlFor="stopTime">Stop Time</label>
+                        <input type="time" id="seclusion-stopTime" name="stopTime" onChange={this.context.stateUpdate('stop_time')} />
+                        <div id='optionalSeconds' >
+                            <label htmlFor="seconds" >If time is less than 1 minute enter seconds:</label>
+                            <input type="text" id="seclusion-seconds" onChange={this.context.stateUpdate('seconds')}/>
+                        </div>
+                        <div>
+                            <button type="button" onClick={() => {this.context.lengthHandler(); this.clearHoldField('seclusion-'); }}>Enter Hold</button>                  
+                            {this.context.holdError}
+                        </div>   
+                    </div>
                 </div>
                 <div>
                     <label htmlFor="force">Reasonable Force</label>
                     <select id="force" name="force" onChange={this.context.stateUpdate('reasonable_force')}>
                         <option value="---">---</option>
-                        <option value="None">--None--</option>
+                        <option value="None">None</option>
                         <option value="Non-PCM Hold">Non-PCM Hold</option>
                         <option value="Unlicensed Seclusion">Unlicensed Seclusion</option>
                     </select>
+                    <div id='reasonableForceHold' hidden>
+                        <label htmlFor="startTime">Start Time</label>
+                        <input type="time" id="force-startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>                    
+                        <label htmlFor="stopTime">Stop Time</label>
+                        <input type="time" id="force-stopTime" name="stopTime" onChange={this.context.stateUpdate('stop_time')} />
+                        <div id='optionalSeconds' >
+                            <label htmlFor="seconds" >If time is less than 1 minute enter seconds:</label>
+                            <input type="text" id="force-seconds" onChange={this.context.stateUpdate('seconds')}/>
+                        </div>
+                        <div>
+                            <button type="button" onClick={() => {this.context.lengthHandler(); this.clearHoldField('force-'); }}>Enter Hold</button>                  
+                            {this.context.holdError}
+                        </div>   
+                    </div>
                 </div>
                 <div>
                     <label htmlFor="studentInjury">Student injury during restrictive procedure</label>
