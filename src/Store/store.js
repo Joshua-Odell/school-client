@@ -14,6 +14,8 @@ const federalSettings = ["---", "1","2","3","4","5","6","7","8","11","12","13","
 
 const disabilityClasses = ["---", "ASD","DB","D/HH","DCD-MM","DCD-SP","DD 3-6","EBD","OHD","PI","SMI","SLD","SLI","TBI"];
 
+const behavior_type = ['Physcial Aggression/Fighting', 'Unsafe Location', 'Self-injurious Behavior', 'Use/Possession of weapon', 'Possession of Drugs', 'Other (described in narrative)'];
+
 exports.holds = holds;
 exports.disabilityClasses = disabilityClasses;
 exports.majorDisruptionList = majorDisruptionList;
@@ -22,3 +24,4 @@ exports.concordRoomLocation = concordRoomLocation;
 exports.raceEthnicity = raceEthnicity;
 exports.ages = ages;
 exports.federalSettings = federalSettings;
+exports.behavior_type = behavior_type;

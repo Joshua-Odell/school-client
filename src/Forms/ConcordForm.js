@@ -1,6 +1,7 @@
 import React from 'react';
 import Context from '../Context';
 import DatePicker from 'react-datepicker';
+import DatePickerTwo from 'react-datepicker';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -57,7 +58,10 @@ export default class ConcordForm extends React.Component {
                 <div>
                     <label htmlFor="date">Date</label>
                     <DatePicker id="date" selected={this.state.startDate} onChange={this.handleChange.bind(this)} />
-                </div>               
+                </div>
+                <div>
+                    {this.context.Select(list.behavior_type, 'Type of Problem Behavior', this.context.stateUpdate('behavior_type'), true)}
+                </div>
                 <div>
                     <div>
                         {/* There should be a seperate field for each person so they can be matched to the relevant staff table */}
@@ -71,6 +75,12 @@ export default class ConcordForm extends React.Component {
                         <h5>InvolvedPeople</h5>
                         {this.context.displayInvolved()}
                     </div>
+                </div>
+                <div>
+                    <label htmlFor="narrative">Narrative</label>
+                    <textarea name="narrative" id="narrative" rows="10" cols="30" onChange={this.context.stateUpdate('narrative')}
+                    placeholder="this might include getting no sleep, hunger, new staff, new peer, 
+                    events earlier in the day, etc. – anything that may have impacted the student's behavior"></textarea>
                 </div>                
                 <div>
                     <label htmlFor="contributingVariables">Contributing Variables</label>
@@ -154,6 +164,69 @@ export default class ConcordForm extends React.Component {
                             {this.context.holdError}
                         </div>   
                     </div>
+                </div>
+                <div>
+                    <label htmlFor="administration">Administration notified immediately</label>
+                    <select id="administration" name="administration" onChange={this.context.boolConversion('administration')}>
+                        <option value="---">---</option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="parent">Parent/guardian contacted immediately following procedure</label>
+                    <select id="parent" name="parent" onChange={this.context.boolConversion('parent')}>
+                        <option value="---">---</option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                    <div>
+                        <label htmlFor="parent_time">Contact Time</label>
+                        <input type="time" id="parent_time" name="parent_time" onChange={this.context.stateUpdate('parent_time')}/>    
+                        <label htmlFor="contactDate">Date</label>
+                        <DatePickerTwo id="contactDate" selected={this.state.startDate} onChange={this.handleChange.bind(this)} />
+                    </div>
+                </div>
+                <div>
+                    <label htmlFor="parent_problem_solving">Engaged the parent in problem solving</label>
+                    <select id="parent_problem_solving" name="parent_problem_solving" onChange={this.context.boolConversion('parent_problem_solving')}>
+                        <option value="---">---</option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="parent_right">Informed parent of right to call for an informal or formal meeting to further discuss the incident and their child's program</label>
+                    <select id="parent_right" name="parent_right" onChange={this.context.boolConversion('parent_right')}>
+                        <option value="---">---</option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="iep_meeting">IEP meeting called to review the adequacy of the IEP (Required if this is the second emergency use of restraint or seclusion in 30 days and
+not already documented in the IEP.)</label>
+                    <select id="iep_meeting" name="iep_meeting" onChange={this.context.boolConversion('iep_meeting')}>
+                        <option value="---">---</option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="student_debriefing">Debriefing with other students</label>
+                    <select id="student_debriefing" name="student_debriefing" onChange={this.context.boolConversion('student_debriefing')}>
+                        <option value="---">---</option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="staff_debriefing">Staff debriefing completed</label>
+                    <select id="staff_debriefing" name="staff_debriefing" onChange={this.context.boolConversion('staff_debriefing')}>
+                        <option value="---">---</option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
                 </div>
                 <div>
                     <label htmlFor="studentInjury">Student injury during restrictive procedure</label>

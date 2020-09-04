@@ -30,6 +30,17 @@ export default class Input extends Component {
       room_location: "---",
       major_disruption: "---",
       day_of_the_week: "---",
+      behavior_type: [],
+      narrative: "",
+      administration: null,
+      parent: null,
+      parent_notification_time: "",
+      parent_notification_date: new Date (),
+      parent_problem_solving: null,
+      parent_right: null,
+      iep_meeting: null,
+      student_debriefing: null,
+      staff_debriefing: null,
       student_injury: "---",
       staff_injury: "---",
       hold_1: null,
@@ -226,20 +237,31 @@ export default class Input extends Component {
 
   // GENERAL HTML FUNCTIONS
 
-  Select = (list, name, handler) => {
+  Select = (list, name, handler, multiple) => {
     const options = list.map((item) => {
       return(
         <option value={item}>{item}</option>
       )
     });
-    return( 
-      <div>
-        <label htmlFor={name}>{name}</label>
-        <select id={name} name={name} onChange={handler}>
-          {options}
-        </select>
-      </div>
-     );
+    if(!multiple){
+      return( 
+        <div>
+          <label htmlFor={name}>{name}</label>
+          <select id={name} name={name} onChange={handler}>
+            {options}
+          </select>
+        </div>
+       );
+    }else {
+      return( 
+        <div>
+          <label htmlFor={name}>{name}</label>
+          <select id={name} name={name} onChange={handler} multiple>
+            {options}
+          </select>
+        </div>
+       );
+    }    
   }
 
   boolConversion = (property) => {
@@ -343,6 +365,17 @@ export default class Input extends Component {
         school: this.state.school,
         date: this.state.date,
         day_of_the_week: this.state.day_of_the_week,
+        behavior_type: this.state.behavior_type,
+        narrative: this.state.narrative,
+        administration: this.state.administration,
+        parent: this.state.parent,
+        parent_notification_time: this.state.parent_notification_time,
+        parent_notification_date: this.state.parent_notification_date,
+        parent_problem_solving: this.state.parent_problem_solving,
+        parent_right: this.state.parent_right,
+        iep_meeting: this.state.iep_meeting,
+        student_debriefing: this.state.student_debriefing,
+        staff_debriefing: this.state.staff_debriefing,
         seclusion: this.state.seclusion,
         reasonable_force: this.state.reasonable_force,
         student_injury: this.state.student_injury,
