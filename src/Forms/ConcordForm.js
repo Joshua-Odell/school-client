@@ -60,7 +60,7 @@ export default class ConcordForm extends React.Component {
                     <DatePicker id="date" selected={this.state.startDate} onChange={this.handleChange.bind(this)} />
                 </div>
                 <div>
-                    {this.context.Select(list.behavior_type, 'Type of Problem Behavior', this.context.stateUpdate('behavior_type'), true)}
+                    {this.context.Select(list.behavior_type, 'Type of Problem Behavior', this.context.stateUpdate('behavior_type', true), true)}
                 </div>
                 <div>
                     <div>
@@ -258,7 +258,7 @@ not already documented in the IEP.)</label>
                 <div>
                     {/* I have list to generate this but this one requires a multiple option */}
                     <label htmlFor="majorDisruption">Major Disruption</label>
-                    <select id='majorDisruption' name='majorDisruption' multiple onChange={this.context.stateUpdate('major_disruption')}>
+                    <select id='majorDisruption' name='majorDisruption' multiple onChange={this.context.stateUpdate('major_disruption', true)}>
                         <option value="Clearing Classroom">Clearing Classroom</option>
                         <option value="Physical Aggression/Fighting">Physical Aggression/Fighting</option>
                         <option value="Closing Hallway">Closing Hallway</option>

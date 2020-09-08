@@ -28,7 +28,7 @@ export default class Input extends Component {
       length: "",
       law_enforcement: "---",
       room_location: "---",
-      major_disruption: "---",
+      major_disruption: [],
       day_of_the_week: "---",
       behavior_type: [],
       narrative: "",
@@ -275,10 +275,14 @@ export default class Input extends Component {
     }    
   }
 
-  stateUpdate = (property) => {
+  stateUpdate = (property, multiple) => {
+    let result = this.state.[property]
     return (event) => {
       const { target: {value}} = event
-      this.setState({[property]: value}, () => {this.createForceHoldIncident();})
+      if(multiple){
+        result.push(value)
+        this.setState({[property]: result});
+      }else { this.setState({[property]: value}, () => {this.createForceHoldIncident();})}
     }
   }
 
@@ -426,7 +430,54 @@ export default class Input extends Component {
     if(this.state.school === 'Concord'){
       this.setState({school: 5})
     }
-  }   
+  }
+  
+  schoolList = () => {
+    if( this.state.school === "NONE"){
+      return(
+        <nav>
+                    <label htmlFor="school">At which site did the Incident occur?</label>
+                    <select id="school" name="school" onChange={this.locationHandler.bind(this)} value={this.state.value}>
+                        <option value="NONE">--NONE--</option>
+                        <option value="Concord">Concord Education Center</option>
+                        <option value="Alliance">Alliance Education Center</option>
+                        <option value="Lebanon">Lebanon Education Center</option>
+                        <option value="Cedar">Cedar School?</option>
+                        <option value="program">programs?</option>
+                    </select>
+                </nav>
+      );
+    }else {
+      return(
+        <nav>
+                    <label htmlFor="school">At which site did the Incident occur?</label>
+                    <select id="school" name="school" onChange={this.locationHandler.bind(this)} value={this.state.value}>
+                        <option value="Concord">Concord Education Center</option>
+                        <option value="Alliance">Alliance Education Center</option>
+                        <option value="Lebanon">Lebanon Education Center</option>
+                        <option value="Cedar">Cedar School?</option>
+                        <option value="program">programs?</option>
+                    </select>
+                </nav>
+      )
+    }
+  }
+
+  getMultipleSelectValues = (select) => {
+    console.log(select)
+    let result = [];
+    let options = select && select.options;
+    let opt;
+  
+    for (let i=0, iLen=options.length; i<iLen; i++) {
+      opt = options[i];
+  
+      if (opt.selected) {
+        result.push(opt.value || opt.text);
+      }
+    }
+    //this.setState({[property]: result});
+  }
 
     render(){
       // Do I need to pass the variables into context if I am updating them here?
@@ -469,7 +520,8 @@ export default class Input extends Component {
           displayHolds: this.displayHolds,
           involvedStaff: this.involvedStaff,
           displayInvolved: this.displayInvolved,
-          createSeclusionHoldIncident: this.createSeclusionHoldIncident
+          createSeclusionHoldIncident: this.createSeclusionHoldIncident,
+          getMultipleSelectValues: this.getMultipleSelectValues
 
         }
         return(
@@ -478,17 +530,7 @@ export default class Input extends Component {
                 <header>
                     <h1>Incident Report Form</h1>
                 </header>
-                <nav>
-                    <label htmlFor="school">At which site did the Incident occur?</label>
-                    <select id="school" name="school" onChange={this.locationHandler.bind(this)} value={this.state.value}>
-                        <option value="NONE">--NONE--</option>
-                        <option value="Concord">Concord Education Center</option>
-                        <option value="Alliance">Alliance Education Center</option>
-                        <option value="Lebanon">Lebanon Education Center</option>
-                        <option value="Cedar">Cedar School?</option>
-                        <option value="program">programs?</option>
-                    </select>
-                </nav>
+                {this.schoolList()}
                 <main>
                   <FormSelector 
                   school={this.state.school}
