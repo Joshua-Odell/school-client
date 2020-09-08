@@ -44,7 +44,7 @@ export default class ConcordForm extends React.Component {
         return(
             <form onSubmit={this.context.handleSubmit}>
                 <div>
-                    <p>Current School Set To: {this.context.school}</p>
+                    <p>Current School Set To: {this.props.school}</p>
                     <button type="button" onClick={this.schoolChanger.bind(this)}>Change School</button>
                 </div>
                 <div>

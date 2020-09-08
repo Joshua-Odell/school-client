@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Context from '../Context';
 import FormSelector from '../FormSelector/FormSelector';
 import config from '../config';
+import ConcordForm from '../Forms/ConcordForm';
+import CedarForm from '../Forms/CedarForm';
 import { duration } from 'moment';
 
 const moment = require('moment');
@@ -11,7 +13,6 @@ export default class Input extends Component {
   constructor(props){
     super(props);
     this.state = {
-      school: this.props.school,
       submissionEmail: "test",
       staff_submitter: "",
       student_Last_Name: "",
@@ -64,19 +65,8 @@ export default class Input extends Component {
 
   
   componentWillMount(){
-    console.log(this.props)
     this.day_of_the_weekHandler(this.state.date);
-    this.setState({school: this.props.school})
   }
-  
-  locationHandler = (event) => {
-    let changes = 0;
-    if(changes === 0){
-      this.setState({school: event.target.value})
-    }else{
-      //code to confirm form change choice
-    }
-  }  
 
   //HOLD FUNCTIONS
 
@@ -459,6 +449,28 @@ export default class Input extends Component {
     //this.setState({[property]: result});
   }
 
+  renderForm = () => {
+        if(this.props.school === "NONE"){
+            return(
+                <div>Please Select Your Location</div>
+            )
+        }
+        else if(this.props.school === "Concord"){
+            return <ConcordForm school={this.props.school}/>            
+        }
+        else if(this.props.school === "Alliance"){
+            //return <AllianceForm />            
+        }else if(this.props.school === "Lebanon"){
+            //return <LebanonForm />            
+        }else if(this.props.school === "Cedar"){
+            return <CedarForm />            
+        }else if(this.props.school === "Program"){
+            //return <ProgramForm />            
+        }else {
+            return null 
+        }
+  }
+
     render(){
       // Do I need to pass the variables into context if I am updating them here?
         const value = {
@@ -508,7 +520,7 @@ export default class Input extends Component {
         return(
           <Context.Provider value={value}>
             <div>
-                {this.props.schoolForm}
+                {this.renderForm()}
             </div>
           </Context.Provider>            
         )
