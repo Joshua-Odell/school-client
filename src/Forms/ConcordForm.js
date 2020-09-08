@@ -35,9 +35,18 @@ export default class ConcordForm extends React.Component {
         document.getElementById(category + 'seconds').value = '';
     }
 
+    schoolChanger = () => {
+        document.getElementById('schoolList').removeAttribute('hidden')
+        console.log('test')
+    }
+
     render(){
         return(
             <form onSubmit={this.context.handleSubmit}>
+                <div>
+                    <p>Current School Set To: {this.context.school}</p>
+                    <button type="button" onClick={this.schoolChanger.bind(this)}>Change School</button>
+                </div>
                 <div>
                     <label htmlFor="email">Your Email</label>
                     <input type="text" id="email" name="email" placeholder="Valid email address" onChange={this.context.stateUpdate('submissionEmail')}/>
@@ -182,7 +191,7 @@ export default class ConcordForm extends React.Component {
                     </select>
                     <div>
                         <label htmlFor="parent_time">Contact Time</label>
-                        <input type="time" id="parent_time" name="parent_time" onChange={this.context.stateUpdate('parent_time')}/>    
+                        <input type="time" id="parent_time" name="parent_time" onChange={this.context.stateUpdate('parent_notification_time')}/>    
                         <label htmlFor="contactDate">Date</label>
                         <DatePickerTwo id="contactDate" selected={this.state.startDate} onChange={this.handleChange.bind(this)} />
                     </div>

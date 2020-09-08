@@ -11,7 +11,7 @@ export default class Input extends Component {
   constructor(props){
     super(props);
     this.state = {
-      school: "NONE",
+      school: this.props.school,
       submissionEmail: "test",
       staff_submitter: "",
       student_Last_Name: "",
@@ -60,9 +60,13 @@ export default class Input extends Component {
   }
 
   static contextType = Context
+
+
   
   componentWillMount(){
+    console.log(this.props)
     this.day_of_the_weekHandler(this.state.date);
+    this.setState({school: this.props.school})
   }
   
   locationHandler = (event) => {
@@ -181,7 +185,7 @@ export default class Input extends Component {
     if(this.state.reasonable_force === "Non-PCM Hold" || this.state.reasonable_force === "Unlicensed Seclusion"){
       this.state.enteredHoldList.push(' ' + this.state.reasonable_force + ',');
     }
-    else if(this.state.seclusion){
+    else if(this.state.seclusion === true){
       this.state.enteredHoldList.push(' Seclusion,');
     }else{
       this.state.enteredHoldList.push(regularHold);
@@ -320,6 +324,12 @@ export default class Input extends Component {
     )
   }
 
+  //PDF GENERATION AND EMAIL
+
+  sendEmail = () => {
+    //
+  }
+
   // STAFF SUBMITTER INFO VERIFICATION
 
   submitterVerification = async() => {
@@ -410,6 +420,7 @@ export default class Input extends Component {
         }
         return res.json()   
       })
+      .then(this.sendEmail())
     }
   } 
 
@@ -429,37 +440,6 @@ export default class Input extends Component {
   schoolConversion = async() => {
     if(this.state.school === 'Concord'){
       this.setState({school: 5})
-    }
-  }
-  
-  schoolList = () => {
-    if( this.state.school === "NONE"){
-      return(
-        <nav>
-                    <label htmlFor="school">At which site did the Incident occur?</label>
-                    <select id="school" name="school" onChange={this.locationHandler.bind(this)} value={this.state.value}>
-                        <option value="NONE">--NONE--</option>
-                        <option value="Concord">Concord Education Center</option>
-                        <option value="Alliance">Alliance Education Center</option>
-                        <option value="Lebanon">Lebanon Education Center</option>
-                        <option value="Cedar">Cedar School?</option>
-                        <option value="program">programs?</option>
-                    </select>
-                </nav>
-      );
-    }else {
-      return(
-        <nav>
-                    <label htmlFor="school">At which site did the Incident occur?</label>
-                    <select id="school" name="school" onChange={this.locationHandler.bind(this)} value={this.state.value}>
-                        <option value="Concord">Concord Education Center</option>
-                        <option value="Alliance">Alliance Education Center</option>
-                        <option value="Lebanon">Lebanon Education Center</option>
-                        <option value="Cedar">Cedar School?</option>
-                        <option value="program">programs?</option>
-                    </select>
-                </nav>
-      )
     }
   }
 
@@ -483,6 +463,7 @@ export default class Input extends Component {
       // Do I need to pass the variables into context if I am updating them here?
         const value = {
           submissionEmail: this.state.submissionEmail,
+          school: this.state.school,
           submitterName: this.state.staff_submitter,
           studentLastName: this.state.student_Last_Name,
           involvedPeople: this.state.involvedPeople,
@@ -527,16 +508,7 @@ export default class Input extends Component {
         return(
           <Context.Provider value={value}>
             <div>
-                <header>
-                    <h1>Incident Report Form</h1>
-                </header>
-                {this.schoolList()}
-                <main>
-                  <FormSelector 
-                  school={this.state.school}
-                  emailHandler={this.emailHandler}
-                   />
-                </main>
+                {this.props.schoolForm}
             </div>
           </Context.Provider>            
         )
