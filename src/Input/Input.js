@@ -475,7 +475,7 @@ export default class Input extends Component {
       // Do I need to pass the variables into context if I am updating them here?
         const value = {
           submissionEmail: this.state.submissionEmail,
-          school: this.state.school,
+          school: this.props.school,
           submitterName: this.state.staff_submitter,
           studentLastName: this.state.student_Last_Name,
           involvedPeople: this.state.involvedPeople,

@@ -2,41 +2,20 @@ import React, { Component } from 'react';
 import CedarForm from '../Forms/CedarForm';
 import ConcordForm from '../Forms/ConcordForm';
 import { render } from '@testing-library/react';
-import Input from '../Input/Input'
-
-let changes = 0;
+import Input from '../Input/Input';
 
 export default class FormSelector extends Component {
     
     state = {
         school: "NONE",
-        schoolForm: "",
     }
         
 
     locationHandler = (event) => {
           this.setState({school: event.target.value});
-          changes ++;
           document.getElementById('schoolList').setAttribute("hidden", true);
     }  
 
-    schoolList = () => {
-        if( this.state.school === "NONE"){
-          return(
-            <nav>
-                <label htmlFor="school">At which site did the Incident occur?</label>
-                    <select id="school" name="school" onChange={this.locationHandler.bind(this)} value={this.state.value}>
-                        <option value="NONE">--NONE--</option>
-                        <option value="Concord">Concord Education Center</option>
-                        <option value="Alliance">Alliance Education Center</option>
-                        <option value="Lebanon">Lebanon Education Center</option>
-                        <option value="Cedar">Cedar School?</option>
-                        <option value="program">programs?</option>
-                </select>
-            </nav>
-          );
-        }
-      }
     
     render(){
         return(
@@ -58,7 +37,6 @@ export default class FormSelector extends Component {
                 <main>
                   <Input
                   school={this.state.school}
-                  schoolForm={this.state.schoolForm}
                    />
                 </main>
             </div>
