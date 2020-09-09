@@ -5,6 +5,8 @@ import config from '../config';
 import ConcordForm from '../Forms/ConcordForm';
 import CedarForm from '../Forms/CedarForm';
 import { duration } from 'moment';
+import studentCheck from '../studentCheck/studentCheck';
+import submitterVerification from '../submitterVerification/submitterVerification'
 
 const moment = require('moment');
 const list = require('../Store/store');
@@ -199,25 +201,6 @@ export default class Input extends Component {
 
   //STUDENT INFORMATION VALIDATION  
 
-  studentCheck = () => {
-    let newStudent = {
-      marss: this.state.student_marss,
-      student_last_name: this.state.student_Last_Name,
-    }
-    fetch(`${config.API_ENDPOINT}/studentcheck/${newStudent.marss}/${newStudent.student_last_name}`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      },
-    })
-      .then(res => {
-        if (!res.ok){
-          this.setState({formError: 'Student MARSS and/or Last Name Invalid'}) // This is needs to be a regular message displayed that interupts submission
-        }
-        return res.json()    
-      })
-      
-  }
 
   // DATE SECTION
 
@@ -322,31 +305,6 @@ export default class Input extends Component {
 
   // STAFF SUBMITTER INFO VERIFICATION
 
-  submitterVerification = async() => {
-    let newStaff ={
-      staff_name: this.state.staff_submitter
-    }
-    fetch(`${config.API_ENDPOINT}/staffcheck/${newStaff.staff_name}`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      },
-    })
-      .then(res => {
-        if (!res.ok){
-          this.setState({formError: 'Staff Name Not recognized'})
-        }
-        return res.json()
-      })
-      .then(await this.emailVerification)
-  }
-
-  emailVerification = async(staff) => {
-    if(this.state.submissionEmail !== staff.email){
-      this.setState({formError:'This email does not match the one on record'});
-    }
-  }
-
   // END SUBMIT DATA MANIPULATION
 
   handleSubmit = (event) => {
@@ -415,8 +373,8 @@ export default class Input extends Component {
   } 
 
   finalDataPreperation = async() => {
-    await this.submitterVerification();
-    await this.studentCheck();    
+    await submitterVerification(this.state.staff_submitter, this.state.submissionEmail);
+    await studentCheck(this.state.student_marss, this.state.student_Last_Name);    
     await this.approverAssignment();
     await this.schoolConversion();
   } 
@@ -504,7 +462,6 @@ export default class Input extends Component {
           dateHandler: this.dateHandler,
           handleSubmit: this.handleSubmit,
           Select: this.Select,
-          studentCheck: this.studentCheck,
           day_of_the_weekHandler: this.day_of_the_weekHandler,
           addHold: this.addHold,
           boolConversion: this.boolConversion,

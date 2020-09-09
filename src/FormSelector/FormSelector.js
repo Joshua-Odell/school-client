@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import CedarForm from '../Forms/CedarForm';
-import ConcordForm from '../Forms/ConcordForm';
 import { render } from '@testing-library/react';
 import Input from '../Input/Input';
 
