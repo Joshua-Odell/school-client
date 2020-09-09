@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import Context from '../Context';
-import FormSelector from '../FormSelector/FormSelector';
 import config from '../config';
 import ConcordForm from '../Forms/ConcordForm';
 import CedarForm from '../Forms/CedarForm';
-import { duration } from 'moment';
 import studentCheck from '../studentCheck/studentCheck';
-import submitterVerification from '../submitterVerification/submitterVerification'
+import submitterVerification from '../submitterVerification/submitterVerification';
+import Completed from '../Forms/Completed';
 
 const moment = require('moment');
 const list = require('../Store/store');
@@ -19,6 +18,7 @@ export default class Input extends Component {
       staff_submitter: "",
       student_Last_Name: "",
       student_marss: "",
+      schoolId: null,
       people_involved: "",
       contributing_variables: "",
       antecedent: "",
@@ -324,7 +324,7 @@ export default class Input extends Component {
       let newIncident = {
         student_marss: this.state.student_marss,
         staff_submitter: this.state.staff_submitter,
-        school: this.state.school,
+        school: this.state.schoolId,
         date: this.state.date,
         day_of_the_week: this.state.day_of_the_week,
         behavior_type: this.state.behavior_type,
@@ -369,6 +369,7 @@ export default class Input extends Component {
         return res.json()   
       })
       .then(this.sendEmail())
+      .then(this.setState({completed: true}))
     }
   } 
 
@@ -380,19 +381,18 @@ export default class Input extends Component {
   } 
 
   approverAssignment = async() => {
-    if(this.state.school === 'Concord'){
+    if(this.props.school === 'Concord'){
       this.setState({approver: 1})
     }
   }
 
   schoolConversion = async() => {
-    if(this.state.school === 'Concord'){
-      this.setState({school: 5})
+    if(this.props.school === 'Concord'){
+      this.setState({schoolId: 1})
     }
   }
 
   getMultipleSelectValues = (select) => {
-    console.log(select)
     let result = [];
     let options = select && select.options;
     let opt;
@@ -408,7 +408,10 @@ export default class Input extends Component {
   }
 
   renderForm = () => {
-        if(this.props.school === "NONE"){
+        if(this.state.completed){
+          return <Completed />
+        }
+        else if(this.props.school === "NONE"){
             return(
                 <div>Please Select Your Location</div>
             )
