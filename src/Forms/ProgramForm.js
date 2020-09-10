@@ -10,7 +10,7 @@ const concordlist = require('../Store/ConcordStore');
 
 
 
-export default class CedarForm extends React.Component {
+export default class ProgramForm extends React.Component {
     state = {
         startDate: new Date()
     };

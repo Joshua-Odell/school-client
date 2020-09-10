@@ -28,8 +28,8 @@ export default class FormSelector extends Component {
                         <option value="Concord">Concord Education Center</option>
                         <option value="Alliance">Alliance Education Center</option>
                         <option value="Lebanon">Lebanon Education Center</option>
-                        <option value="Cedar">Cedar School?</option>
-                        <option value="program">programs?</option>
+                        <option value="Cedar">Cedar School</option>
+                        <option value="Program">Programs</option>
                     </select>
                 </nav>
                 <main>

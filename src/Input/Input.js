@@ -3,6 +3,9 @@ import Context from '../Context';
 import config from '../config';
 import ConcordForm from '../Forms/ConcordForm';
 import CedarForm from '../Forms/CedarForm';
+import AllianceForm from '../Forms/AllianceForm';
+import LebanonForm from '../Forms/LebanonForm';
+import ProgramForm from '../Forms/ProgramForm'
 import studentCheck from '../studentCheck/studentCheck';
 import submitterVerification from '../submitterVerification/submitterVerification';
 import Completed from '../Forms/Completed';
@@ -212,6 +215,8 @@ export default class Input extends Component {
 
   dateHandler = (newdate) => {this.setState({date: newdate})};
 
+  parentDateHandler = (newdate) => {this.setState({parent_notification_date: newdate})};
+
   // GENERAL HTML FUNCTIONS
 
   Select = (list, name, handler, multiple) => {
@@ -420,13 +425,13 @@ export default class Input extends Component {
             return <ConcordForm school={this.props.school}/>            
         }
         else if(this.props.school === "Alliance"){
-            //return <AllianceForm />            
+            return <AllianceForm school={this.props.school}/>            
         }else if(this.props.school === "Lebanon"){
-            //return <LebanonForm />            
+            return <LebanonForm school={this.props.school} />            
         }else if(this.props.school === "Cedar"){
-            return <CedarForm />            
+            return <CedarForm school={this.props.school}/>            
         }else if(this.props.school === "Program"){
-            //return <ProgramForm />            
+            return <ProgramForm school={this.props.school} />            
         }else {
             return null 
         }
@@ -474,7 +479,8 @@ export default class Input extends Component {
           involvedStaff: this.involvedStaff,
           displayInvolved: this.displayInvolved,
           createSeclusionHoldIncident: this.createSeclusionHoldIncident,
-          getMultipleSelectValues: this.getMultipleSelectValues
+          getMultipleSelectValues: this.getMultipleSelectValues,
+          parentDateHandler: this.parentDateHandler
 
         }
         return(

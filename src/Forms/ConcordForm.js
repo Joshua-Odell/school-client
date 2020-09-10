@@ -16,12 +16,19 @@ export default class ConcordForm extends React.Component {
     };
     static contextType = Context;
 
-    handleChange = date => {
+    handleChange = (date) => {
         this.setState({
             startDate: date
         });
         this.context.dateHandler(date);
         this.context.day_of_the_weekHandler(date);
+    };
+
+    handleParentChange = (date) => {
+        this.setState({
+            startDate: date
+        });
+        this.context.parentDateHandler(date);
     };
 
     clearInvolvedField = () => {
@@ -193,7 +200,7 @@ export default class ConcordForm extends React.Component {
                         <label htmlFor="parent_time">Contact Time</label>
                         <input type="time" id="parent_time" name="parent_time" onChange={this.context.stateUpdate('parent_notification_time')}/>    
                         <label htmlFor="contactDate">Date</label>
-                        <DatePickerTwo id="contactDate" selected={this.state.startDate} onChange={this.handleChange.bind(this)} />
+                        <DatePickerTwo id="contactDate" selected={this.state.startDate} onChange={this.handleParentChange.bind(this)} />
                     </div>
                 </div>
                 <div>
