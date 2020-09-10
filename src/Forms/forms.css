@@ -1,0 +1,78 @@
+body {
+    background-color: #EEEEEE;
+    text-align: center;
+}
+
+form {
+    display: inline-block;
+    width: 80%;
+}
+
+textarea {
+    width: 80%;
+}
+
+input, label {
+    display: block;
+}
+
+#involvedList {
+    background-color: white;
+    border-style: solid;
+    padding: 15px;
+}
+
+#enteredHolds {
+    background-color: white;
+    border-style: solid;
+    padding: 15px;
+    width: 100%;
+}
+
+#basicInfo {
+    padding: 15px;
+}
+
+#involvedPeopleGroup {
+    padding: 15px;
+}
+
+#expandedTextArea {
+    padding: 15px;
+}
+
+#holdsSection {
+    padding: 15px;
+    display: flex;
+}
+
+#holdInput {
+    padding: 10px;
+    text-align: left;
+}
+
+#boolQuestions {
+    display: inline-block;
+    padding: 15px;
+    width: 80%;
+    text-align: left;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#submit {
+    font-weight: bold;
+    width: 20em;
+    height: 2em;
+}
+
+#multipleList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

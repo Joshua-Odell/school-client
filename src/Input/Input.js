@@ -135,7 +135,7 @@ export default class Input extends Component {
       duration: length,
     }
 
-    document.getElementById('enteredHolds').removeAttribute('hidden');
+    document.getElementById('enteredHolds').style.visibility = "visible";
 
     if(this.state.reasonable_force === "Non-PCM Hold" || this.state.reasonable_force === "Unlicensed Seclusion"){
       newHold.hold_type = this.state.reasonable_force
