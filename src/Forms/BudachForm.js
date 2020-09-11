@@ -8,9 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 const list = require('../Store/store');
 const concordlist = require('../Store/ConcordStore');
 
-
-//Room locations are identical to budach used same list
-export default class CedarForm extends React.Component {
+//Possibly need to add a building selector
+export default class BudachForm extends React.Component {
     state = {
         startDate: new Date()
     };
@@ -36,7 +35,6 @@ export default class CedarForm extends React.Component {
     }
 
     clearHoldField = (category) => {
-        console.log(category + 'startTime')
         document.getElementById(category + 'startTime').value = '';
         document.getElementById(category + 'stopTime').value = '';
         document.getElementById(category + 'seconds').value = '';
@@ -44,7 +42,6 @@ export default class CedarForm extends React.Component {
 
     schoolChanger = () => {
         document.getElementById('schoolList').removeAttribute('hidden')
-        console.log('test')
     }
 
     listConverter = (list) => {
@@ -70,12 +67,12 @@ export default class CedarForm extends React.Component {
                 {this.context.formError}
                 <div className='container'>
                     <div id='basicInfo' className="item">
-                        <div className="input-container">
+                        <div className="spacing">
                             <label htmlFor="email">Your Email</label>
-                            <input type="text" id="email" className="input" name="email" placeholder="Valid email address" onChange={this.context.stateUpdate('submissionEmail')}/>
+                            <input type="text" id="email" name="email" placeholder="Valid email address" onChange={this.context.stateUpdate('submissionEmail')}/>
                         </div>
                         <div className="spacing">
-                            <label htmlFor="reporter">Your Name (First and Last)</label>
+                            <label htmlFor="reporter">Your Name</label>
                             <input type="text" id="reporter" name="reporter" placeholder="Your Name" onChange={this.context.stateUpdate('staff_submitter')}/>
                         </div>                       
                         <div className="spacing">
@@ -102,9 +99,9 @@ export default class CedarForm extends React.Component {
                         {/* There should be a display showing the sucessfully added people */}
                         </div>
                         <div id='involvedPeopleList' className="spacing" >
-                            <h5>Involved People</h5>
+                            <h5>InvolvedPeople</h5>
                             <div id='involvedList'>
-                            {this.listConverter(this.context.enteredPersonsList)}
+                                {this.listConverter(this.context.enteredPersonsList)}
                             </div>                            
                         </div>
                     </div>
@@ -223,7 +220,7 @@ export default class CedarForm extends React.Component {
                     <div className="item">
                             <h5>Entered Holds</h5>
                             <div id='enteredHolds'>
-                            {this.listConverter(this.context.enteredHoldList)}
+                                {this.listConverter(this.context.enteredHoldList)}
                             </div>
                             
                     </div>

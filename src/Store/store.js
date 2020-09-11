@@ -2,6 +2,14 @@ const majorDisruptionList = ["---", "Clearing Classrom", "Physical Agression/Fig
 
 const concordRoomLocation = ["---", "Classroom", "Individual Office", "Blue Hallway", "Green Hallway", "Red Hallway", "Yellow Hallway", "Sensory Room", "Lunch Room", "Gym", "Outside", "Playground", "Front Office", "Field Trip", "Front Entrance", "Bathroom", "Life Skills Lab", "Project Discovery Lab"];
 
+const budachRoomLocation = ["---", "Classroom", "Individual Student Office", "Hallway", "Sensory Room", "Kitchen", "Lunch Room", "Gym", "Outside", "Playground", "Front Office", "Field Trip"];
+
+const budachBuilding = ["---", "AL", "BMS", "CMS", "CVE", "CME", "DCALS-N", "DCTC", "DEC", "FHS", "HHS", "HMS", "HSHS", "LNHS", "MMS", "MVE"]
+
+const DHHBuilding = ["---", "IGHMS", "LC", "SHS"];
+
+const TEABuilding = ["---", "TEA", "ECSE Classroom"]
+
 const daysOfTheWeek = ["---", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday"];
 
 const holds = ["---", "None", "Transport- Single Wrist Tri", "Transport- Double Wrist Tri", "Transport- Single Sunday Stroll", "Transport- Double Sunday Stroll", "Transport- One Arm Wrap", "One-Arm Wrap", "2-Person Vertical", "3-Person Vertical", "2-3 Person Vertical", "Supine"];
@@ -21,7 +29,11 @@ exports.disabilityClasses = disabilityClasses;
 exports.majorDisruptionList = majorDisruptionList;
 exports.daysOfTheWeek = daysOfTheWeek;
 exports.concordRoomLocation = concordRoomLocation;
+exports.budachRoomLocation = budachRoomLocation;
+exports.budachBuilding = budachBuilding;
 exports.raceEthnicity = raceEthnicity;
 exports.ages = ages;
 exports.federalSettings = federalSettings;
 exports.behavior_type = behavior_type;
+exports.DHHBuilding = DHHBuilding;
+exports.TEABuilding = TEABuilding;

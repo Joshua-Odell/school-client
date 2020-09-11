@@ -5,10 +5,14 @@ import ConcordForm from '../Forms/ConcordForm';
 import CedarForm from '../Forms/CedarForm';
 import AllianceForm from '../Forms/AllianceForm';
 import LebanonForm from '../Forms/LebanonForm';
-import ProgramForm from '../Forms/ProgramForm'
+import BudachForm from '../Forms/BudachForm'
 import studentCheck from '../studentCheck/studentCheck';
 import submitterVerification from '../submitterVerification/submitterVerification';
 import Completed from '../Forms/Completed';
+
+import './Input.css';
+import DHHProgramsForm from '../Forms/DHHProgramsForm';
+import OptionsForm from '../Forms/OptionsForm';
 
 const moment = require('moment');
 const list = require('../Store/store');
@@ -175,15 +179,14 @@ export default class Input extends Component {
     let count = this.state.holdCount
     let holdIdVariable = 'hold_' + count.toString();
     let newCount = count + 1
-    let regularHold = ' ' + this.state.holds_used + ','
     
     if(this.state.reasonable_force === "Non-PCM Hold" || this.state.reasonable_force === "Unlicensed Seclusion"){
-      this.state.enteredHoldList.push(' ' + this.state.reasonable_force + ',');
+      this.state.enteredHoldList.push(this.state.reasonable_force);
     }
     else if(this.state.seclusion === true){
-      this.state.enteredHoldList.push(' Seclusion,');
+      this.state.enteredHoldList.push('Seclusion');
     }else{
-      this.state.enteredHoldList.push(regularHold);
+      this.state.enteredHoldList.push(this.state.holds_used);
     }
 
     this.setState({[holdIdVariable]: id})
@@ -192,14 +195,6 @@ export default class Input extends Component {
     this.setState({length: ""})
     this.setState({holdCount: newCount})
     document.getElementById('holdEntry').value = '';
-  }
-
-  displayHolds = () => {
-    return(
-      <div>
-        {this.state.enteredHoldList}
-      </div>
-    )
   }
 
   //STUDENT INFORMATION VALIDATION  
@@ -258,7 +253,7 @@ export default class Input extends Component {
   }
 
   stateUpdate = (property, multiple) => {
-    let result = this.state.[property]
+    let result = this.state.[property];
     return (event) => {
       const { target: {value}} = event
       if(multiple){
@@ -281,25 +276,32 @@ export default class Input extends Component {
       },
     })
       .then(res => {
-        if (!res.ok){
-          this.setState({formError: 'Staff Name Not recognized'})
+        if (!res.ok){          
+          this.staffValidationError('involvedPeople')
+        } else{
+          return res.json()
         }
-        return res.json()
+        
       })
-      .then(this.addInvolvedPerson)
+      .then(() => {
+        this.state.enteredPersonsList.push(this.state.people_involved)
+        this.setState({people_involved: ""})
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
+  staffValidationError = (property) => {
+    if(property === 'involvedPeople'){
+      this.setState({formError: 'Staff Name Not recognized'});
+    }    
+    document.getElementById([property]).classList.add("fieldError")
   }
 
   addInvolvedPerson = () => {
-    this.state.enteredPersonsList.push(' ' + this.state.people_involved + ',')
+    this.state.enteredPersonsList.push(this.state.people_involved)
     this.setState({people_involved: ""})
-  }
-
-  displayInvolved = () => {
-    return(
-      <div>
-        {this.state.enteredPersonsList}
-      </div>
-    )
   }
 
   //PDF GENERATION AND EMAIL
@@ -415,23 +417,24 @@ export default class Input extends Component {
   renderForm = () => {
         if(this.state.completed){
           return <Completed />
-        }
-        else if(this.props.school === "NONE"){
+        }else if(this.props.school === "NONE"){
             return(
                 <div>Please Select Your Location</div>
             )
-        }
-        else if(this.props.school === "Concord"){
+        }else if(this.props.school === "Concord"){
             return <ConcordForm school={this.props.school}/>            
-        }
-        else if(this.props.school === "Alliance"){
+        }else if(this.props.school === "AEC"){
             return <AllianceForm school={this.props.school}/>            
-        }else if(this.props.school === "Lebanon"){
+        }else if(this.props.school === "TEA (ECSE LEC)"){
             return <LebanonForm school={this.props.school} />            
         }else if(this.props.school === "Cedar"){
             return <CedarForm school={this.props.school}/>            
-        }else if(this.props.school === "Program"){
-            return <ProgramForm school={this.props.school} />            
+        }else if(this.props.school === "Budach"){
+            return <BudachForm school={this.props.school} />            
+        }else if(this.props.school === "DHH"){
+            return <DHHProgramsForm school={this.props.school} />
+        }else if(this.props.school === "Options"){
+            return <OptionsForm school={this.props.school} />
         }else {
             return null 
         }
@@ -466,6 +469,7 @@ export default class Input extends Component {
           secondsField: this.state.secondsField,
           enteredHoldList: this.state.enteredHoldList,
           formError: this.state.formError,
+          enteredPersonsList: this.state.enteredPersonsList,
           createHoldIncident: this.createHoldIncident,
           dateHandler: this.dateHandler,
           handleSubmit: this.handleSubmit,
@@ -475,12 +479,11 @@ export default class Input extends Component {
           boolConversion: this.boolConversion,
           stateUpdate: this.stateUpdate ,
           lengthHandler: this.lengthHandler,
-          displayHolds: this.displayHolds,
           involvedStaff: this.involvedStaff,
-          displayInvolved: this.displayInvolved,
           createSeclusionHoldIncident: this.createSeclusionHoldIncident,
           getMultipleSelectValues: this.getMultipleSelectValues,
-          parentDateHandler: this.parentDateHandler
+          parentDateHandler: this.parentDateHandler,
+          
 
         }
         return(

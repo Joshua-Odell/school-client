@@ -19,8 +19,12 @@ textarea {
     width: 80%;
 }
 
-input, label {
-    display: block;
+#commentsSection {
+    padding: 15px;
+}
+
+#generalReturn {
+    padding: 15px;
 }
 
 #involvedList {
@@ -68,8 +72,7 @@ input, label {
 
 .container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-direction: column;
 }
 
 #submit {
@@ -78,8 +81,43 @@ input, label {
     height: 2em;
 }
 
+.approvalButtons {
+    padding: 10px;
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+}
+
 #multipleList {
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+input:invalid {
+    background-color: #C10042;
+}
+
+.fieldError {
+    border-color: #C10042;
+    background-color: #f7bbcd;
+
+}
+
+@media screen and (min-width: 1000px){
+
+    .container{
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    #multipleList {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    input, label {
+        display: block;
+    }
 }

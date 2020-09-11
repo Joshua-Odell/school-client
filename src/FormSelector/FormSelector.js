@@ -26,10 +26,12 @@ export default class FormSelector extends Component {
                     <select id="school" name="school" onChange={this.locationHandler.bind(this)} value={this.state.value}>
                         <option value="NONE">--NONE--</option>
                         <option value="Concord">Concord Education Center</option>
-                        <option value="Alliance">Alliance Education Center</option>
-                        <option value="Lebanon">Lebanon Education Center</option>
+                        <option value="AEC">Alliance Education Center</option>
+                        <option value="TEA (ECSE LEC)">TEA (ECSE LEC)</option>
                         <option value="Cedar">Cedar School</option>
-                        <option value="Program">Programs</option>
+                        <option value="Budach">Budach</option>
+                        <option value="DHH">D/HH Programs</option>
+                        <option value="Options">Options</option>
                     </select>
                 </nav>
                 <main>

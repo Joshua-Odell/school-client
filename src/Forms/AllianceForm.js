@@ -36,7 +36,6 @@ export default class AllianceForm extends React.Component {
     }
 
     clearHoldField = (category) => {
-        console.log(category + 'startTime')
         document.getElementById(category + 'startTime').value = '';
         document.getElementById(category + 'stopTime').value = '';
         document.getElementById(category + 'seconds').value = '';
@@ -44,7 +43,19 @@ export default class AllianceForm extends React.Component {
 
     schoolChanger = () => {
         document.getElementById('schoolList').removeAttribute('hidden')
-        console.log('test')
+    }
+
+    listConverter = (list) => {
+        const listItems = list.map((item) => {
+            return(
+            <li>{item}</li>
+            )
+        });
+        return(
+            <ul>
+                {listItems}
+            </ul>
+        );
     }
 
     render(){
@@ -54,6 +65,7 @@ export default class AllianceForm extends React.Component {
                     <p>Current School Set To: {this.props.school}</p>
                     <button type="button" onClick={this.schoolChanger.bind(this)}>Change School</button>
                 </div>
+                {this.context.formError}
                 <div className='container'>
                     <div id='basicInfo' className="item">
                         <div className="spacing">
@@ -90,7 +102,7 @@ export default class AllianceForm extends React.Component {
                         <div id='involvedPeopleList' className="spacing" >
                             <h5>InvolvedPeople</h5>
                             <div id='involvedList'>
-                                {this.context.displayInvolved()}
+                            {this.listConverter(this.context.enteredPersonsList)}
                             </div>                            
                         </div>
                     </div>
@@ -113,7 +125,7 @@ export default class AllianceForm extends React.Component {
                         </select>
                     </div>
                     <div className="item">
-                        {this.context.Select(list.concordRoomLocation, "Location", this.context.stateUpdate('room_location'))}
+                        {this.context.Select(list.budachRoomLocation, "Location", this.context.stateUpdate('room_location'))}
                     </div>                    
                 </div>                
                 <div id='expandedTextArea'>                    
@@ -209,7 +221,7 @@ export default class AllianceForm extends React.Component {
                     <div className="item">
                             <h5>Entered Holds</h5>
                             <div id='enteredHolds'>
-                                {this.context.displayHolds()}
+                            {this.listConverter(this.context.enteredHoldList)}
                             </div>
                             
                     </div>

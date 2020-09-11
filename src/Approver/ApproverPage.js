@@ -22,7 +22,7 @@ export default class ApproverPage extends Component {
         })
         .then(res => {
             if (!res.ok){
-              alert('Student MARSS and/or Last Name Invalid') // This is needs to be a regular message displayed that interupts submission
+              alert('Invalid Incident ID') // This is needs to be a regular message displayed that interupts submission
             }
             return res.json()    
           })
@@ -33,18 +33,54 @@ export default class ApproverPage extends Component {
         this.setState({date: incident.date})
         this.setState({location: incident.school_name})
         this.setState({reportingStaff: incident.staff_submitter })
+        console.log(this.state.date.type)
     }
 
-    addComments = () => {
-        this.setState({comments: this.event.target})
+    addComments = (event) => {
+        const { target: {value}} = event;
+        this.setState({comments: value});
     }
 
     acceptButton = (event) => {
         event.preventDefault();
+        fetch(config.API_ENDPOINT + '/conformationpage/' + this.props.match.params.id, {
+            method: 'PATCH',
+            body: JSON.stringify({
+               approver_comments: this.state.comments,
+               approved: true 
+            }),
+            headers: {
+                'content-type': 'application/json'
+            },
+        })
+        .then(res => {
+            if(!res.ok){
+                alert('request was not sucessfull')
+            }
+            return res.json()
+        })
+        .then(document.getElementById('approvedMessage').removeAttribute('hidden'))
     }
 
     returnButton = (event) => {
         event.preventDefault();
+        fetch(config.API_ENDPOINT + '/conformationpage/' + this.props.match.params.id, {
+            method: 'PATCH',
+            body: JSON.stringify({
+               approver_comments: this.state.comments,
+               approved: false 
+            }),
+            headers: {
+                'content-type': 'application/json'
+            },
+        })
+        .then(res => {
+            if(!res.ok){
+                alert('request was not sucessfull')
+            }
+            return res.json()
+        })
+        .then(document.getElementById('returnedMessage').removeAttribute('hidden'))
     }
 
     render(){
@@ -54,16 +90,22 @@ export default class ApproverPage extends Component {
                     <h1>Incident Report Conformation</h1>
                 </header>
                 <main>
-                    <h4>Date:</h4> {this.state.date}
-                    <h4>Location:</h4> {this.state.location}
-                    <h4>Reporting Staff:</h4> {this.state.reportingStaff}
-                    <h4>Incident Number:</h4> {this.state.incidentNumber}
+                    <div id='generalReturn'>
+                        <h4>Date:</h4> {this.state.date}
+                        <h4>Location:</h4> {this.state.location}
+                        <h4>Reporting Staff:</h4> {this.state.reportingStaff}
+                        <h4>Incident Number:</h4> {this.state.incidentNumber}
+                    </div>                    
                     <div id='commentsSection'>
-                        <label htmlFor="comments">Comments</label>
-                        <input type="text" id="comments" name="comments" onChange={this.addComments}/>
+                        <label htmlFor="comments">Comments:</label>
+                        <textarea id="comments" name="comments" onChange={this.addComments} />
                         <div>
-                            <button type="button" onClick={this.acceptButton}>Accept Incident</button>
-                            <button type="button" onClick={this.returnButton}>Return To Sender</button>
+                            <div className="approvalButtons">
+                                <button type="button" onClick={this.acceptButton}>Accept Incident</button>
+                            </div>
+                            <div className="approvalButtons">
+                                <button type="button" onClick={this.returnButton}>Return To Sender For Changes</button>
+                            </div>                                
                         </div>                        
                     </div>                    
                     <div id='approvedMessage' hidden>
