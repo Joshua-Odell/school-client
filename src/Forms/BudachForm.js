@@ -154,7 +154,7 @@ export default class BudachForm extends React.Component {
                             <button type="button" onClick={this.context.createHoldIncident}>Add Hold</button>
                                 
                         </div>                
-                        <div id='holdEntry' >                    
+                        <div id='holdEntry' hidden >                    
                             <div >                   
                                 {this.context.Select(list.holds, 'Hold', this.context.stateUpdate('holds_used'))} 
                                 <label htmlFor="startTime">Start Time</label>
