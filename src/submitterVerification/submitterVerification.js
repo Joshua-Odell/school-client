@@ -1,7 +1,6 @@
 import config from '../config';
 
-export default function submitterVerification(staff_name, submissionEmail) {
-  console.log(staff_name, submissionEmail)
+export default function submitterVerification(staff_name, submissionEmail, formError) {
     fetch(`${config.API_ENDPOINT}/staffcheck/${staff_name}`, {
       method: 'GET',
       headers: {
@@ -10,15 +9,15 @@ export default function submitterVerification(staff_name, submissionEmail) {
     })
       .then(res => {
         if (!res.ok){
-          alert('Staff Name Not recognized')
+          formError('reporter');
         }
         return res.json()
       })
-      .then(emailVerification(submissionEmail))
+      //.then(emailVerification(submissionEmail, this.props.formError))
   }
 
-  function emailVerification(staff, submissionEmail) {
+  function emailVerification(staff, submissionEmail, formError) {
     if(submissionEmail !== staff.email){
-      alert('This email does not match the one on record');
+      formError('email');
     }
   }

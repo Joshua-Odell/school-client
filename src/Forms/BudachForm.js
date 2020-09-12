@@ -6,7 +6,6 @@ import DatePickerTwo from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 const list = require('../Store/store');
-const concordlist = require('../Store/ConcordStore');
 
 //Possibly need to add a building selector
 export default class BudachForm extends React.Component {

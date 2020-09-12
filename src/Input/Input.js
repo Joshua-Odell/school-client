@@ -15,7 +15,6 @@ import DHHProgramsForm from '../Forms/DHHProgramsForm';
 import OptionsForm from '../Forms/OptionsForm';
 
 const moment = require('moment');
-const list = require('../Store/store');
 
 export default class Input extends Component {
   constructor(props){
@@ -109,17 +108,17 @@ export default class Input extends Component {
     this.setState({length: time}, () => {this.addHold(); });       
   }
 
-  createHoldIncident = () => {
+  createHoldIncident = (event) => {
     document.getElementById('holdEntry').removeAttribute('hidden');
   }
 
-  createSeclusionHoldIncident = () => {
+  createSeclusionHoldIncident = (event) => {
     if(this.state.seclusion === true){
       document.getElementById('seclusionHold').removeAttribute('hidden');
     }
   }
 
-  createForceHoldIncident = () => {
+  createForceHoldIncident = (event) => {
     if(this.state.reasonable_force === 'Non-PCM Hold' || this.state.reasonable_force === 'Unlicensed Seclusion'){
       document.getElementById('reasonableForceHold').removeAttribute('hidden');
     }
@@ -277,7 +276,7 @@ export default class Input extends Component {
     })
       .then(res => {
         if (!res.ok){          
-          this.staffValidationError('involvedPeople')
+          this.formError('involvedPeople')
         } else{
           return res.json()
         }
@@ -292,9 +291,13 @@ export default class Input extends Component {
       });
   }
 
-  staffValidationError = (property) => {
-    if(property === 'involvedPeople'){
+  formError = (property) => {
+    if(property === 'involvedPeople' || property === 'reporter'){
       this.setState({formError: 'Staff Name Not recognized'});
+    }else if(property === 'email'){
+      this.setState({formError: 'This email does not match the one on record'})
+    }else if(property === 'marssNumber' || property === 'studentLastName'){
+      this.setState({formError: 'Student MARSS and/or Last Name Invalid'})
     }    
     document.getElementById([property]).classList.add("fieldError")
   }
@@ -375,14 +378,29 @@ export default class Input extends Component {
         }
         return res.json()   
       })
-      .then(this.sendEmail())
+      .then(data => this.generatePDF(data))
       .then(this.setState({completed: true}))
     }
   } 
 
+  generatePDF = (id) => {
+    fetch(`${config.API_ENDPOINT}/pdf/${id}`, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      },        
+    })
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(error => { throw error })
+      }
+      return res.json()   
+    })
+  }
+
   finalDataPreperation = async() => {
-    await submitterVerification(this.state.staff_submitter, this.state.submissionEmail);
-    await studentCheck(this.state.student_marss, this.state.student_Last_Name);    
+    await submitterVerification(this.state.staff_submitter, this.state.submissionEmail, this.formError);
+    await studentCheck(this.state.student_marss, this.state.student_Last_Name, this.formError);    
     await this.approverAssignment();
     await this.schoolConversion();
   } 

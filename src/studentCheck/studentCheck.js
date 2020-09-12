@@ -1,6 +1,6 @@
 import config from '../config';
 
-export default  function studentCheck(student_marss, student_Last_Name){
+export default  function studentCheck(student_marss, student_Last_Name, formError){
     fetch(`${config.API_ENDPOINT}/studentcheck/${student_marss}/${student_Last_Name}`, {
       method: 'GET',
       headers: {
@@ -9,7 +9,8 @@ export default  function studentCheck(student_marss, student_Last_Name){
     })
       .then(res => {
         if (!res.ok){
-          alert('Student MARSS and/or Last Name Invalid') // This is needs to be a regular message displayed that interupts submission
+          formError('marssNumber');
+          formError('studentLastName');
         }
         return res.json()    
       })

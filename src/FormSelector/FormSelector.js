@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from '@testing-library/react';
 import Input from '../Input/Input';
 
 export default class FormSelector extends Component {

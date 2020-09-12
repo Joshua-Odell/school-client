@@ -6,7 +6,6 @@ import DatePickerTwo from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 const list = require('../Store/store');
-const concordlist = require('../Store/ConcordStore');
 
 
 //Room locations are identical to budach used same list
