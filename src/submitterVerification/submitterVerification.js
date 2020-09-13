@@ -9,11 +9,12 @@ export default function submitterVerification(staff_name, submissionEmail, formE
     })
       .then(res => {
         if (!res.ok){
-          formError('reporter');
+          throw new error()
         }
         return res.json()
       })
-      //.then(emailVerification(submissionEmail, this.props.formError))
+      .then(res => emailVerification(res, submissionEmail, this.props.formError))
+      .catch(error => formError('reporter'))
   }
 
   function emailVerification(staff, submissionEmail, formError) {
