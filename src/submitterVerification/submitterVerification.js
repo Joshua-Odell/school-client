@@ -9,7 +9,7 @@ export default function submitterVerification(staff_name, submissionEmail, formE
     })
       .then(res => {
         if (!res.ok){
-          throw new error()
+          throw new Error()
         }
         return res.json()
       })

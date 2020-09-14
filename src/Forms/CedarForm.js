@@ -2,6 +2,7 @@ import React from 'react';
 import Context from '../Context';
 import DatePicker from 'react-datepicker';
 import DatePickerTwo from 'react-datepicker';
+import LengthHandler from '../LengthHandler/LengthHandler';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -158,7 +159,7 @@ export default class CedarForm extends React.Component {
                         </div>                
                         <div id='holdEntry' hidden>                    
                             <div >                   
-                                {this.context.Select(list.holds, 'Hold', this.context.stateUpdate('holds_used'))} 
+                                {this.context.Select(list.holds, 'Hold', this.context.stateUpdate('holds_used'))} 0
                                 <label htmlFor="startTime">Start Time</label>
                                 <input type="time" id="regular-startTime" name="startTime" onChange={this.context.stateUpdate('start_time')}/>                    
                                 <label htmlFor="stopTime">Stop Time</label>

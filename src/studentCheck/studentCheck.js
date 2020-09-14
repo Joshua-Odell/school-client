@@ -9,10 +9,14 @@ export default  function studentCheck(student_marss, student_Last_Name, formErro
     })
       .then(res => {
         if (!res.ok){
-          formError('marssNumber');
-          formError('studentLastName');
+          throw new Error()
+          
         }
         return res.json()    
+      })
+      .catch(error => {
+        formError('marssNumber');
+        formError('studentLastName');
       })
       
   }

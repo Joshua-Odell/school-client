@@ -262,6 +262,10 @@ export default class Input extends Component {
     }
   }
 
+  stateGeneralUpdate = (property, value) => {
+    this.setState({[property]: [value]});
+  }
+
   // INVOLVED FUNCTIONS
   involvedStaff = () => {
     document.getElementById('involvedPeopleList').removeAttribute('hidden');
@@ -501,6 +505,7 @@ export default class Input extends Component {
           createSeclusionHoldIncident: this.createSeclusionHoldIncident,
           getMultipleSelectValues: this.getMultipleSelectValues,
           parentDateHandler: this.parentDateHandler,
+          stateGeneralUpdate: this.stateGeneralUpdate,
           
 
         }
