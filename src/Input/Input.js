@@ -77,8 +77,6 @@ export default class Input extends Component {
   }
 
   //HOLD FUNCTIONS
-
-  // This function works I just need to interupt the subsequent function call if there is an error
   lengthHandler = () => {
     let seconds = this.state.seconds;
     let start = moment(this.state.start_time, "HH:mm");
@@ -251,6 +249,10 @@ export default class Input extends Component {
     }    
   }
 
+  stateGeneralUpdate = (property, value) => {
+    this.setState({[property]: [value]});
+  }
+
   stateUpdate = (property, multiple) => {
     let result = this.state.[property];
     return (event) => {
@@ -260,39 +262,6 @@ export default class Input extends Component {
         this.setState({[property]: result});
       }else { this.setState({[property]: value}, () => {this.createForceHoldIncident();})}
     }
-  }
-
-  stateGeneralUpdate = (property, value) => {
-    this.setState({[property]: [value]});
-  }
-
-  // INVOLVED FUNCTIONS
-  involvedStaff = () => {
-    document.getElementById('involvedPeopleList').removeAttribute('hidden');
-    let newStaff ={
-      staff_name: this.state.people_involved
-    }
-    fetch(`${config.API_ENDPOINT}/staffcheck/${newStaff.staff_name}`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json'
-      },
-    })
-      .then(res => {
-        if (!res.ok){          
-          this.formError('involvedPeople')
-        } else{
-          return res.json()
-        }
-        
-      })
-      .then(() => {
-        this.state.enteredPersonsList.push(this.state.people_involved)
-        this.setState({people_involved: ""})
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 
   formError = (property) => {
@@ -309,12 +278,6 @@ export default class Input extends Component {
   addInvolvedPerson = () => {
     this.state.enteredPersonsList.push(this.state.people_involved)
     this.setState({people_involved: ""})
-  }
-
-  //PDF GENERATION AND EMAIL
-
-  sendEmail = () => {
-    //
   }
 
   // STAFF SUBMITTER INFO VERIFICATION
@@ -441,7 +404,26 @@ export default class Input extends Component {
           return <Completed />
         }else if(this.props.school === "NONE"){
             return(
+              <div>
                 <div>Please Select Your Location</div>
+                <div id="description">
+                  <h3>Behavior Log</h3>
+                  <p>This application will allow for minimal repetition when logging incidents while increase the quality of those reports.</p>
+                  <h4>The process</h4>
+                  <ul>
+                    <li>The submitter selects their school giving them a custom form with location specific information</li>
+                    <li>While inputing data several checks are occuring to make sure that the student and staff are validated with the database</li>
+                    <li>The form uses the database to get repetative data. This means that information such as demographics do not need to be entered everytime the student has an incident</li>
+                    <li>The form uses inputed choices to display the relevant fields. This reduces the time spent interacting with irrelevant fields.</li>
+                    <li>The displays for the hold inputs and involved person inputs give confidence to the submitter about the accuracy of their report.</li>
+                    <li>Upon submission final validations occur before sending the incident to the database.</li>
+                    <li>When the incident has been sucessfully added to the database this program generates a unique PDF Incident Report for each incident.</li>
+                    <li>That PDF is then sent to the designated approver for review along with a link to either approve or return the incident with comments.</li>
+                    <li>Upon acceptance of each new incident a CSV file is automatically updated this file is then used to produce up to the moment data returns.</li>
+                    <li>The data return only returns accepted incidents.</li>
+                  </ul>
+                </div>
+              </div>                
             )
         }else if(this.props.school === "Concord"){
             return <ConcordForm school={this.props.school}/>            
@@ -463,7 +445,6 @@ export default class Input extends Component {
   }
 
     render(){
-      // Do I need to pass the variables into context if I am updating them here?
         const value = {
           submissionEmail: this.state.submissionEmail,
           school: this.props.school,
@@ -492,6 +473,7 @@ export default class Input extends Component {
           enteredHoldList: this.state.enteredHoldList,
           formError: this.state.formError,
           enteredPersonsList: this.state.enteredPersonsList,
+          people_involved:this.state.people_involved,
           createHoldIncident: this.createHoldIncident,
           dateHandler: this.dateHandler,
           handleSubmit: this.handleSubmit,
@@ -501,11 +483,11 @@ export default class Input extends Component {
           boolConversion: this.boolConversion,
           stateUpdate: this.stateUpdate ,
           lengthHandler: this.lengthHandler,
-          involvedStaff: this.involvedStaff,
           createSeclusionHoldIncident: this.createSeclusionHoldIncident,
           getMultipleSelectValues: this.getMultipleSelectValues,
           parentDateHandler: this.parentDateHandler,
           stateGeneralUpdate: this.stateGeneralUpdate,
+          addInvolvedPerson: this.addInvolvedPerson,
           
 
         }

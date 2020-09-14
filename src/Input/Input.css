@@ -105,6 +105,11 @@ input:invalid {
 
 }
 
+#description ul {
+    text-align: left;
+    list-style-type: square;
+}
+
 @media screen and (min-width: 1000px){
 
     .container{

@@ -3,7 +3,7 @@ import Context from '../Context';
 import DatePicker from 'react-datepicker';
 import DatePickerTwo from 'react-datepicker';
 import LengthHandler from '../LengthHandler/LengthHandler';
-
+import involvedStaff from '../involvedStaff/involvedStaff';
 import "react-datepicker/dist/react-datepicker.css";
 
 const list = require('../Store/store');
@@ -97,8 +97,7 @@ export default class CedarForm extends React.Component {
                             {/* There should be a seperate field for each person so they can be matched to the relevant staff table */}
                         <label htmlFor="involvedPeople">People Involved:</label>
                         <input type="text" id="involvedPeople" name="involvedPeople" onChange={this.context.stateUpdate('people_involved')}/>
-                        <button type='button' onClick={() => { this.context.involvedStaff(); this.clearInvolvedField(); }}>Add Staff</button> 
-                        {/* The buttons should add the person and verify their existence in the database */}
+                        <button type='button' onClick={() => { involvedStaff(this.context.people_involved, this.context.formError, this.context.addInvolvedPerson); this.clearInvolvedField(); }}>Add Staff</button>                        {/* The buttons should add the person and verify their existence in the database */}
                         {/* There should be a display showing the sucessfully added people */}
                         </div>
                         <div id='involvedPeopleList' className="spacing" >
