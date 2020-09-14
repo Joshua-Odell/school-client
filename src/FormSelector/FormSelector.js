@@ -16,7 +16,7 @@ export default class FormSelector extends Component {
     
     render(){
         return(
-            <div>
+            <body>
                 <header>
                     <h1>Incident Report Form</h1>
                 </header>
@@ -34,11 +34,12 @@ export default class FormSelector extends Component {
                     </select>
                 </nav>
                 <main>
-                  <Input
-                  school={this.state.school}
-                   />
+                    <Input
+                    school={this.state.school}
+                    />
                 </main>
-            </div>
+            </body>        
+            
         )    
     }
 }
