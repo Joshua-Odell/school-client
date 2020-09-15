@@ -1,68 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Behavior Log -client
 
-## Available Scripts
+This application is a data entry and manipulation software designed to help a level four school for kids with severe behavior problems.The current system they use involves entering redundant information every time an incident occurs which is on a very regular basis. This will streamline the process by reducing the demographic and location information that is entered each time. Instead it makes a call to the database confirming the accuracy of the information and retrieving relevant information. This software also removes the process of manually copying incidents to fill out PDF's. Instead with each creation of an incident the pdf is generated and sent to the assigned approver for comments or final approval. With each approval a fresh csv is generated with all incident information this is used to parse through the data and create relevant graphs automatically. Accurate recording and up to date information is critical to effective treatment of students. This programs ensures that process is streamlined while freeing up the staff to spend their time more effectively.
 
-In the project directory, you can run:
+## Repos:
 
-### `npm start`
+Client- https://github.com/Joshua-Odell/school-client
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Server- https://github.com/Joshua-Odell/school-server
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Live App- https://behaviorallog.com/
 
-### `npm test`
+## Instructions:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To use the app you must first enter the demo credentials. Then when you land on the landing page select the relevant school from the drop down list. This gives you a form specific to this location.
 
-### `npm run build`
+[Landing Search](/Guides/school-selection.jpg)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Next you are prompted to enter your name and email. This will be checked against the staff database upon submission. This email will be used to send adjustment requests.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+[Staff Information](/Guides/staff-information.jpg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Then you are supposed to enter two identifying characteristics of the student. This ensures that the correct student is referenced. This information is checked against the database and relevant demographic information is connected to the incident.
 
-### `npm run eject`
+[Student Information Entry](/Guides/student-information.jpg)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The next interactive section is the involved staff section. This checks the name entered against the database to confirm the staff member prior to connecting them to the incident.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[Involved Person Entry](/Guides/involved.jpg)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+After the narrative section is the holds. Holds are the primary data source collected relating to incidents. It is important to collect information on each independently. The add hold button will display fields for standard hold types. Seclusion and reasonable force are special types of holds so these will only display when set to "true". Each hold is entered into the database and when they are confirmed then tied to the incident.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+[Hold Entry](/Guides/holds.jpg)
 
-## Learn More
+Finally you have a list of yes or no questions just before submission.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+[Submission](/Guides/submission.jpg)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Upon submission the data goes through its final validation and is submitted to the database. When the submission is successful an Incident Response Form is generated as a unique PDF with the incident id. This is then emailed to the assigned approver with a link. The submitters link leads to a page that gives the basic non-sensitive information about an incident. From here they can approve or return with comments the incident.Upon return the original creator gets email a link to edit their entry and the comments added by approver. Then process continues until acceptance. Upon acceptance every entry marked as approved is returned as a CSV for further manipulation into graphs.
 
-### Code Splitting
+## Demo Information
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Credentials
 
-### Analyzing the Bundle Size
+Username:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Password:
 
-### Making a Progressive Web App
+Staff Submitter
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Name: Vito Corleone
 
-### Advanced Configuration
+Email: email
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Student
 
-### Deployment
+Student Last Name: Weasly
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+MarSS Number: 123458
 
-### `npm run build` fails to minify
+Staff Involved
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Name: Luca Brasi
