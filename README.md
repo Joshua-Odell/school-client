@@ -36,28 +36,32 @@ Finally you have a list of yes or no questions just before submission.
 
 [Submission](/Guides/submission.jpg)
 
-Upon submission the data goes through its final validation and is submitted to the database. When the submission is successful an Incident Response Form is generated as a unique PDF with the incident id. This is then emailed to the assigned approver with a link. The submitters link leads to a page that gives the basic non-sensitive information about an incident. From here they can approve or return with comments the incident.Upon return the original creator gets email a link to edit their entry and the comments added by approver. Then process continues until acceptance. Upon acceptance every entry marked as approved is returned as a CSV for further manipulation into graphs.
+Upon submission the data goes through its final validation and is submitted to the database. When the submission is successful an Incident Response Form is generated as a unique PDF with the incident id. This is then emailed to the assigned approver with a link. The submitters link leads to a page that gives the basic non-sensitive information about an incident. From here they can approve or return with comments the incident.
+
+[Approval Page](/Guides/approval.jpg)
+
+Upon return the original creator gets email a link to edit their entry and the comments added by approver. Then process continues until acceptance. Upon acceptance every entry marked as approved is returned as a CSV for further manipulation into graphs.
 
 ## Demo Information
 
-Credentials
+#### Credentials
 
 Username:
 
 Password:
 
-Staff Submitter
+##### Staff Submitter
 
 Name: Vito Corleone
 
 Email: email
 
-Student
+#### Student
 
 Student Last Name: Weasly
 
 MarSS Number: 123458
 
-Staff Involved
+#### Staff Involved
 
 Name: Luca Brasi
