@@ -1,128 +1,126 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Merriweather+Sans:wght@600&family=Raleway&display=swap');
 
 body {
-    background-color: #EEEEEE;
-    text-align: center;
-    font-family: 'Raleway', sans-serif;
+	background-color: #eeeeee;
+	text-align: center;
+	font-family: 'Raleway', sans-serif;
 }
 
 h1 {
-    font-family: 'Josefin Sans', sans-serif;
+	font-family: 'Josefin Sans', sans-serif;
 }
 
 form {
-    display: inline-block;
-    width: 80%;
+	display: inline-block;
+	width: 80%;
 }
 
 textarea {
-    width: 80%;
+	width: 80%;
 }
 
 #commentsSection {
-    padding: 15px;
+	padding: 15px;
 }
 
 #generalReturn {
-    padding: 15px;
+	padding: 15px;
 }
 
 #involvedList {
-    background-color: white;
-    border-style: solid;
-    padding: 15px;
+	background-color: white;
+	border-style: solid;
+	padding: 15px;
 }
 
 #enteredHolds {
-    background-color: white;
-    border-style: solid;
-    padding: 15px;
-    width: 100%;
+	background-color: white;
+	border-style: solid;
+	padding: 15px;
+	width: 100%;
 }
 
 #basicInfo {
-    padding: 15px;
+	padding: 15px;
 }
 
 #involvedPeopleGroup {
-    padding: 15px;
+	padding: 15px;
 }
 
 #expandedTextArea {
-    padding: 15px;
+	padding: 15px;
 }
 
 #holdsSection {
-    padding: 15px;
-    display: flex;
+	padding: 15px;
+	display: flex;
 }
 
 #holdInput {
-    padding: 10px;
-    text-align: left;
+	padding: 10px;
+	text-align: left;
 }
 
 #boolQuestions {
-    display: inline-block;
-    padding: 15px;
-    width: 80%;
-    text-align: left;
-
+	display: inline-block;
+	padding: 15px;
+	width: 80%;
+	text-align: left;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 #submit {
-    font-weight: bold;
-    width: 20em;
-    height: 2em;
+	font-weight: bold;
+	width: 20em;
+	height: 2em;
 }
 
 .approvalButtons {
-    padding: 10px;
-    font-weight: bold;
+	padding: 10px;
+	font-weight: bold;
 }
 
 ul {
-    list-style-type: none;
+	list-style-type: none;
 }
 
 #multipleList {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 input:invalid {
-    background-color: #C10042;
+	background-color: #c10042;
 }
 
 .fieldError {
-    border-color: #C10042;
-    background-color: #f7bbcd;
-
+	border-color: #c10042;
+	background-color: #f7bbcd;
 }
 
 #description ul {
-    text-align: left;
-    list-style-type: square;
+	text-align: left;
+	list-style-type: square;
 }
 
-@media screen and (min-width: 1000px){
+@media screen and (min-width: 1000px) {
+	.container {
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
 
-    .container{
-        flex-direction: row;
-        justify-content: space-evenly;
-    }
+	#multipleList {
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
 
-    #multipleList {
-        flex-direction: row;
-        justify-content: space-evenly;
-    }
-
-    input, label {
-        display: block;
-    }
+	input,
+	label {
+		display: block;
+	}
 }

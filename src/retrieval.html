@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <label for="password">Password:</label>
-        <input id="password" type="text" />
-        <button type="submit">Submit</button>
-    </div>
-    <div>
-        <header>
-            <h1>Data Retrieval</h1>
-        </header>
-        <nav>
-            <label htmlFor="school">At which site did the Incident occur?</label>
-            <select id="school" name="schoolLocation" onChange={this.locationHandler.bind(this)} value={this.state.value}>
-                <option value="NONE">--NONE--</option>
-                <option value="Concord">Concord Education Center</option>
-                <option value="Alliance">Alliance Education Center</option>
-                <option value="Lebanon">Lebanon Education Center</option>
-                <option value="Cedar">Cedar School?</option>
-                <option value="program">programs?</option>
-            </select>
-            <div>
-                <div class="text match">
-                    <label for="text-field">text match</label>
-                    <input id="text-field" type="text" />
-                    <label for="text-field-type">type</label>
-                    <select id="text-field-type" name="textMatch">
-                        <option value="NONE">--NONE--</option>
-                        <option value="studentName">Students Name</option>
-                    </select>
-                </div>
-                      
-                
-                Return drop down list based on school selection</div>
-        </nav>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div>
+			<label for="password">Password:</label>
+			<input id="password" type="text" />
+			<button type="submit">Submit</button>
+		</div>
+		<div>
+			<header>
+				<h1>Data Retrieval</h1>
+			</header>
+			<nav>
+				<label htmlFor="school">At which site did the Incident occur?</label>
+				<select
+					id="school"
+					name="schoolLocation"
+					onChange="{this.locationHandler.bind(this)}"
+					value="{this.state.value}"
+				>
+					<option value="NONE">--NONE--</option>
+					<option value="Concord">Concord Education Center</option>
+					<option value="Alliance">Alliance Education Center</option>
+					<option value="Lebanon">Lebanon Education Center</option>
+					<option value="Cedar">Cedar School?</option>
+					<option value="program">programs?</option>
+				</select>
+				<div>
+					<div class="text match">
+						<label for="text-field">text match</label>
+						<input id="text-field" type="text" />
+						<label for="text-field-type">type</label>
+						<select id="text-field-type" name="textMatch">
+							<option value="NONE">--NONE--</option>
+							<option value="studentName">Students Name</option>
+						</select>
+					</div>
 
-    </div>
-</body>
+					Return drop down list based on school selection
+				</div>
+			</nav>
+		</div>
+	</body>
 </html>
