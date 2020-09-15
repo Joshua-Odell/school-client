@@ -33,7 +33,6 @@ export default class ApproverPage extends Component {
         this.setState({date: incident.date})
         this.setState({location: incident.school_name})
         this.setState({reportingStaff: incident.staff_submitter })
-        console.log(this.state.date.type)
     }
 
     addComments = (event) => {
