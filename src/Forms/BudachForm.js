@@ -18,7 +18,7 @@ export default class BudachForm extends React.Component {
         this.setState({
             startDate: date
         });
-        this.context.dateHandler(date);
+        this.context.stateGeneralUpdate('date', date);
         this.context.day_of_the_weekHandler(date);
     };
 
@@ -26,7 +26,7 @@ export default class BudachForm extends React.Component {
         this.setState({
             startDate: date
         });
-        this.context.parentDateHandler(date);
+        this.context.stateGeneralUpdate('parent_notification_date', date);
     };
 
     clearInvolvedField = () => {

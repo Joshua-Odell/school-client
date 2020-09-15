@@ -194,23 +194,14 @@ export default class Input extends Component {
     document.getElementById('holdEntry').value = '';
   }
 
-  //STUDENT INFORMATION VALIDATION  
-
-
-  // DATE SECTION
-
+  // Takes the date and converts it to a day of the week string 
   day_of_the_weekHandler = (date) => {
     let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     let weekday = daysOfTheWeek[date.getDay()];
     this.setState({day_of_the_week: weekday});
-  }
+  }  
 
-  dateHandler = (newdate) => {this.setState({date: newdate})};
-
-  parentDateHandler = (newdate) => {this.setState({parent_notification_date: newdate})};
-
-  // GENERAL HTML FUNCTIONS
-
+  //A function used to generate multiple different types of selection html elements 
   Select = (list, name, handler, multiple) => {
     const options = list.map((item) => {
       return(
@@ -238,6 +229,7 @@ export default class Input extends Component {
     }    
   }
 
+  // takes the strings returned from bianary drop down lists and converts the results to a bool
   boolConversion = (property) => {
     return (event) => {
       const { target: {value}} = event
@@ -249,10 +241,12 @@ export default class Input extends Component {
     }    
   }
 
+  // A state Update function that is very broad in order to be used as a multipurpose callback function
   stateGeneralUpdate = (property, value) => {
     this.setState({[property]: [value]});
   }
 
+  //A state update function used primarily by the forms select and options components 
   stateUpdate = (property, multiple) => {
     let result = this.state.[property];
     return (event) => {
@@ -264,6 +258,8 @@ export default class Input extends Component {
     }
   }
 
+
+  // An all purpose error handler that sets an error class on the relevant field and can set a message
   formError = (property) => {
     if(property === 'involvedPeople' || property === 'reporter'){
       this.setState({formError: 'Staff Name Not recognized'});
@@ -275,26 +271,23 @@ export default class Input extends Component {
     document.getElementById([property]).classList.add("fieldError")
   }
 
+  //This function is called by the Involved Person validator. This is kept here for simplicity sake with the push order complicating calling back to change state.
   addInvolvedPerson = () => {
     this.state.enteredPersonsList.push(this.state.people_involved)
     this.setState({people_involved: ""})
   }
 
-  // STAFF SUBMITTER INFO VERIFICATION
-
-  // END SUBMIT DATA MANIPULATION
-
+  //Does an initial check to ensure no critical fields are left blank then passes on to finalPostRequest
   handleSubmit = (event) => {
     event.preventDefault();
 
     if( this.state.room_location === '---' || this.state.seclusion === '---' || this.state.reasonable_force === '---' || this.student_Injury === '---' || this.staff_Injury === '---' || this.law_enforcement === '---'){
       this.setState({formError: 'You must make a selection'})
-    }
-    //I still need more data validation
-    
+    }   
     this.finalPostRequest();
   }
 
+  // Takes the forms states and formats a post request to add the incident to the database
   finalPostRequest = async() => {
     await this.finalDataPreperation();
     if(this.state.formError === ''){
@@ -350,6 +343,7 @@ export default class Input extends Component {
     }
   } 
 
+  //Ran after sucessfull submission generating a unique pdf for each individual incident
   generatePDF = (id) => {
     fetch(`${config.API_ENDPOINT}/pdf/${id}`, {
       method: 'GET',
@@ -365,6 +359,7 @@ export default class Input extends Component {
     })
   }
 
+  // runs the functions that check that the staff and students are valid along with assigning the approvers
   finalDataPreperation = async() => {
     await submitterVerification(this.state.staff_submitter, this.state.submissionEmail, this.formError);
     await studentCheck(this.state.student_marss, this.state.student_Last_Name, this.formError);    
@@ -372,33 +367,21 @@ export default class Input extends Component {
     await this.schoolConversion();
   } 
 
+  //sets the correct approver for each school
   approverAssignment = async() => {
     if(this.props.school === 'Concord'){
       this.setState({approver: 1})
     }
   }
 
+  //changes the name to the relevant school ID, Ideal because school is used to display the school name prior to submission
   schoolConversion = async() => {
     if(this.props.school === 'Concord'){
       this.setState({schoolId: 1})
     }
   }
 
-  getMultipleSelectValues = (select) => {
-    let result = [];
-    let options = select && select.options;
-    let opt;
-  
-    for (let i=0, iLen=options.length; i<iLen; i++) {
-      opt = options[i];
-  
-      if (opt.selected) {
-        result.push(opt.value || opt.text);
-      }
-    }
-    //this.setState({[property]: result});
-  }
-
+  //Takes The school Prop that is sent from FormSelector and displays the relevant Form
   renderForm = () => {
         if(this.state.completed){
           return <Completed />
