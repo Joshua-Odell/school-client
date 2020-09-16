@@ -46,9 +46,9 @@ Upon return the original creator gets email a link to edit their entry and the c
 
 #### Credentials
 
-Username:
+Username: email@email.com
 
-Password:
+Password: demo123!
 
 ##### Staff Submitter
 

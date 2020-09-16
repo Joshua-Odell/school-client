@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import config from '../config';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
-export default class ApproverPage extends Component {
+class ApproverPage extends Component {
 	state = {
 		comments: '',
 		date: null,
@@ -142,3 +143,7 @@ export default class ApproverPage extends Component {
 		);
 	}
 }
+
+export default withAuthenticationRequired(ApproverPage, {
+	onRedirecting: () => <div>Redirecting you to the login page...</div>,
+});
