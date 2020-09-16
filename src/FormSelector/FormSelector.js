@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Input from '../Input/Input';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
-export default class FormSelector extends Component {
+class FormSelector extends Component {
 	state = {
 		school: 'NONE',
 	};
@@ -42,3 +43,7 @@ export default class FormSelector extends Component {
 		);
 	}
 }
+
+export default withAuthenticationRequired(FormSelector, {
+	onRedirecting: () => <div>Redirecting you to the login page...</div>,
+});

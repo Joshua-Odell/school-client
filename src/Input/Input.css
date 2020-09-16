@@ -27,6 +27,10 @@ textarea {
 	padding: 15px;
 }
 
+#loginBtn {
+	background-color: white;
+}
+
 #involvedList {
 	background-color: white;
 	border-style: solid;

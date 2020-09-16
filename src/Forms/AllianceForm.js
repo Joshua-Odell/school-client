@@ -136,7 +136,7 @@ export default class AllianceForm extends React.Component {
 							{/* There should be a display showing the sucessfully added people */}
 						</div>
 						<div id="involvedPeopleList" className="spacing">
-							<h5>InvolvedPeople</h5>
+							<h5>Involved People</h5>
 							<div id="involvedList">
 								{this.listConverter(this.context.enteredPersonsList)}
 							</div>

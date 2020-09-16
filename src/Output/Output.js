@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './output.css';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
-export default class Output extends Component {
+class Output extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -166,12 +167,6 @@ export default class Output extends Component {
 	}
 }
 
-// function Toggle() {
-//     const [isVisible, setIsVisible] = React.useState(false)
-//     return (
-//         <div>
-//             <button onClick={ () => setIsVisible(!!isVisible)}>click</button>
-//             {isVisible && (<p>is visible</p>)}
-//         </div>
-//     )
-// }
+export default withAuthenticationRequired(Output, {
+	onRedirecting: () => <div>Redirecting you to the login page...</div>,
+});
