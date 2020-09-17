@@ -70,7 +70,7 @@ export default class Input extends Component {
 
 	static contextType = Context;
 
-	componentWillMount() {
+	componentDidMount() {
 		this.day_of_the_weekHandler(this.state.date);
 	}
 

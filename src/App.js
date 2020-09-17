@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import Output from './Output/Output';
+import Output from './FutureFeatures/Output/Output';
 import FormSelector from './FormSelector/FormSelector';
 import ApproverPage from './Approver/ApproverPage';
 import LoginButton from './LoginButton';
@@ -28,7 +28,7 @@ export default class App extends Component {
 					<Route path="/login" component={LoginButton} />
 					<Route path="/incidententry" component={FormSelector} />
 					<Route path="/conformationpage/:id" component={ApproverPage} />
-					<Route path="/output" component={Output} />
+					{/* <Route path="/output" component={Output} /> Left in for future potential feature depending on client desire */}
 				</Switch>
 			</main>
 		);
