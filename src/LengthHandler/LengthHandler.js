@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Context from '../Context';
 import config from '../config';
 
@@ -27,6 +27,7 @@ export default class LengthHandler extends Component {
 
 		let hours = duration.hours();
 		hours = hours.toString();
+		minutes = minutes.toString();
 		time = hours + ':' + minutes + '.' + '00';
 
 		if (time === '0:00.00') {

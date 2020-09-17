@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import Head from './Head';
 import { Auth0Provider } from '@auth0/auth0-react';
 
 ReactDOM.render(
@@ -11,6 +12,7 @@ ReactDOM.render(
 			clientId="gOV5Kclt98UEikfTMXoUmgidx4Ds78YR"
 			redirectUri={window.location.origin}
 		>
+			<Head />
 			<App />
 		</Auth0Provider>
 	</BrowserRouter>,

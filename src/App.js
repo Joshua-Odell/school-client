@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import Output from './Output/Output';
+import Output from './FutureFeatures/Output/Output';
 import FormSelector from './FormSelector/FormSelector';
 import ApproverPage from './Approver/ApproverPage';
 import LoginButton from './LoginButton';
@@ -20,39 +20,17 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<div>
-				<head>
-					<link
-						rel="apple-touch-icon"
-						sizes="180x180"
-						href="../apple-touch-icon.png"
-					/>
-					<link
-						rel="icon"
-						type="image/png"
-						sizes="32x32"
-						href="../favicon-32x32.png"
-					/>
-					<link
-						rel="icon"
-						type="image/png"
-						sizes="16x16"
-						href="../favicon-16x16.png"
-					/>
-					<link rel="manifest" href="../site.webmanifest" />
-				</head>
-				<main onChange={this.authCheck}>
-					<Switch>
-						<Route path="/" exact={true}>
-							<Redirect to="/login" />
-						</Route>
-						<Route path="/login" component={LoginButton} />
-						<Route path="/incidententry" component={FormSelector} />
-						<Route path="/conformationpage/:id" component={ApproverPage} />
-						<Route path="/output" component={Output} />
-					</Switch>
-				</main>
-			</div>
+			<main onChange={this.authCheck}>
+				<Switch>
+					<Route path="/" exact={true}>
+						<Redirect to="/login" />
+					</Route>
+					<Route path="/login" component={LoginButton} />
+					<Route path="/incidententry" component={FormSelector} />
+					<Route path="/conformationpage/:id" component={ApproverPage} />
+					{/* <Route path="/output" component={Output} /> Left in for future potential feature depending on client desire */}
+				</Switch>
+			</main>
 		);
 	}
 }

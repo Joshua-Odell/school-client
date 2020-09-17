@@ -2,7 +2,6 @@ import React from 'react';
 import Context from '../Context';
 import DatePicker from 'react-datepicker';
 import DatePickerTwo from 'react-datepicker';
-import LengthHandler from '../LengthHandler/LengthHandler';
 import involvedStaff from '../involvedStaff/involvedStaff';
 import 'react-datepicker/dist/react-datepicker.css';
 

@@ -3,9 +3,10 @@ import React from 'react';
 export default React.createContext({
 	school: 'NONE',
 	submissionEmail: 'test',
-	staff_submitter: '',
-	student_Last_Name: '',
-	student_marss: '',
+	submitterName: '',
+	studentLastName: '',
+	involvedPeople: [],
+	marss: '',
 	people_involved: '',
 	contributing_variables: '',
 	antecedent: '',

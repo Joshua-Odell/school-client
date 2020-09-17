@@ -36,7 +36,7 @@ const LoginButton = (authCheck) => {
 				to spend their time more effectively.
 			</p>
 			<p> Upon login visit </p>{' '}
-			<p> "https://behaviorallog.com/incidententry"</p>
+			<a href="https://behaviorallog.com/incidententry">Enter an Incident</a>
 		</div>
 	);
 };
