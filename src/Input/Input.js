@@ -433,12 +433,12 @@ export default class Input extends Component {
 				<div>
 					<div>Please Select Your Location</div>
 					<div id="description">
-						<h3>Behavior Log</h3>
+						<h2>Behavior Log</h2>
 						<p>
 							This application will allow for minimal repetition when logging
 							incidents while increase the quality of those reports.
 						</p>
-						<h4>The process</h4>
+						<h3>The process</h3>
 						<ul>
 							<li>
 								The submitter selects their school giving them a custom form
