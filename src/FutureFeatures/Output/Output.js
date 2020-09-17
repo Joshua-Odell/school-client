@@ -56,7 +56,7 @@ class Output extends Component {
 		}
 
 		// this.setState((state) => {
-		//     console.log(state, !!this.state.isAdvancedOptionsVisible)
+		//
 		//     return {
 		//         ...state, isAdvancedOptionsVisible: !!state.isAdvancedOptionsVisible
 		//     }

@@ -34,7 +34,6 @@ export default class CedarForm extends React.Component {
 	};
 
 	clearHoldField = (category) => {
-		console.log(category + 'startTime');
 		document.getElementById(category + 'startTime').value = '';
 		document.getElementById(category + 'stopTime').value = '';
 		document.getElementById(category + 'seconds').value = '';
@@ -42,7 +41,6 @@ export default class CedarForm extends React.Component {
 
 	schoolChanger = () => {
 		document.getElementById('schoolList').removeAttribute('hidden');
-		console.log('test');
 	};
 
 	listConverter = (list) => {
