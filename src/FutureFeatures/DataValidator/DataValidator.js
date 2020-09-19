@@ -1,10 +1,10 @@
 import { Component } from "react";
-import Context from "../Context";
+import Context from "../../Context";
 
 export default class DataValidator extends Component{
     static contextType = Context;
 
-    dataValidator = () => {
+    DataValidatorFunction = () => {
         if(typeOf(this.context.school !== "integer"){
             alert('inproper school')
         }
@@ -12,7 +12,7 @@ export default class DataValidator extends Component{
 
     render(){
         return(
-            dataValidator()
+            DataValidatorFunction()
         )
     }
 }

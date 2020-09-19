@@ -7,7 +7,7 @@ class FormSelector extends Component {
 		school: 'NONE',
 	};
 
-	locationHandler = (event) => {
+	LocationHandler = (event) => {
 		this.setState({ school: event.target.value });
 		document.getElementById('schoolList').setAttribute('hidden', true);
 	};

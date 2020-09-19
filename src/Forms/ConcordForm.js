@@ -2,7 +2,7 @@ import React from 'react';
 import Context from '../Context';
 import DatePicker from 'react-datepicker';
 import DatePickerTwo from 'react-datepicker';
-import involvedStaff from '../involvedStaff/involvedStaff';
+import InvolvedStaff from '../InvolvedStaff/InvolvedStaff';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const list = require('../Store/store');
@@ -13,7 +13,7 @@ export default class ConcordForm extends React.Component {
 	};
 	static contextType = Context;
 
-	handleChange = (date) => {
+	HandleChange = (date) => {
 		this.setState({
 			startDate: date,
 		});
@@ -21,28 +21,28 @@ export default class ConcordForm extends React.Component {
 		this.context.day_of_the_weekHandler(date);
 	};
 
-	handleParentChange = (date) => {
+	HandleParentChange = (date) => {
 		this.setState({
 			startDate: date,
 		});
 		this.context.stateGeneralUpdate('parent_notification_date', date);
 	};
 
-	clearInvolvedField = () => {
+	ClearInvolvedField = () => {
 		document.getElementById('involvedPeople').value = '';
 	};
 
-	clearHoldField = (category) => {
+	ClearHoldField = (category) => {
 		document.getElementById(category + 'startTime').value = '';
 		document.getElementById(category + 'stopTime').value = '';
 		document.getElementById(category + 'seconds').value = '';
 	};
 
-	schoolChanger = () => {
+	SchoolChanger = () => {
 		document.getElementById('schoolList').removeAttribute('hidden');
 	};
 
-	listConverter = (list) => {
+	ListConverter = (list) => {
 		const listItems = list.map((item) => {
 			return <li>{item}</li>;
 		});
@@ -54,7 +54,7 @@ export default class ConcordForm extends React.Component {
 			<form onSubmit={this.context.handleSubmit}>
 				<div>
 					<p>Current School Set To: {this.props.school}</p>
-					<button type="button" onClick={this.schoolChanger.bind(this)}>
+					<button type="button" onClick={this.SchoolChanger.bind(this)}>
 						Change School
 					</button>
 				</div>
@@ -105,7 +105,7 @@ export default class ConcordForm extends React.Component {
 							<DatePicker
 								id="date"
 								selected={this.state.startDate}
-								onChange={this.handleChange.bind(this)}
+								onChange={this.HandleChange.bind(this)}
 							/>
 						</div>
 					</div>
@@ -122,12 +122,12 @@ export default class ConcordForm extends React.Component {
 							<button
 								type="button"
 								onClick={() => {
-									involvedStaff(
+									InvolvedStaff(
 										this.context.people_involved,
 										this.context.formError,
 										this.context.addInvolvedPerson
 									);
-									this.clearInvolvedField();
+									this.ClearInvolvedField();
 								}}
 							>
 								Add Staff
@@ -138,7 +138,7 @@ export default class ConcordForm extends React.Component {
 						<div id="involvedPeopleList" className="spacing">
 							<h5>Involved People</h5>
 							<div id="involvedList">
-								{this.listConverter(this.context.enteredPersonsList)}
+								{this.ListConverter(this.context.enteredPersonsList)}
 							</div>
 						</div>
 					</div>
@@ -268,7 +268,7 @@ export default class ConcordForm extends React.Component {
 									type="button"
 									onClick={() => {
 										this.context.lengthHandler();
-										this.clearHoldField('regular-');
+										this.ClearHoldField('regular-');
 									}}
 								>
 									Enter Hold
@@ -317,7 +317,7 @@ export default class ConcordForm extends React.Component {
 										type="button"
 										onClick={() => {
 											this.context.lengthHandler();
-											this.clearHoldField('seclusion-');
+											this.ClearHoldField('seclusion-');
 										}}
 									>
 										Enter Hold
@@ -370,7 +370,7 @@ export default class ConcordForm extends React.Component {
 										type="button"
 										onClick={() => {
 											this.context.lengthHandler();
-											this.clearHoldField('force-');
+											this.ClearHoldField('force-');
 										}}
 									>
 										Enter Hold
@@ -383,7 +383,7 @@ export default class ConcordForm extends React.Component {
 					<div className="item">
 						<h5>Entered Holds</h5>
 						<div id="enteredHolds">
-							{this.listConverter(this.context.enteredHoldList)}
+							{this.ListConverter(this.context.enteredHoldList)}
 						</div>
 					</div>
 				</div>
@@ -427,7 +427,7 @@ export default class ConcordForm extends React.Component {
 							<DatePickerTwo
 								id="contactDate"
 								selected={this.state.startDate}
-								onChange={this.handleParentChange.bind(this)}
+								onChange={this.HandleParentChange.bind(this)}
 							/>
 						</div>
 					</div>

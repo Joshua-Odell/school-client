@@ -1,6 +1,6 @@
 import config from '../config';
 
-export default function submitterVerification(
+export default function SubmitterVerification(
 	staff_name,
 	submissionEmail,
 	formError
@@ -18,12 +18,12 @@ export default function submitterVerification(
 			return res.json();
 		})
 		.then((res) =>
-			emailVerification(res, submissionEmail, this.props.formError)
+			EmailVerification(res, submissionEmail, this.props.formError)
 		)
 		.catch((error) => formError('reporter'));
 }
 
-function emailVerification(staff, submissionEmail, formError) {
+function EmailVerification(staff, submissionEmail, formError) {
 	if (submissionEmail !== staff.email) {
 		formError('email');
 	}
