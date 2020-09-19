@@ -9,8 +9,8 @@ import ConcordForm from '../Forms/ConcordForm';
 import DHHProgramsForm from '../Forms/DHHProgramsForm';
 import LebanonForm from '../Forms/LebanonForm';
 import OptionsForm from '../Forms/OptionsForm';
-import StudentCheck from '../StudentCheck/StudentCheck';
-import SubmitterVerification from '../SubmitterVerification/SubmitterVerification';
+import StudentCheck from '../studentCheck/studentCheck';
+import SubmitterVerification from '../submitterVerification/submitterVerification';
 import './Input.css';
 
 const moment = require('moment');
