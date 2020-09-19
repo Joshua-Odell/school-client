@@ -1,6 +1,6 @@
 import config from '../config';
 
-export default function studentCheck(
+export default function StudentCheck(
 	student_marss,
 	student_Last_Name,
 	formError

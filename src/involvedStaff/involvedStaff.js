@@ -1,6 +1,6 @@
 import config from '../config';
 
-export default function involvedStaff(
+export default function InvolvedStaff(
 	staff_name,
 	formError,
 	addInvolvedPerson

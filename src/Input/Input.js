@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import Context from '../Context';
 import config from '../config';
-import ConcordForm from '../Forms/ConcordForm';
-import CedarForm from '../Forms/CedarForm';
+import Context from '../Context';
 import AllianceForm from '../Forms/AllianceForm';
-import LebanonForm from '../Forms/LebanonForm';
 import BudachForm from '../Forms/BudachForm';
-import studentCheck from '../studentCheck/studentCheck';
-import submitterVerification from '../submitterVerification/submitterVerification';
+import CedarForm from '../Forms/CedarForm';
 import Completed from '../Forms/Completed';
-
-import './Input.css';
+import ConcordForm from '../Forms/ConcordForm';
 import DHHProgramsForm from '../Forms/DHHProgramsForm';
+import LebanonForm from '../Forms/LebanonForm';
 import OptionsForm from '../Forms/OptionsForm';
+import StudentCheck from '../StudentCheck/StudentCheck';
+import SubmitterVerification from '../SubmitterVerification/SubmitterVerification';
+import './Input.css';
 
 const moment = require('moment');
 
@@ -71,11 +70,11 @@ export default class Input extends Component {
 	static contextType = Context;
 
 	componentDidMount() {
-		this.day_of_the_weekHandler(this.state.date);
+		this.DayOfTheWeekHandler(this.state.date);
 	}
 
 	//HOLD FUNCTIONS
-	lengthHandler = () => {
+	LengthHandler = () => {
 		let seconds = this.state.seconds;
 		let start = moment(this.state.start_time, 'HH:mm');
 		let stop = moment(this.state.stop_time, 'HH:mm');
@@ -102,21 +101,21 @@ export default class Input extends Component {
 			time = hours + ':' + minutes + '.' + seconds;
 		}
 		this.setState({ length: time }, () => {
-			this.addHold();
+			this.AddHold();
 		});
 	};
 
-	createHoldIncident = (event) => {
+	CreateHoldIncident = (event) => {
 		document.getElementById('holdEntry').removeAttribute('hidden');
 	};
 
-	createSeclusionHoldIncident = (event) => {
+	CreateSeclusionHoldIncident = (event) => {
 		if (this.state.seclusion === true) {
 			document.getElementById('seclusionHold').removeAttribute('hidden');
 		}
 	};
 
-	createForceHoldIncident = (event) => {
+	CreateForceHoldIncident = (event) => {
 		if (
 			this.state.reasonable_force === 'Non-PCM Hold' ||
 			this.state.reasonable_force === 'Unlicensed Seclusion'
@@ -125,7 +124,7 @@ export default class Input extends Component {
 		}
 	};
 
-	addHold = () => {
+	AddHold = () => {
 		let start_time = this.state.start_time;
 		let stop_time = this.state.stop_time;
 		let length = this.state.length;
@@ -175,10 +174,10 @@ export default class Input extends Component {
 				}
 				return res.json();
 			})
-			.then(this.settingHoldIds);
+			.then(this.SettingHoldIds);
 	};
 
-	settingHoldIds = (id) => {
+	SettingHoldIds = (id) => {
 		let count = this.state.holdCount;
 		let holdIdVariable = 'hold_' + count.toString();
 		let newCount = count + 1;
@@ -203,7 +202,7 @@ export default class Input extends Component {
 	};
 
 	// Takes the date and converts it to a day of the week string
-	day_of_the_weekHandler = (date) => {
+	DayOfTheWeekHandler = (date) => {
 		let daysOfTheWeek = [
 			'Sunday',
 			'Monday',
@@ -244,14 +243,14 @@ export default class Input extends Component {
 	};
 
 	// takes the strings returned from bianary drop down lists and converts the results to a bool
-	boolConversion = (property) => {
+	BoolConversion = (property) => {
 		return (event) => {
 			const {
 				target: { value },
 			} = event;
 			if (['true', 'false'].includes(value)) {
 				this.setState({ [property]: value === 'true' }, () => {
-					this.createSeclusionHoldIncident();
+					this.CreateSeclusionHoldIncident();
 				});
 			} else {
 				this.setState({ [property]: '---' });
@@ -260,12 +259,12 @@ export default class Input extends Component {
 	};
 
 	// A state Update function that is very broad in order to be used as a multipurpose callback function
-	stateGeneralUpdate = (property, value) => {
+	StateGeneralUpdate = (property, value) => {
 		this.setState({ [property]: [value] });
 	};
 
 	//A state update function used primarily by the forms select and options components
-	stateUpdate = (property, multiple) => {
+	StateUpdate = (property, multiple) => {
 		let result = this.state[property];
 		return (event) => {
 			const {
@@ -276,14 +275,14 @@ export default class Input extends Component {
 				this.setState({ [property]: result });
 			} else {
 				this.setState({ [property]: value }, () => {
-					this.createForceHoldIncident();
+					this.CreateForceHoldIncident();
 				});
 			}
 		};
 	};
 
 	// An all purpose error handler that sets an error class on the relevant field and can set a message
-	formError = (property) => {
+	FormError = (property) => {
 		if (property === 'involvedPeople' || property === 'reporter') {
 			this.setState({ formError: 'Staff Name Not recognized' });
 		} else if (property === 'email') {
@@ -297,13 +296,13 @@ export default class Input extends Component {
 	};
 
 	//This function is called by the Involved Person validator. This is kept here for simplicity sake with the push order complicating calling back to change state.
-	addInvolvedPerson = () => {
+	AddInvolvedPerson = () => {
 		this.state.enteredPersonsList.push(this.state.people_involved);
 		this.setState({ people_involved: '' });
 	};
 
 	//Does an initial check to ensure no critical fields are left blank then passes on to finalPostRequest
-	handleSubmit = (event) => {
+	HandleSubmit = (event) => {
 		event.preventDefault();
 
 		if (
@@ -316,12 +315,12 @@ export default class Input extends Component {
 		) {
 			this.setState({ formError: 'You must make a selection' });
 		}
-		this.finalPostRequest();
+		this.FinalPostRequest();
 	};
 
 	// Takes the forms states and formats a post request to add the incident to the database
-	finalPostRequest = async () => {
-		await this.finalDataPreperation();
+	FinalPostRequest = async () => {
+		await this.FinalDataPreperation();
 		if (this.state.formError === '') {
 			let newIncident = {
 				student_marss: this.state.student_marss,
@@ -372,13 +371,13 @@ export default class Input extends Component {
 					}
 					return res.json();
 				})
-				.then((data) => this.generatePDF(data))
+				.then((data) => this.GeneratePDF(data))
 				.then(this.setState({ completed: true }));
 		}
 	};
 
 	//Ran after sucessfull submission generating a unique pdf for each individual incident
-	generatePDF = (id) => {
+	GeneratePDF = (id) => {
 		fetch(`${config.API_ENDPOINT}/pdf/${id}`, {
 			method: 'GET',
 			headers: {
@@ -395,37 +394,37 @@ export default class Input extends Component {
 	};
 
 	// runs the functions that check that the staff and students are valid along with assigning the approvers
-	finalDataPreperation = async () => {
-		await submitterVerification(
+	FinalDataPreperation = async () => {
+		await SubmitterVerification(
 			this.state.staff_submitter,
 			this.state.submissionEmail,
-			this.formError
+			this.FormError
 		);
-		await studentCheck(
+		await StudentCheck(
 			this.state.student_marss,
 			this.state.student_Last_Name,
-			this.formError
+			this.FormError
 		);
-		await this.approverAssignment();
-		await this.schoolConversion();
+		await this.ApproverAssignment();
+		await this.SchoolConversion();
 	};
 
 	//sets the correct approver for each school
-	approverAssignment = async () => {
+	ApproverAssignment = async () => {
 		if (this.props.school === 'Concord') {
 			this.setState({ approver: 1 });
 		}
 	};
 
 	//changes the name to the relevant school ID, Ideal because school is used to display the school name prior to submission
-	schoolConversion = async () => {
+	SchoolConversion = async () => {
 		if (this.props.school === 'Concord') {
 			this.setState({ schoolId: 1 });
 		}
 	};
 
 	//Takes The school Prop that is sent from FormSelector and displays the relevant Form
-	renderForm = () => {
+	RenderForm = () => {
 		if (this.state.completed) {
 			return <Completed />;
 		} else if (this.props.school === 'NONE') {
@@ -534,21 +533,21 @@ export default class Input extends Component {
 			formError: this.state.formError,
 			enteredPersonsList: this.state.enteredPersonsList,
 			people_involved: this.state.people_involved,
-			createHoldIncident: this.createHoldIncident,
-			handleSubmit: this.handleSubmit,
+			createHoldIncident: this.CreateHoldIncident,
+			handleSubmit: this.HandleSubmit,
 			Select: this.Select,
-			day_of_the_weekHandler: this.day_of_the_weekHandler,
-			addHold: this.addHold,
-			boolConversion: this.boolConversion,
-			stateUpdate: this.stateUpdate,
-			lengthHandler: this.lengthHandler,
-			createSeclusionHoldIncident: this.createSeclusionHoldIncident,
-			stateGeneralUpdate: this.stateGeneralUpdate,
-			addInvolvedPerson: this.addInvolvedPerson,
+			day_of_the_weekHandler: this.DayOfTheWeekHandler,
+			addHold: this.AddHold,
+			boolConversion: this.BoolConversion,
+			stateUpdate: this.StateUpdate,
+			lengthHandler: this.LengthHandler,
+			createSeclusionHoldIncident: this.CreateSeclusionHoldIncident,
+			stateGeneralUpdate: this.StateGeneralUpdate,
+			addInvolvedPerson: this.AddInvolvedPerson,
 		};
 		return (
 			<Context.Provider value={value}>
-				<div>{this.renderForm()}</div>
+				<div>{this.RenderForm()}</div>
 			</Context.Provider>
 		);
 	}
