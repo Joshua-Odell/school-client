@@ -2,7 +2,6 @@ import React from 'react';
 import Context from '../Context';
 import DatePicker from 'react-datepicker';
 import DatePickerTwo from 'react-datepicker';
-import InvolvedStaff from '../InvolvedStaff/InvolvedStaff';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const list = require('../Store/store');
