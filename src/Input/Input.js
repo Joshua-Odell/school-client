@@ -448,7 +448,7 @@ export default class Input extends Component {
 								that the student and staff are validated with the database
 							</li>
 							<li>
-								The form uses the database to get repetative data. This means
+								The form uses the database to get repetitive data. This means
 								that information such as demographics do not need to be entered
 								everytime the student has an incident
 							</li>
