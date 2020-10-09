@@ -23,7 +23,7 @@ class FormSelector extends Component {
 					<select
 						id="school"
 						name="school"
-						onChange={this.locationHandler.bind(this)}
+						onChange={this.LocationHandler.bind(this)}
 						value={this.state.value}
 					>
 						<option value="NONE">--NONE--</option>
